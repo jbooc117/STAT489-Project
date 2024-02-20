@@ -8,3 +8,4 @@ df.heartDisease = filter(heartDisease, LocationAbbr == "TX" & Data_Value != "NA"
 lm.year = lm(df.heartDisease$Data_Value~df.heartDisease$Year)
 #plot(lm.year)
 
+# Initial data set contained too many points so by using filtering, the focus can be set to the heart disease prevalence in TX. Further filtering can be put in place in the future on specific counties, then variables such as race, income, and gender can be analyzed in these geographical units. 

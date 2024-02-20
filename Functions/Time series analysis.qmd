@@ -31,4 +31,4 @@ ggplot(demographic_trends, aes(x = YearStart, y = RecordCount, color = Break_Out
 
 
 ```
-
+# After the time series analysis and plotting using ggplot2, it's shown that the factor race plays a bigger role compared to the other factors in terms of heart disease. For future EDA, it's important to focus on the underlying reasoning for this (further filtering and selecting in smaller geographical units). 

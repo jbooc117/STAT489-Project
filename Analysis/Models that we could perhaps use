@@ -1,0 +1,15 @@
+
+mixed models
+Cox proportional hazard model - generalized linear models
+Intepreatiotn not linear but research models.
+Library(Mgcv)
+Library(survival) - weibull dist. 
+This is for autocorrelation
+
+conditional logistic regression - conditional outcome as u very different strata
+
+Model today.
+geogrpahically wieghted regression - maybe
+
+State is categorical and random intercept
+Do MArkov random fuel as states dont have an effect but the neighbors

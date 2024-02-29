@@ -1,0 +1,54 @@
+library(sf)
+library(sp)
+library(spgwr)
+library(spdep)
+
+#loading the data and removing NA values
+my_data_new <- read.csv("C:/Users/Shombit Roy/Downloads/finalCVD3.csv") #Change file directory
+#my_data_2 <- subset(my_data, select = -c(geometry))
+
+data.Tx <- subset(my_data_new, LocationAbbr == "TX")
+
+my_data_2 <- na.omit(data.Tx)
+
+# If your data is not already a spatial object
+my_data <- st_as_sf(my_data_2, coords = c("lon", "lat"), crs = 4326)
+
+library(spdep)
+
+library(sf)
+library(sp)
+
+
+#this code was to ensure that point data was taken from the dataset
+# First, ensure your 'sf' object contains point geometries
+if(all(st_geometry_type(my_data) %in% "POINT")) {
+  # Extract coordinates from the 'sf' object
+  coords <- st_coordinates(my_data)
+  
+  # Create a SpatialPoints object
+  my_data_sp <- SpatialPoints(coords)
+} else {
+  stop("The dataset does not contain point geometries, or contains mixed types.")
+}
+
+
+# Define neighbors based on a distance threshold
+# For example, setting the threshold to 5 km 
+distance_threshold <- 5  
+
+
+neighbors <- dnearneigh(coords, 0, distance_threshold)
+
+
+weights <- nb2listw(neighbors, style="W", zero.policy=TRUE)
+
+forumula <- lm(my_data_2$Data_Value ~ my_data_2$perc_asian + my_data_2$perc_white + my_data_2$perc_hispanic + my_data_2$perc_africanamerican)
+
+
+summary(forumula)
+
+model_lag <- lagsarlm(formula, data=my_data, listw=weights)
+
+# Show summary of the model
+summary(model_lag)

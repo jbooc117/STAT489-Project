@@ -1,0 +1,67 @@
+---
+title: Homework
+format: html
+editor: visual
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+load("C:/Users/Shombit Roy/Downloads/VacData.Rdata")
+
+library(dplyr)
+library(sp)
+library(ggplot2)
+library(spdep)
+library(sf)
+library(lmtest)
+library(tidyverse)
+
+
+data <- read.csv("C:/Users/Shombit Roy/Downloads/finalCVD (2).csv")
+
+indices = data %>% select(LocationID) %>% mutate(LocationID = as.character(LocationID)) %>% mutate(Digits = str_length(LocationID)) %>% select(Digits) %>% `==`(4) %>% which()
+
+mergedData_2 <- merge(US_Conus_VacSocial, data, by.x = "GEOID", by.y = "LocationID") 
+my_data_2 <- subset(mergedData_2, select = -c(perc_vac, population, population.persqkm, median_householdincome, perc_HealthInsurance, LocationAbbr, LocationDesc, Class, Stratification1, Year, Data_Value_Unit))
+
+library(randomForest)
+
+data <- my_data_2[,c("Data_Value", "perc_asian", "perc_white", "perc_hispanic", "perc_africanamerican")]
+
+train_indices <- sample(1:nrow(data), size = floor(0.8 * nrow(data)))
+train_data <- data[train_indices, ]
+test_data <- data[-train_indices, ]
+
+# Fitting the Random Forest model
+rf_model <- randomForest(Data_Value ~ perc_asian + perc_white + perc_hispanic + perc_africanamerican, data = train_data, ntree = 10)
+
+predictions <- predict(rf_model, newdata = test_data)
+
+mse <- mean((predictions - test_data$Data_Value)^2)
+mse
+rmse <- sqrt(mse)
+
+summary(rf_model)
+importance(rf_model)
+varImpPlot(rf_model)
+
+# Plot of actual vs. predicted values
+df_plot = plot(test_data$Data_Value, predictions, main = "Actual vs Predicted Data_Value",
+     xlab = "Actual Data_Value", ylab = "Predicted Data_Value", pch = 20)
+abline(a = 0, b = 1, col = "red") 
+
+# Plot of residuals
+residuals <- test_data$Data_Value - predictions
+plot(predictions, residuals, main = "Residuals vs Predicted",
+     xlab = "Predicted Data Value", ylab = "Residuals", pch = 19, col = 'blue')
+abline(h = 0, col = "red")
+```
+
+From the model it seems that the perc_asian is the most important factor in play in our data from the Varimpplot function. Also I used 80 -20 split is because this split is known as the Pareto Principle, so i just used that as my rule of thumb.

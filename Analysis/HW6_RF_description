@@ -1,0 +1,11 @@
+Model description of Random Forest:
+- The random forest model is a popular machine-learning algorithm comprised of multiple decision trees. 
+- Within each individual decision tree are decision nodes. 
+- The purpose of decision trees are to see how to subset the data through CART (Classification and Regression Tree). 
+- Because decision trees are supervised, be cautious of bias and overfitting. 
+- With the RF model, it's important to have multiple decision trees in order to obtain the most accurate results. 
+
+RF comparison to GWR model:
+- NOTE: Our group is still working on how to properly fit our data set with the GWR model. 
+- A noteable difference between RF and GWR is that RF is able to better capture any non-linear relationships compared to regression models. 
+- The RF model also weighs certain features more than others, whereas the GWR model does not. 

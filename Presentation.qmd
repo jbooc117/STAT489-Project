@@ -1,0 +1,33 @@
+---
+title: "Cardiovascular Disease death prediction based on air quality and socioeconomic factors"
+author: 
+  name: "Shombit, Christina, Johan"
+  institution: "Texas A\\&M University"
+format: 
+  beamer:
+    include-in-header: 
+      - text: "\\definecolor{TAMUMaroon}{HTML}{500000}"
+      - text: "\\setbeamercolor{palette primary}{bg=TAMUMaroon,fg=white}"
+    theme: metropolis
+    keep-tex: true
+    linkcolor: blue
+editor: visual
+date: today
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+set.seed(12345)
+```
+
+## Abstract
+
+## Introduction
+
+## Methods
+
+## Results
+
+## Literature Review 
+
+## Conclusion

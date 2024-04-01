@@ -1,0 +1,34 @@
+Strengths:
+1) Risk prediction models 
+2) Range of covariates 
+3) Identify clusters using statistics and bandwidths
+4) Pool the data over multiple years to reduce missing information from smaller counties 
+
+Weaknesses:
+1) Multicollinearity using GWR model 
+2) Spatial and temporal differences on the large regional and subregional scale is still poorly understood
+3) Oftentimes, there's a misclassification of races outside of white/black 
+4) 
+
+Zelko paper:
+- Variables: air pollution, social determinants, Type 2 diabetes mortality rates, and county-level data 
+- Correlation found between household income, race, and healthcare access 
+- CDC and Wonder data, cohort study, age-adjusted CVM, GWR model, AIC and R^2
+
+Terry paper:
+- Foused on race/sex differences rather than geographical differences 
+- Results suggest an association between the social determinants of health and cardiovascular mortality
+- Wonder data, Social Vulnerability Index, 2-tailed Kruskal-Wallis test, linear regression model 
+
+Singh paper:
+- Examined CVD on the elderly population 
+- Performed data standardization 
+- Divide data into batches (differences in algorithms for certain year ranges), 3rd degree polynomial function
+
+Tabb paper:
+- Variables: smoking status, BMI, physical activity, blood pressure, blood glocuse levels, and diet 
+- Focus on how much heterogeneity exists in the difference between whites and blacks in the US
+- GWR model, ANOVA F test, adaptive bandwidths 
+
+Mena paper:
+- Mapping, cluster detection, spatial regression 

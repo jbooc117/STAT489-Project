@@ -11,9 +11,10 @@ Weaknesses:
 4) 
 
 Zelko paper:
-- Variables: air pollution, social determinants, Type 2 diabetes mortality rates, and county-level data 
+- Variables: Type 2 diabetes mortality rates, air pollution, social determinants, and county-level data 
 - Correlation found between household income, race, and healthcare access 
 - CDC and Wonder data, cohort study, age-adjusted CVM, GWR model, AIC and R^2
+- Results show that counties in the South had the highest PM2.5 exposure and counties in the Northeast had the lowest 
 
 Terry paper:
 - Foused on race/sex differences rather than geographical differences 
@@ -32,3 +33,12 @@ Tabb paper:
 
 Mena paper:
 - Mapping, cluster detection, spatial regression 
+
+Draft:
+- Above papers are useful for our paper to see the spatial distribution of cardiovascular disease and better understand the geographical differrences 
+in relation to air quality and socioeconomic factors for policymakers. 
+- Past studies focus on the trends of covariates and spatial patterning; however, our paper will use these in order to make risk prediction model
+over cardiovascular deaths 
+- Regional variation exists across the US (as seen in the the MidWest and the StrokeBelt regions) 
+- Our paper takes into account the fact that socioeconomic factors are not constant on a time and space basis 
+- The GWR model is better for local-level disparities in 

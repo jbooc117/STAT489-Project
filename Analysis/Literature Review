@@ -1,44 +1,72 @@
-Strengths:
+******* STRENGTHS *******
+
 1) Risk prediction models 
-2) Range of covariates 
-3) Identify clusters using statistics and bandwidths
-4) Pool the data over multiple years to reduce missing information from smaller counties 
+2) Studies also have a wide range of covariates 
+3) Following studies identify clusters using bandwidths and statistics such as Moran's I, LISA, Getis-Ord Gi, etc. 
+4) By pooling the data over multiple years, this reduces the amount of missing information from smaller counties 
 
-Weaknesses:
-1) Multicollinearity using GWR model 
-2) Spatial and temporal differences on the large regional and subregional scale is still poorly understood
-3) Oftentimes, there's a misclassification of races outside of white/black 
-4) 
 
-Zelko paper:
+******* WEAKNESSES *******
+
+1) When using GWR model, multicollinearity is subject to occur. 
+2) Spatial and temporal differences on the larger regional/subregional scale is still poorly understood 
+3) Hosptilization weaknesses and findings from studies show that there's a misclassification of races outside of white/black. This often happens due to underrreporting.
+This suggests the need for better accurate population-based surveillance on races to 
+
+
+******* PAPER SUMMARIES *******
+
+1. Zelko paper:
 - Variables: Type 2 diabetes mortality rates, air pollution, social determinants, and county-level data 
 - Correlation found between household income, race, and healthcare access 
 - CDC and Wonder data, cohort study, age-adjusted CVM, GWR model, AIC and R^2
 - Results show that counties in the South had the highest PM2.5 exposure and counties in the Northeast had the lowest 
 
-Terry paper:
+2. Terry paper:
 - Foused on race/sex differences rather than geographical differences 
 - Results suggest an association between the social determinants of health and cardiovascular mortality
 - Wonder data, Social Vulnerability Index, 2-tailed Kruskal-Wallis test, linear regression model 
 
-Singh paper:
-- Examined CVD on the elderly population 
+3. Singh paper:
+- Examined CVD on the elderly population using hospitalization records; specifically data from 1991-2014, aged 65+ years, and categorized by 
+age/sex/race/state
 - Performed data standardization 
-- Divide data into batches (differences in algorithms for certain year ranges), 3rd degree polynomial function
+- Divided the data into batches (differences in algorithms for certain year ranges), 3rd degree polynomial function
 
-Tabb paper:
+4. Tabb paper:
 - Variables: smoking status, BMI, physical activity, blood pressure, blood glocuse levels, and diet 
 - Focus on how much heterogeneity exists in the difference between whites and blacks in the US
 - GWR model, ANOVA F test, adaptive bandwidths 
 
-Mena paper:
+5. Mena paper:
 - Mapping, cluster detection, spatial regression 
+- Detailed sections of the factors associated with cardiovascular disease such as air pollution, socioeconomic status, education level, 
+rural vs urban residency, etc 
+- States that socioeconomic status is an important factor to see access to healthcare services 
 
-Draft:
-- Above papers are useful for our paper to see the spatial distribution of cardiovascular disease and better understand the geographical differrences 
-in relation to air quality and socioeconomic factors for policymakers. 
-- Past studies focus on the trends of covariates and spatial patterning; however, our paper will use these in order to make risk prediction model
-over cardiovascular deaths 
-- Regional variation exists across the US (as seen in the the MidWest and the StrokeBelt regions) 
-- Our paper takes into account the fact that socioeconomic factors are not constant on a time and space basis 
-- The GWR model is better for local-level disparities in 
+
+******* LITERATURE REVIEW KEY HIGHLIGHTS *******
+
+1) Above papers are useful for our paper to see the spatial distribution of cardiovascular disease and better understand the geographical differrences 
+in relation to air quality and socioeconomic factors on a spatial and temporal basis. This allows policymakers to make the necessary decisions and implement policies.
+
+2) Past studies tend to soley focus on the trends of covariates and spatial patterning; However, our paper will use these in order to make a risk prediction model
+over cardiovascular deaths. 
+
+3) Multiple studies have shwon that CVD mortality is the most prominent in the MidWest and StrokeBelt regions of the US. However, 
+regional variation exists for cardiovascular disease. 
+
+4) Our paper takes into account the fact that socioeconomic factors are not constant on a time and space basis, especially with cardiovascular disease 
+as it's a much more complex relationship. 
+
+5) The GWR model is better for analyzing disparities at the local-scale, see which socioeconomic factor affects different regions, and 
+then implement a policy for that specific region. 
+
+6) There's been a growing popularity for the use of spatial models in the epidemiological domain to analyze the factors and spatial distribution 
+of a certain disease. The spatial models and techniques used differ between studies however the end goal remains the same. 
+
+7) Our study strengths include: 
+- a) Using CDC data from the years 2015-2018 for the covariates such as age, sex, race, etc
+- b) Using a separate dataset for the socioeconomic factors in US counties 
+- c) Using a final separate dataset for the air particulate matter in US counties 
+- d) By using a GWR model, there's minimal possibility for errors between the actual model the predicted risk model 

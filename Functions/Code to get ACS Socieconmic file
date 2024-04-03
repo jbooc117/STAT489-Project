@@ -1,0 +1,21 @@
+set.seed(123456)
+library(tidyverse)
+library(tidycensus)
+library(tidycensus)
+library(sf)
+library(sp)
+
+options(tigris_use_cache = TRUE)
+
+variables = (Income = "B19013_001E")
+
+US_median_income = get_acs(
+geography = "county",  
+year = 2016, #change year
+variables = variables,
+survey = "acs5"
+)
+
+df_22 <- as.data.frame(US_median_income)
+
+##U have to get the API key, so look at hw#2. ALso have to chnage it to a dataframe and then can use the dyplyr fucntion to work and then change it back to a shape file

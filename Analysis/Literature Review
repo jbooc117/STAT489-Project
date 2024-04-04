@@ -1,48 +1,57 @@
-******* STRENGTHS *******
+******* STRENGTHS OF RESEARCH PAPERS *******
 
-1) Risk prediction models 
-2) Studies also have a wide range of covariates 
-3) Following studies identify clusters using bandwidths and statistics such as Moran's I, LISA, Getis-Ord Gi, etc. 
-4) By pooling the data over multiple years, this reduces the amount of missing information from smaller counties 
+a) Risk prediction models 
+b) Studies also have a wide range of covariates 
+c) Following studies identify clusters using bandwidths and statistics such as Moran's I (global), LISA (local), and Getis-Ord Gi (local). 
+d) By pooling the data over multiple years, this reduces the amount of missing information from smaller counties 
 
 
-******* WEAKNESSES *******
+******* WEAKNESSES OF RESEARCH PAPERS *******
 
-1) When using GWR model, multicollinearity is subject to occur. 
-2) Spatial and temporal differences on the larger regional/subregional scale is still poorly understood 
-3) Hosptilization weaknesses and findings from studies show that there's a misclassification of races outside of white/black. This often happens due to underrreporting.
+a) When using GWR model, multicollinearity is subject to occur. 
+b) Spatial and temporal differences on the larger regional/subregional scale is still poorly understood 
+c) Hosptilization weaknesses and findings from studies show that there's a misclassification of races outside of white/black. This often happens due to underrreporting.
 This suggests the need for better accurate population-based surveillance on races to 
 
 
-******* PAPER SUMMARIES *******
+******* RESEARCH PAPER SUMMARIES *******
 
-1. Zelko paper:
-- Variables: Type 2 diabetes mortality rates, air pollution, social determinants, and county-level data 
-- Correlation found between household income, race, and healthcare access 
-- CDC and Wonder data, cohort study, age-adjusted CVM, GWR model, AIC and R^2
-- Results show that counties in the South had the highest PM2.5 exposure and counties in the Northeast had the lowest 
+1. Zelko ~ "Geographically Weighted Modeling to Explore Social and Environmental Factors Affecting County-Level Cardiovascular Mortality
+            in People with Diabetes in the United States: A Cross-Sectional Anlysis" :
+    - Variables: Type 2 diabetes mortality rates, air pollution, social determinants, and county-level data 
+    - Correlation found between household income, race, and healthcare access 
+    - CDC and Wonder data, cohort study, age-adjusted CVM, GWR model, AIC and R^2
+    - Results show that counties in the South had the highest PM2.5 exposure and counties in the Northeast had the lowest 
 
-2. Terry paper:
-- Foused on race/sex differences rather than geographical differences 
-- Results suggest an association between the social determinants of health and cardiovascular mortality
-- Wonder data, Social Vulnerability Index, 2-tailed Kruskal-Wallis test, linear regression model 
+2. Terry ~ "Trends in Cardiovascular Disease Mortality by County-Level Social Vulnerability Index in the US":
+    - Foused on race/sex differences rather than geographical differences 
+    - Results suggest an association between the social determinants of health and cardiovascular mortality
+    - Wonder data, Social Vulnerability Index, 2-tailed Kruskal-Wallis test, linear regression model 
 
-3. Singh paper:
-- Examined CVD on the elderly population using hospitalization records; specifically data from 1991-2014, aged 65+ years, and categorized by 
-age/sex/race/state
-- Performed data standardization 
-- Divided the data into batches (differences in algorithms for certain year ranges), 3rd degree polynomial function
+3. Singh ~ "Spatiotemporal and Demographic Trends and Disparities in Cardiovascular Disease Among Older Adults in the US Based on 181 
+            Million Hospitalization Records": 
+    - Examined CVD on the elderly population using hospitalization records; specifically data from 1991-2014, aged 65+ years, and categorized by 
+      age/sex/race/state
+    - Performed data standardization 
+    - Divided the data into batches (differences in algorithms for certain year ranges), 3rd degree polynomial function
 
-4. Tabb paper:
-- Variables: smoking status, BMI, physical activity, blood pressure, blood glocuse levels, and diet 
-- Focus on how much heterogeneity exists in the difference between whites and blacks in the US
-- GWR model, ANOVA F test, adaptive bandwidths 
+4. Tabb ~ "Exploring the Spatial Patterning in Racial Differences in Cardiovascular Health Between Blacks and Whites Across the US":
+    - Variables: smoking status, BMI, physical activity, blood pressure, blood glocuse levels, and diet 
+    - Focus on how much heterogeneity exists in the difference between whites and blacks in the US
+    - GWR model, ANOVA F test, adaptive bandwidths 
 
-5. Mena paper:
-- Mapping, cluster detection, spatial regression 
-- Detailed sections of the factors associated with cardiovascular disease such as air pollution, socioeconomic status, education level, 
-rural vs urban residency, etc 
-- States that socioeconomic status is an important factor to see access to healthcare services 
+5. Mena ~ "Spatial Analysis for the Epidemiological Study of Cardiovascular Diseases: A systematic Literature Search":
+    - Mapping, cluster detection, spatial regression 
+    - Detailed sections of the factors associated with cardiovascular disease such as air pollution, socioeconomic status, education level, 
+      rural vs urban residency, etc 
+    - States that socioeconomic status is an important factor to see access to healthcare services 
+    - For spatial analysis, the geographic unit of choice and the size of the area are important factors to take into consideration 
+    - In terms of cluster analysis, take into account the number of occurring events, the expected number of events, and the population at risk 
+
+6. Roth ~ "Trends and Patterns of Geographic Variation in Cardiovascular Mortality Among US Counties, 1980-2014": 
+    - Overall, there's been a decrease in cardiovascular disease mortality rates in the US on the county-level scale. 
+    - Focus of the paper was on the county-level, however nation-level results were used for comparison 
+    - Focus of the paper was on trends and clustering of specific heart diseases rather than CVD incidence 
 
 
 ******* LITERATURE REVIEW KEY HIGHLIGHTS *******
@@ -65,7 +74,13 @@ then implement a policy for that specific region.
 6) There's been a growing popularity for the use of spatial models in the epidemiological domain to analyze the factors and spatial distribution 
 of a certain disease. The spatial models and techniques used differ between studies however the end goal remains the same. 
 
-7) Our study strengths include: 
+7) The GWR model shows whether or not a linear relationship exists between cardiovascular disease deaths and the covariates, making it suitable 
+to see where the areas of focus should be placed in terms of improvement as well as an increase presence of healthcare practitioners. 
+
+9) As the leading cause of death in the United States, it's important to analyze the geographical distribution of cardiovascular disease deaths, 
+determine the strength of its relationship with the covariates air poluution and socioeconomic factors, to make a risk prediction model. 
+
+10) Our study strengths include: 
 - a) Using CDC data from the years 2015-2018 for the covariates such as age, sex, race, etc
 - b) Using a separate dataset for the socioeconomic factors in US counties 
 - c) Using a final separate dataset for the air particulate matter in US counties 

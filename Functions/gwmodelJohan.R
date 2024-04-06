@@ -2,6 +2,9 @@ library(sf)
 library(GWmodel)
 library(ggplot2)
 set.seed(1234)
+
+finalCVD = read_sf("finalCVDshapes.shp")
+
 # Remove features with empty geometries
 merge2015GW = finalCVD[!st_is_empty(finalCVD), ]
 merge2015GW = merge2015GW%>%na.omit(merge2015GW) #1 county missing
@@ -54,4 +57,10 @@ gwr_results_sf%>%ggplot() +
 summary(gwr_results_sf)
 gwr_results
 
-gwr.montecarlo()
+gwr.montecarlo(Data_Vl ~ 
+                 prc_wht + prc_frc + prc_hsp + perc_sn + 
+                 p2_5_20 + estimat + U__2015,
+               data = mergedf_spatial, 
+               bw = opt_bandwidth, 
+               kernel = "gaussian", 
+               adaptive = FALSE)

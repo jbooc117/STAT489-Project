@@ -3,7 +3,8 @@ library(GWmodel)
 library(ggplot2)
 set.seed(1234)
 # Remove features with empty geometries
-merge2015GW <- merge2015[!st_is_empty(merge2015), ]
+merge2015GW = finalCVD[!st_is_empty(finalCVD), ]
+merge2015GW = merge2015GW%>%na.omit(merge2015GW) #1 county missing
 
 # Calculate centroids of the MULTIPOLYGON geometries
 mergedf_centroids <- st_centroid(merge2015GW)
@@ -15,18 +16,18 @@ coords <- st_coordinates(mergedf_centroids)
 mergedf_spatial = merge2015GW%>%as_Spatial() #change name
 
 
-#change forumla
+#change formula
 opt_bandwidth <- bw.gwr(Data_Vl ~ 
                           prc_wht + prc_frc + prc_hsp + perc_sn + 
-                          DaysCO + DaysNO2 + DaysOzone + DaysPM2_5 + DaysPM10, 
+                          p2_5_20 + estimat + U__2015, 
                         data = mergedf_spatial, 
                         kernel = "gaussian", 
                         parallel.method = "omp")
 
-# Running GWR with the optimal bandwidth
+# Running GWR with the optimal bandwidth for seed 1234: 128251.7
 gwr_results <- gwr.basic(Data_Vl ~ 
                            prc_wht + prc_frc + prc_hsp + perc_sn + 
-                           DaysCO + DaysNO2 + DaysOzone + DaysPM2_5 + DaysPM10, 
+                           p2_5_20 + estimat + U__2015, 
                          data = mergedf_spatial, 
                          bw = opt_bandwidth, 
                          kernel = "gaussian", 
@@ -42,7 +43,15 @@ gwr_results_sf%>%ggplot() +
                                 alpha = 0.1
                                 )) +
   scale_fill_gradientn(colours = terrain.colors(8),
-                       limits = c(0, 100),
-                       breaks = c(25, 50, 7)) +
+                       #limits = c(19,530),
+                       breaks = c(100,250,350)) +
   theme(text = element_text(size = 20), 
-        legend.position = "bottom")
+        legend.position = "bottom") + 
+  labs(title = "GWR for particulate concentrations, 2015",
+       fill = "Deaths from CVD per 100,000 people")
+
+#Parameter Analysis
+summary(gwr_results_sf)
+gwr_results
+
+gwr.montecarlo()

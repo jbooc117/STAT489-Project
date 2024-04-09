@@ -1,5 +1,5 @@
 ---
-title: "Demo arXiv template"
+title: "Spatial Modeling of Cardiovascular Disease Associated with Increasing Airborne Particulate Matter"
 format:
   arxiv-pdf:
     keep-tex: true  
@@ -12,50 +12,292 @@ author:
     affiliations:
       - name: Texas A\&M University
         department: Department of Statistics
-        address: 
-        city: College Station, TX
-        country: USA
-        postal-code: 77843
-    orcid: 0000-0003-2402-304X
     email: jbooc24@tamu.edu
-    url: https://mm218.dev
-  - name: Someone Else
+    
+  - name: Christina Kim
     affiliations:
-      - name: State University of New York College of Environmental Science and Forestry
-        department: Department of Sustainable Resources Management
-        address: 1 Forestry Drive
-        city: Syracuse, NY
-        country: USA
-        postal-code: 13210
+      - name: Texas A\&M University
+        department: Department of Statistics
+    email: christinaykim3@tamu.edu 
+
+  - name: Shombit Roy
+    affiliations:
+      - name: Texas A\&M University
+        department: Department of Statistics
+    email: shombit123@tamu.edu
 abstract: |
-  This document is only a demo explaining how to use the template.
+  Cardiovascular disease (CVD) stands as the leading cause of death in the United States. By using spatial modeling techniques, such as geographically weighted regression (GWR), we have determined that CVD will see an increasing incidence rate outside the Stroke Belt region as the concentration of air pollutants increases and socioeconomic factors worsen. Policymakers and health practice practitioners are thus able to use these results in justifying targeted interventions to curb the increasing rates of CVD, aiming to halt one of the world’s deadliest diseases. 
 keywords: 
-  - template
-  - demo
+  - PM2_5
+  - Cardiovascular Disease
 bibliography: bibliography.bib  
 ---
 
 # Introduction {#sec-intro}
 
-This is an example of how to use this template to render journal articles. This template is inspired by the arXiv rticles template for rmarkdown, repurposed for the Quarto publishing system.
+-   Broad strokes: Explain how cardiovascular disease is the leading cause of death in the US, our paper filing the gap by putting the focus on the 18-44-year-old age group 
 
-This quarto extension format supports PDF and HTML outputs. This template is primarily focused on generating acceptable {{< latex >}} outputs from Quarto, but renders an acceptable HTML output using the standard Quarto options.
+-   Specifics: Explicitly state how the CVD incidence rate varies spatially in the US, for our covariates. Our approach involves analyzing this relationship to produce risk prediction estimates for our specified age group. 
+
+-   Central thesis: Use a geographically weighted model approach to produce visualizations and analyze the relationship between our response variable (CVD deaths) and its covariates (air pollutant concentration and socioeconomic factors), specifically focusing on spatial variation. 
+
+-   Step back: The overall outcome of our study involves aiding policymakers and health practitioners develop the necessary interventions in the targeted regions that are most affected by CVD.Related Works
+
+Paragraph 1) Review of regression approaches in cardiovascular disease mortality 2) Review of geographically weighted regression models 3) GWR with CVD 4) Risk prediction Model 5) Direct comparison with clustering approaches
 
 # Related Works
 
+1.  Review of regression approaches in cardiovascular disease mortality 
+
+2.  Review of geographically weighted regression models 
+
+3.  GWR with CVD 
+
+4.  Risk prediction model 
+
+5.  Direct comparison with clustering approaches
 
 # Methods
 
+### Data
 
+-   Combination of four data sets (will add citations later): CDC cardiovascular disease death rates per US counties, NASA particulate matter concentrations for the year 2015, US Census Data for 2015, and US Vaccination rate by county data
+
+    -   Vaccination rates were not considered in the study, rather, the dataset was used for its geometry listing, which will be important for our GWR section.
+
+-   We merged the four data sets together to analyze multiple variables against the CVM per 100,000 residents in each county. Variables included % of race present in county, PM2.5 concentrations, median income, and unemployment rates.
+
+### Geographically Weighted Regression Model
+
+-   
+
+```{r include=FALSE}
+source("./Functions/gwmodelJohan.R")
+#source("./Functions/FinalGWmodel.qmd")
+```
 
 ```{r}
-source("./Functions/gwmodelJohan.R")
+gwr_results_sf%>%ggplot() +
+  geom_sf(aes(fill = gwr_results_sf$y),
+          color = scales::alpha("black",
+                                alpha = 0.1
+                                )) +
+  scale_fill_gradientn(colours = terrain.colors(8),
+                       #limits = c(19,530),
+                       breaks = c(100,250,350)) +
+  theme(text = element_text(size = 20), 
+        legend.position = "bottom") + 
+  labs(title = "GWR for particulate concentrations, 2015",
+       fill = "Deaths from CVD per 100,000 people")
 ```
+
 # Results
+
+```{r}
+gwr_results
+```
+
+Table Summary interpretation: The analysis compares two distinct statistical models to explore the relationships between socio-economic, demographic, and environmental variables and death rates. The first is a global regression model which, despite revealing that all predictors are highly statistically significant, does not take into account spatial correlation. Hence, while the model does suggest that our variables are indeed important, the global model may overlook local variations that are crucial in understanding the true nature of the data. 
+
+On the other hand, the geographically weighted regression (GWR) model incorporates spatial variation, which is a critical factor given the context of the data. We can see how well the GWR model worked by looking at the R-squared value, which is .870, a significant improvement over the global model. This R-squared value, along with the use of localized spatial statistics, confirms the non-uniform relationship between the predictors and the response variable across different geographical areas. In summary, the GWR model, by accommodating the spatial component present in the data, provides a more realistic interpretation of how various factors influence death rates across different regions.
+
+Significance plot:- 
+
+The plots provided depict the local significance and magnitude of different parameters (covariates) from a geographically weighted regression (GWR) model, focusing on their relationship with death rates across the United States. The areas in red indicate regions where the covariates are statistically significant, and the color's intensity represents the effect's magnitude.
+
+```{r}
+#significance
+local_t_values <- gwr_results_sf$prc_wht_TV
+local_p_values <- 2 * pt(-abs(local_t_values), df = 2480.149) #df number cam from the Gw diagnostic
+
+
+gwr_results_sf$prc_wht_p_values <- local_p_values
+
+
+gwr_results_sf$prc_wht_signif_coef <- ifelse(gwr_results_sf$prc_wht_p_values < 0.05, 
+                                             gwr_results_sf$prc_wht, 
+                                             NA)  # Set to NA if not significant
+
+library(ggplot2)
+ggplot(gwr_results_sf) +
+  geom_sf(aes(fill = prc_wht_signif_coef), color = "black", size = 0.1) +
+  scale_fill_gradient(low = "white", high = "red", na.value = NA, 
+                      name = "Coefficient Magnitude", limits = NULL) +  
+  labs(title = "Local Significance and Magnitude of 'prc_wht' Parameter",
+       subtitle = "Geographically Weighted Regression (GWR)",
+       caption = "Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
+  theme_minimal() +
+  theme(text = element_text(size = 12), legend.position = "right")
+
+#significance
+local_t_values_2 <- gwr_results_sf$prc_frc_TV
+local_p_values_2 <- 2 * pt(-abs(local_t_values_2), df = 2480.149) #df number cam from the Gw diagnostic
+
+
+gwr_results_sf$prc_af_p_values <- local_p_values_2
+
+
+gwr_results_sf$prc_af_signif_coef <- ifelse(gwr_results_sf$prc_af_p_values < 0.05, 
+                                             gwr_results_sf$prc_frc, 
+                                             NA)  # Set to NA if not significant
+
+library(ggplot2)
+ggplot(gwr_results_sf) +
+  geom_sf(aes(fill = prc_af_signif_coef), color = "black", size = 0.1) +
+  scale_fill_gradient(low = "white", high = "red", na.value = NA, 
+                      name = "Coefficient Magnitude", limits = NULL) +  
+  labs(title = "Local Significance and Magnitude of 'prc_af' Parameter",
+       subtitle = "Geographically Weighted Regression (GWR)",
+       caption = "Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
+  theme_minimal() +
+  theme(text = element_text(size = 12), legend.position = "right")
+
+#significance
+local_t_values_3 <- gwr_results_sf$prc_hsp_TV
+local_p_values_3 <- 2 * pt(-abs(local_t_values_3), df = 2480.149) #df number cam from the Gw diagnostic
+
+
+
+gwr_results_sf$prc_hsp_p_values <- local_p_values_3
+
+
+gwr_results_sf$prc_hsp_signif_coef <- ifelse(gwr_results_sf$prc_hsp_p_values < 0.05, 
+                                             gwr_results_sf$prc_hsp, 
+                                             NA)  # Set to NA if not significant
+
+library(ggplot2)
+ggplot(gwr_results_sf) +
+  geom_sf(aes(fill = prc_hsp_signif_coef), color = "black", size = 0.1) +
+  scale_fill_gradient(low = "white", high = "red", na.value = NA, 
+                      name = "Coefficient Magnitude", limits = NULL) +  
+  labs(title = "Local Significance and Magnitude of 'prc_hsp' Parameter",
+       subtitle = "Geographically Weighted Regression (GWR)",
+       caption = "Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
+  theme_minimal() +
+  theme(text = element_text(size = 12), legend.position = "right")
+
+#significance
+local_t_values_4 <- gwr_results_sf$perc_sn_TV
+local_p_values_4 <- 2 * pt(-abs(local_t_values_4), df = 2480.149) #df number cam from the Gw diagnostic
+
+
+gwr_results_sf$prc_sn_p_values <- local_p_values_4
+
+
+gwr_results_sf$prc_sn_signif_coef <- ifelse(gwr_results_sf$prc_sn_p_values < 0.05, 
+                                             gwr_results_sf$perc_sn, 
+                                             NA)  # Set to NA if not significant
+
+library(ggplot2)
+ggplot(gwr_results_sf) +
+  geom_sf(aes(fill = prc_sn_signif_coef), color = "black", size = 0.1) +
+  scale_fill_gradient(low = "white", high = "red", na.value = NA, 
+                      name = "Coefficient Magnitude", limits = NULL) +  
+  labs(title = "Local Significance and Magnitude of 'prc_sn' Parameter",
+       subtitle = "Geographically Weighted Regression (GWR)",
+       caption = "Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
+  theme_minimal() +
+  theme(text = element_text(size = 12), legend.position = "right")
+```
+
+-   Demographic Impact: The percentage of white and Hispanic populations shows significant regional variations in association with death rates. Higher proportions of white populations correlate with lower death rates in central areas, whereas higher percentages of Hispanic populations are linked to lower death rates in the West and Southwest. Conversely, higher percentages of African American populations are associated with higher death rates in certain Midwestern and Southeastern regions.
+
+```{r}
+#significance
+local_t_values_5 <- gwr_results_sf$p2_5_20_TV
+local_p_values_5 <- 2 * pt(-abs(local_t_values_5), df = 2480.149) #df number cam from the Gw diagnostic
+
+
+
+gwr_results_sf$prc_p2_p_values <- local_p_values_5
+
+
+gwr_results_sf$prc_p2_signif_coef <- ifelse(gwr_results_sf$prc_p2_p_values < 0.05, 
+                                             gwr_results_sf$p2_5_20, 
+                                             NA)  # Set to NA if not significant
+
+library(ggplot2)
+ggplot(gwr_results_sf) +
+  geom_sf(aes(fill = prc_p2_signif_coef), color = "black", size = 0.1) +
+  scale_fill_gradient(low = "white", high = "red", na.value = NA, 
+                      name = "Coefficient Magnitude", limits = NULL) +  
+  labs(title = "Local Significance and Magnitude of 'prc_p2_5' Parameter",
+       subtitle = "Geographically Weighted Regression (GWR)",
+       caption = "Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
+  theme_minimal() +
+  theme(text = element_text(size = 12), legend.position = "right")
+```
+
+-   Environmental Influence: Air quality, indicated by PM2.5 levels, demonstrates a significant positive relationship with death rates, particularly east of the Rockies, highlighting environmental health as a major concern.
+
+    ```{r}
+    #significance
+    local_t_values_6 <- gwr_results_sf$estimat_TV
+    local_p_values_6 <- 2 * pt(-abs(local_t_values_6), df = 2480.149) #df number cam from the Gw diagnostic
+
+
+    gwr_results_sf$prc_est_p_values <- local_p_values_6
+
+
+    gwr_results_sf$prc_est_signif_coef <- ifelse(gwr_results_sf$prc_est_p_values < 0.05, 
+                                                 gwr_results_sf$estimat, 
+                                                 NA)  # Set to NA if not significant
+
+    library(ggplot2)
+    ggplot(gwr_results_sf) +
+      geom_sf(aes(fill = prc_est_signif_coef), color = "black", size = 0.1) +
+      scale_fill_gradient(low = "white", high = "red", na.value = NA, 
+                          name = "Coefficient Magnitude", limits = NULL) +  
+      labs(title = "Local Significance and Magnitude of 'estimat' Parameter",
+           subtitle = "Geographically Weighted Regression (GWR)",
+           caption = "Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
+      theme_minimal() +
+      theme(text = element_text(size = 12), legend.position = "right")
+
+    #significance
+    local_t_values_7 <- gwr_results_sf$U__2015
+    local_p_values_7 <- 2 * pt(-abs(local_t_values_7), df = 2480.149) #df number cam from the Gw diagnostic
+
+
+    gwr_results_sf$prc_U_2015_p_values <- local_p_values_7
+
+
+    gwr_results_sf$prc_U_2015_signif_coef <- ifelse(gwr_results_sf$prc_U_2015_p_values < 0.05, 
+                                                 gwr_results_sf$U__2015, 
+                                                 NA)  # Set to NA if not significant
+
+    library(ggplot2)
+    ggplot(gwr_results_sf) +
+      geom_sf(aes(fill = prc_U_2015_signif_coef), color = "black", size = 0.1) +
+      scale_fill_gradient(low = "white", high = "red", na.value = NA, 
+                          name = "Coefficient Magnitude", limits = NULL) +  
+      labs(title = "Local Significance and Magnitude of 'estimat' Parameter",
+           subtitle = "Geographically Weighted Regression (GWR)",
+           caption = "Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
+      theme_minimal() +
+      theme(text = element_text(size = 12), legend.position = "right")
+    ```
+
+```{=html}
+<!-- -->
+```
+-   Socio-economic Correlation: Median income levels across many regions show a consistent negative association with death rates, suggesting that higher income areas generally experience fewer deaths.
 
 # Discussion
 
+These maps reveal that the relationships between race, socio-economic factors, environmental quality, and death rates are complex and highly localized. The significance and strength of these relationships vary considerably across different parts of the United States. For example, 
 
+-   Socio-economic factors like income show widespread significance, implying a consistent relationship with health outcomes across various locations.
+
+```{=html}
+<!-- -->
+```
+-   Race impacts are significant in certain areas, which may reflect underlying health disparities, access to care, or other social determinants of health.
+
+```{=html}
+<!-- -->
+```
+-   Air quality has a broad impact, suggesting environmental health concerns that might require region-specific policies. 
 
 {{< pagebreak >}}
 
@@ -63,3 +305,5 @@ source("./Functions/gwmodelJohan.R")
 
 ::: {#refs}
 :::
+
+[@article-journal]

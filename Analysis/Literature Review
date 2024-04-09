@@ -62,7 +62,7 @@ in relation to air quality and socioeconomic factors on a spatial and temporal b
 2) Past studies tend to soley focus on the trends of covariates and spatial patterning; However, our paper will use these in order to make a risk prediction model
 over cardiovascular deaths. 
 
-3) Multiple studies have shwon that CVD mortality is the most prominent in the MidWest and StrokeBelt regions of the US. However, 
+3) Multiple studies have shown that CVD mortality is the most prominent in the MidWest and StrokeBelt regions of the US. However, 
 regional variation exists for cardiovascular disease. 
 
 4) Our paper takes into account the fact that socioeconomic factors are not constant on a time and space basis, especially with cardiovascular disease 
@@ -84,4 +84,34 @@ determine the strength of its relationship with the covariates air poluution and
 - a) Using CDC data from the years 2015-2018 for the covariates such as age, sex, race, etc
 - b) Using a separate dataset for the socioeconomic factors in US counties 
 - c) Using a final separate dataset for the air particulate matter in US counties 
-- d) By using a GWR model, there's minimal possibility for errors between the actual model the predicted risk model 
+- d) By using a GWR model, there's minimal possibility for errors between the actual model and the predicted risk model 
+
+******* PARAGRAPH OUTLINE *******
+
+Paragraph 1. (Review of regression approaches in cardiovascular disease mortality) >>>> 
+     There's been a growing popularity for the use of spatial models in the epidemiological domain to analyze the factors and spatial distribution 
+     of a certain disease. The spatial models and techniques used differ between studies however the end goal remains the same. 
+
+
+Paragraph 2. (Review of geographically weighted regression models) >>>>
+
+Paragraph 3. (GWR with CVD) >>>> 
+     The GWR model shows whether or not a linear relationship exists between cardiovascular disease deaths and the covariates, making it suitable 
+     to see where the areas of focus should be placed in terms of improvement as well as an increase presence of healthcare practitioners. 
+     The GWR model is better for analyzing disparities at the local-scale, see which socioeconomic factor affects different regions, and 
+     then implement a policy for that specific region. 
+
+
+Paragraph 4. (Risk prediction model) >>>>
+     Risk assessment and risk estimates helps to understand the key factors associated with CVD.
+     Past studies tend to soley focus on the trends of covariates and spatial patterning. However, our paper will use these in order to make a risk prediction model
+     over cardiovascular deaths. When using a risk prediction model to make estimates, the following is necessary: reliable data, risk markers, 
+     valid statistical methods, and clinical context setting (Lloyd-Jones et. al). As risk prediction models are centered around the population as a whole rather than individuals, 
+     we apply our risk prediction model over the 18-44 year-old age group. 
+
+
+5. Paragraph 5 (Direct comparison with clustering approaches) >>>> 
+     With cluster analysis, it's important to take into consideration the number of occurring events, the expected number of events, and the population at risk. 
+     Whereas with spatial analysis, factors such as the geographic region of choice and the size of the area are key componenets. 
+     Clustering approaches is a suitable method in order to see where the CVD incidence is concentrated. However, Our paper takes into account 
+     the fact that socioeconomic factors are not constant on a time and space basis with cardiovascular disease by using a GWR model. as it's a much more complex relationship. 

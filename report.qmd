@@ -5,7 +5,7 @@ format:
     keep-tex: true  
     linenumbers: false
     doublespacing: false
-    runninghead: "A Preprint"
+    runninghead: "CVD Related to PM2.5"
   arxiv-html: default
 author:
   - name: Johan Booc
@@ -28,8 +28,9 @@ author:
 abstract: |
   Cardiovascular disease (CVD) stands as the leading cause of death in the United States. By using spatial modeling techniques, such as geographically weighted regression (GWR), we have determined that CVD will see an increasing incidence rate outside the Stroke Belt region as the concentration of air pollutants increases and socioeconomic factors worsen. Policymakers and health practice practitioners are thus able to use these results in justifying targeted interventions to curb the increasing rates of CVD, aiming to halt one of the world’s deadliest diseases. 
 keywords: 
-  - PM2_5
-  - Cardiovascular Disease
+  - Fine Particulate Matter (PM2_5)
+  - Cardiovascular Disease (CVD)
+  - Cardiovascular Mortality (CVM)
 bibliography: bibliography.bib  
 ---
 
@@ -69,11 +70,17 @@ Paragraph 1) Review of regression approaches in cardiovascular disease mortality
 
 ### Geographically Weighted Regression Model
 
--   
+-   Local Significance
+
+    -   Coefficients have t-values and SE values, converted t-values into p-values with formula from code, extracted these p-values for each covariate and then plotted significance from p-values. The results of this should show which covariates have higher effects per county
+
+    -   Per our (source), different regions of the United States should have different variables with greater significance relating to CVD rates.
+
+        -   For example, in the midwest, food insecurity was found to be the most significant factor, while in the West it did not play much of a role compared to income, PM2.5, and access to healthcare.
 
 ```{r include=FALSE}
 source("./Functions/gwmodelJohan.R")
-#source("./Functions/FinalGWmodel.qmd")
+source("./Functions/GWmodelRscript.R")
 ```
 
 ```{r}

@@ -1,16 +1,10 @@
----
-  title: "Final GW model"
-format: html
-editor: visual
----
-  
-  ```{r}
 library(sf)
 library(GWmodel)
 library(ggplot2)
+library(tidyverse)
 set.seed(123)
 
-finalCVD <- read_sf("finalCVDshapes.shp") #relative file path
+finalCVD <- read_sf("./Data/finalCVDshapes.shp") #relative file path
 
 
 # Remove features with empty geometries
@@ -54,9 +48,9 @@ gwr_results_sf%>%ggplot() +
   labs(title = "GWR for particulate concentrations, 2015",
        fill = "Deaths from CVD per 100,000 people")
 
-```
 
-```{r}
+
+
 gwr_results_sf %>% 
   mutate("Death Abs Err" = abs(yhat - y)) %>%
   ggplot() +
@@ -68,9 +62,7 @@ gwr_results_sf %>%
   theme(text = element_text(size = 20), 
         legend.position = "bottom") +
   labs(title = "Absolute Prediction Error of Death by GWR w/gaussian kernel")
-```
 
-```{r}
 #significance
 local_t_values <- gwr_results_sf$prc_wht_TV
 local_p_values <- 2 * pt(-abs(local_t_values), df = 2480.149) #df number cam from the Gw diagnostic
@@ -95,9 +87,6 @@ ggplot(gwr_results_sf) +
   theme(text = element_text(size = 12), legend.position = "right")
 
 
-```
-
-```{r}
 #significance
 local_t_values_2 <- gwr_results_sf$prc_frc_TV
 local_p_values_2 <- 2 * pt(-abs(local_t_values_2), df = 2480.149) #df number cam from the Gw diagnostic
@@ -120,9 +109,7 @@ ggplot(gwr_results_sf) +
        caption = "Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
   theme_minimal() +
   theme(text = element_text(size = 12), legend.position = "right")
-```
 
-```{r}
 #significance
 local_t_values_3 <- gwr_results_sf$prc_hsp_TV
 local_p_values_3 <- 2 * pt(-abs(local_t_values_3), df = 2480.149) #df number cam from the Gw diagnostic
@@ -146,9 +133,7 @@ ggplot(gwr_results_sf) +
        caption = "Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
   theme_minimal() +
   theme(text = element_text(size = 12), legend.position = "right")
-```
 
-```{r}
 #significance
 local_t_values_4 <- gwr_results_sf$perc_sn_TV
 local_p_values_4 <- 2 * pt(-abs(local_t_values_4), df = 2480.149) #df number cam from the Gw diagnostic
@@ -171,9 +156,7 @@ ggplot(gwr_results_sf) +
        caption = "Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
   theme_minimal() +
   theme(text = element_text(size = 12), legend.position = "right")
-```
 
-```{r}
 #significance
 local_t_values_5 <- gwr_results_sf$p2_5_20_TV
 local_p_values_5 <- 2 * pt(-abs(local_t_values_5), df = 2480.149) #df number cam from the Gw diagnostic
@@ -197,9 +180,7 @@ ggplot(gwr_results_sf) +
        caption = "Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
   theme_minimal() +
   theme(text = element_text(size = 12), legend.position = "right")
-```
 
-```{r}
 #significance
 local_t_values_6 <- gwr_results_sf$estimat_TV
 local_p_values_6 <- 2 * pt(-abs(local_t_values_6), df = 2480.149) #df number cam from the Gw diagnostic
@@ -222,9 +203,7 @@ ggplot(gwr_results_sf) +
        caption = "Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
   theme_minimal() +
   theme(text = element_text(size = 12), legend.position = "right")
-```
 
-```{r}
 #significance
 local_t_values_7 <- gwr_results_sf$U__2015
 local_p_values_7 <- 2 * pt(-abs(local_t_values_7), df = 2480.149) #df number cam from the Gw diagnostic
@@ -247,4 +226,3 @@ ggplot(gwr_results_sf) +
        caption = "Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
   theme_minimal() +
   theme(text = element_text(size = 12), legend.position = "right")
-```

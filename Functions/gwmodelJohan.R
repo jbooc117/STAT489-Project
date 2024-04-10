@@ -1,9 +1,10 @@
 library(sf)
 library(GWmodel)
 library(ggplot2)
+library(tidyverse)
 set.seed(1234)
 
-finalCVD = read_sf("finalCVDshapes.shp")
+finalCVD = read_sf("./Data/finalCVDshapes.shp")
 
 # Remove features with empty geometries
 merge2015GW = finalCVD[!st_is_empty(finalCVD), ]
@@ -54,13 +55,5 @@ gwr_results_sf%>%ggplot() +
        fill = "Deaths from CVD per 100,000 people")
 
 #Parameter Analysis
-summary(gwr_results_sf)
 gwr_results
 
-gwr.montecarlo(Data_Vl ~ 
-                 prc_wht + prc_frc + prc_hsp + perc_sn + 
-                 p2_5_20 + estimat + U__2015,
-               data = mergedf_spatial, 
-               bw = opt_bandwidth, 
-               kernel = "gaussian", 
-               adaptive = FALSE)

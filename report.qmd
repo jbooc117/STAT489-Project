@@ -113,6 +113,8 @@ Significance plot:- 
 The plots provided depict the local significance and magnitude of different parameters (covariates) from a geographically weighted regression (GWR) model, focusing on their relationship with death rates across the United States. The areas in red indicate regions where the covariates are statistically significant, and the color's intensity represents the effect's magnitude.
 
 ```{r}
+#| layout-ncol: 2
+#| layout-nrow: 2
 #significance
 local_t_values <- gwr_results_sf$prc_wht_TV
 local_p_values <- 2 * pt(-abs(local_t_values), df = 2480.149) #df number cam from the Gw diagnostic
@@ -127,12 +129,12 @@ gwr_results_sf$prc_wht_signif_coef <- ifelse(gwr_results_sf$prc_wht_p_values < 0
 
 library(ggplot2)
 ggplot(gwr_results_sf) +
-  geom_sf(aes(fill = prc_wht_signif_coef), color = "black", size = 0.1) +
-  scale_fill_gradient(low = "white", high = "red", na.value = NA, 
-                      name = "Coefficient Magnitude", limits = NULL) +  
-  labs(title = "Local Significance and Magnitude of 'prc_wht' Parameter",
+  geom_sf(aes(fill = prc_wht_signif_coef), color = alpha("black",0.35), size = 0.1) +
+  scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
+                      name = "Magnitude", limits = NULL) +  
+  labs(title = "Local Significance and Magnitude of '% White' Parameter",
        subtitle = "Geographically Weighted Regression (GWR)",
-       caption = "Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
+       caption = "Blue indicates lower magnitude of effect and Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
   theme_minimal() +
   theme(text = element_text(size = 12), legend.position = "right")
 
@@ -150,12 +152,12 @@ gwr_results_sf$prc_af_signif_coef <- ifelse(gwr_results_sf$prc_af_p_values < 0.0
 
 library(ggplot2)
 ggplot(gwr_results_sf) +
-  geom_sf(aes(fill = prc_af_signif_coef), color = "black", size = 0.1) +
-  scale_fill_gradient(low = "white", high = "red", na.value = NA, 
-                      name = "Coefficient Magnitude", limits = NULL) +  
-  labs(title = "Local Significance and Magnitude of 'prc_af' Parameter",
+  geom_sf(aes(fill = prc_af_signif_coef), color = alpha("black",0.35), size = 0.1) +
+  scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
+                      name = "Magnitude", limits = NULL) +  
+  labs(title = "Local Significance and Magnitude of '% African American' Parameter",
        subtitle = "Geographically Weighted Regression (GWR)",
-       caption = "Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
+       caption = "Blue indicates lower magnitude of effect and Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
   theme_minimal() +
   theme(text = element_text(size = 12), legend.position = "right")
 
@@ -174,12 +176,12 @@ gwr_results_sf$prc_hsp_signif_coef <- ifelse(gwr_results_sf$prc_hsp_p_values < 0
 
 library(ggplot2)
 ggplot(gwr_results_sf) +
-  geom_sf(aes(fill = prc_hsp_signif_coef), color = "black", size = 0.1) +
-  scale_fill_gradient(low = "white", high = "red", na.value = NA, 
-                      name = "Coefficient Magnitude", limits = NULL) +  
-  labs(title = "Local Significance and Magnitude of 'prc_hsp' Parameter",
+  geom_sf(aes(fill = prc_hsp_signif_coef), color = alpha("black",0.35), size = 0.1) +
+  scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
+                      name = "Magnitude", limits = NULL) +  
+  labs(title = "Local Significance and Magnitude of '% Hispanic' Parameter",
        subtitle = "Geographically Weighted Regression (GWR)",
-       caption = "Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
+       caption = "Blue indicates lower magnitude of effect and Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
   theme_minimal() +
   theme(text = element_text(size = 12), legend.position = "right")
 
@@ -197,12 +199,12 @@ gwr_results_sf$prc_sn_signif_coef <- ifelse(gwr_results_sf$prc_sn_p_values < 0.0
 
 library(ggplot2)
 ggplot(gwr_results_sf) +
-  geom_sf(aes(fill = prc_sn_signif_coef), color = "black", size = 0.1) +
-  scale_fill_gradient(low = "white", high = "red", na.value = NA, 
-                      name = "Coefficient Magnitude", limits = NULL) +  
-  labs(title = "Local Significance and Magnitude of 'prc_sn' Parameter",
+  geom_sf(aes(fill = prc_sn_signif_coef), color = alpha("black",0.35), size = 0.1) +
+  scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
+                      name = "Magnitude", limits = NULL) +  
+  labs(title = "Local Significance and Magnitude of '% Asian' Parameter",
        subtitle = "Geographically Weighted Regression (GWR)",
-       caption = "Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
+       caption = "Blue indicates lower magnitude of effect and Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
   theme_minimal() +
   theme(text = element_text(size = 12), legend.position = "right")
 ```
@@ -285,9 +287,8 @@ ggplot(gwr_results_sf) +
       theme(text = element_text(size = 12), legend.position = "right")
     ```
 
-```{=html}
 <!-- -->
-```
+
 -   Socio-economic Correlation: Median income levels across many regions show a consistent negative association with death rates, suggesting that higher income areas generally experience fewer deaths.
 
 # Discussion
@@ -296,14 +297,12 @@ These maps reveal that the relationships between race, socio-economic factors, e
 
 -   Socio-economic factors like income show widespread significance, implying a consistent relationship with health outcomes across various locations.
 
-```{=html}
 <!-- -->
-```
+
 -   Race impacts are significant in certain areas, which may reflect underlying health disparities, access to care, or other social determinants of health.
 
-```{=html}
 <!-- -->
-```
+
 -   Air quality has a broad impact, suggesting environmental health concerns that might require region-specific policies. 
 
 {{< pagebreak >}}

@@ -48,7 +48,14 @@ Paragraph 1) Review of regression approaches in cardiovascular disease mortality
 
 # Related Works
 
-1.  Review of regression approaches in cardiovascular disease mortality 
+Paragraph 1. (Review of regression approaches in cardiovascular disease mortality) >>>> 
+     There's been a growing popularity for the use of spatial models in the epidemiological domain to analyze the factors and spatial distribution 
+     of a certain disease. The spatial models and techniques used differ between studies however the end goal remains the same, reduce the disease 
+     mortality rates for the population. Statistical regression models have been a popular choice, specifically for CVD-related studies. The factors 
+     that compromise the underlying causes for CVD can be seen as a dynamic and interconnected web. Zelko et. al examines the relationship 
+     between CVD and covariates similar to our study, such as air pollution, social determinants, and county-level data. By using a GWR model,
+     they found a correlation between household income, race, and healthcare access. Their results also showed that counties in the South had 
+     the highest PM 2.5 concentrations. 
 
 2.  Review of geographically weighted regression models 
 

@@ -228,7 +228,7 @@ gwr_results_sf$prc_p2_signif_coef <- ifelse(gwr_results_sf$prc_p2_p_values < 0.0
 library(ggplot2)
 ggplot(gwr_results_sf) +
   geom_sf(aes(fill = prc_p2_signif_coef), color = "black", size = 0.1) +
-  scale_fill_gradient(low = "white", high = "red", na.value = NA, 
+  scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
                       name = "Coefficient Magnitude", limits = NULL) +  
   labs(title = "Local Significance and Magnitude of 'prc_p2_5' Parameter",
        subtitle = "Geographically Weighted Regression (GWR)",
@@ -255,7 +255,7 @@ ggplot(gwr_results_sf) +
     library(ggplot2)
     ggplot(gwr_results_sf) +
       geom_sf(aes(fill = prc_est_signif_coef), color = "black", size = 0.1) +
-      scale_fill_gradient(low = "white", high = "red", na.value = NA, 
+      scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
                           name = "Coefficient Magnitude", limits = NULL) +  
       labs(title = "Local Significance and Magnitude of 'estimat' Parameter",
            subtitle = "Geographically Weighted Regression (GWR)",
@@ -278,7 +278,7 @@ ggplot(gwr_results_sf) +
     library(ggplot2)
     ggplot(gwr_results_sf) +
       geom_sf(aes(fill = prc_U_2015_signif_coef), color = "black", size = 0.1) +
-      scale_fill_gradient(low = "white", high = "red", na.value = NA, 
+      scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
                           name = "Coefficient Magnitude", limits = NULL) +  
       labs(title = "Local Significance and Magnitude of 'estimat' Parameter",
            subtitle = "Geographically Weighted Regression (GWR)",

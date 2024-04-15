@@ -26,7 +26,7 @@ author:
         department: Department of Statistics
     email: shombit123@tamu.edu
 abstract: |
-  Cardiovascular disease (CVD) stands as the leading cause of death in the United States. By using spatial modeling techniques, such as geographically weighted regression (GWR), we have determined that CVD will see an increasing incidence rate outside the Stroke Belt region as the concentration of air pollutants increases and socioeconomic factors worsen. Policymakers and health practice practitioners are thus able to use these results in justifying targeted interventions to curb the increasing rates of CVD, aiming to halt one of the world’s deadliest diseases. 
+  Cardiovascular disease (CVD) is the leading cause of death in the United States. By using a spatial modeling technique (geographically weighted regression), we found the concentration of PM 2.5 is centered in the Strokebelt region. Policymakers and health practitioners can use these results to identify targeted interventions to curb the increasing rates of CVD, aiming to halt one of the world’s deadliest diseases.  
 keywords: 
   - Fine Particulate Matter (PM2_5)
   - Cardiovascular Disease (CVD)
@@ -40,7 +40,7 @@ bibliography: bibliography.bib
 
 -   Specifics: Explicitly state how the CVD incidence rate varies spatially in the US, for our covariates. Our approach involves analyzing this relationship to produce risk prediction estimates for our specified age group. 
 
--   Central thesis: Use a geographically weighted model approach to produce visualizations and analyze the relationship between our response variable (CVD deaths) and its covariates (air pollutant concentration and socioeconomic factors), specifically focusing on spatial variation. 
+-   Central thesis: Despite past studies focusing on the Stroke Belt region of the United States, we aim to put our focus on the nationwide impact of PM 2.5 concentration, median household income, and unemployment rates on cardiovascular disease deaths, necessitating regional interventions. 
 
 -   Step back: The overall outcome of our study involves aiding policymakers and health practitioners develop the necessary interventions in the targeted regions that are most affected by CVD.Related Works
 
@@ -260,9 +260,9 @@ ggplot(gwr_results_sf) +
   geom_sf(aes(fill = prc_p2_signif_coef), color = "black", size = 0.1) +
   scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
                       name = "Coefficient Magnitude", limits = NULL) +  
-  labs(title = "Local Significance and Magnitude of 'prc_p2_5' Parameter",
+  labs(title = "Local Significance and Magnitude of PM2.5 Parameter",
        subtitle = "Geographically Weighted Regression (GWR)",
-       caption = "Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
+       caption = "Blue indicates lower magnitude of effect and Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
   theme_minimal() +
   theme(text = element_text(size = 12), legend.position = "right")
 ```
@@ -287,9 +287,9 @@ ggplot(gwr_results_sf) +
       geom_sf(aes(fill = prc_est_signif_coef), color = "black", size = 0.1) +
       scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
                           name = "Coefficient Magnitude", limits = NULL) +  
-      labs(title = "Local Significance and Magnitude of 'estimat' Parameter",
+      labs(title = "Local Significance of Median Income Parameter",
            subtitle = "Geographically Weighted Regression (GWR)",
-           caption = "Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
+           caption = "Blue indicates lower magnitude of effect and Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
       theme_minimal() +
       theme(text = element_text(size = 12), legend.position = "right")
 
@@ -310,9 +310,9 @@ ggplot(gwr_results_sf) +
       geom_sf(aes(fill = prc_U_2015_signif_coef), color = "black", size = 0.1) +
       scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
                           name = "Coefficient Magnitude", limits = NULL) +  
-      labs(title = "Local Significance and Magnitude of 'estimat' Parameter",
+      labs(title = "Local Significance of Unemployment Parameter",
            subtitle = "Geographically Weighted Regression (GWR)",
-           caption = "Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
+           caption = "Blue indicates lower magnitude of effect and Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
       theme_minimal() +
       theme(text = element_text(size = 12), legend.position = "right")
     ```

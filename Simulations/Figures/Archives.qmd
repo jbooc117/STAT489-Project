@@ -1,0 +1,358 @@
+---
+title: "Spatial Modeling of Cardiovascular Disease Associated with Increasing Airborne Particulate Matter"
+format:
+  arxiv-pdf:
+    keep-tex: true  
+    linenumbers: false
+    doublespacing: false
+    runninghead: "CVD Related to PM2.5"
+  arxiv-html: default
+author:
+  - name: Johan Booc
+    affiliations:
+      - name: Texas A\&M University
+        department: Department of Statistics
+    email: jbooc24@tamu.edu
+    
+  - name: Christina Kim
+    affiliations:
+      - name: Texas A\&M University
+        department: Department of Statistics
+    email: christinaykim3@tamu.edu 
+
+  - name: Shombit Roy
+    affiliations:
+      - name: Texas A\&M University
+        department: Department of Statistics
+    email: shombit123@tamu.edu
+abstract: |
+  Cardiovascular disease (CVD) is the leading cause of death in the United States. By using a spatial modeling technique (geographically weighted regression), we found the concentration of PM 2.5 is centered in the Strokebelt region. Policymakers and health practitioners can use these results to identify targeted interventions to curb the increasing rates of CVD, aiming to halt one of the world’s deadliest diseases.  
+keywords: 
+  - Fine Particulate Matter (PM2_5)
+  - Cardiovascular Disease (CVD)
+  - Cardiovascular Mortality (CVM)
+bibliography: bibliography.bib  
+---
+
+# Introduction {#sec-intro}
+
+-   Broad strokes: Explain how cardiovascular disease is the leading cause of death in the US, our paper filing the gap by putting the focus on the 18-44-year-old age group 
+
+-   Specifics: Explicitly state how the CVD incidence rate varies spatially in the US, for our covariates. Our approach involves analyzing this relationship to produce risk prediction estimates for our specified age group. 
+
+-   Central thesis: Despite past studies focusing on the Stroke Belt region of the United States, we aim to put our focus on the nationwide impact of PM 2.5 concentration, median household income, and unemployment rates on cardiovascular disease deaths, necessitating regional interventions. 
+
+-   Step back: The overall outcome of our study involves aiding policymakers and health practitioners develop the necessary interventions in the targeted regions that are most affected by CVD.Related Works
+
+Paragraph 1) Review of regression approaches in cardiovascular disease mortality 2) Review of geographically weighted regression models 3) GWR with CVD 4) Risk prediction Model 5) Direct comparison with clustering approaches
+
+# Related Works
+
+Paragraph 1. (Review of regression approaches in cardiovascular disease mortality) >>>> 
+     There's been a growing popularity for the use of spatial models in the epidemiological domain to analyze the factors and spatial distribution 
+     of a certain disease. The spatial models and techniques used differ between studies however the end goal remains the same, reduce the disease 
+     mortality rates for the population. Statistical regression models have been a popular choice, specifically for CVD-related studies. The factors 
+     that compromise the underlying causes for CVD can be seen as a dynamic and interconnected web. Zelko et. al examines the relationship 
+     between CVD and covariates similar to our study, such as air pollution, social determinants, and county-level data. By using a GWR model,
+     they found a correlation between household income, race, and healthcare access. Their results also showed that counties in the South had 
+     the highest PM 2.5 concentrations. 
+
+Paragraph 2. (Review of geographically weighted regression models) >>>>
+     The geographically weighted regression model (GWR) stands out from the traditional regression models to explore spatial data by doing so
+     on the local scale as well as taking into account varied coefficients for a certain spatial unit (Gebread et. al). The GWR model uses the 
+     weighted least square method to estimate the regression coefficients. In general, we are interested in seeing values closer to the point of 
+     interest than values farther from it, as they carry more weight and have a greater influence. The GWR model includes the parameter, neighborhood 
+     (also known as the bandwidth). 
+
+Paragraph 3. (Direct comparison with OLS approaches) >>>> 
+     As seen in other studies, the Ordinary Least Squares model is a popular method for public health studies. Compared to the GWR model, 
+     the OLS model generates the regression coefficients on a global scale. Because of this, the OLS method may not be the ideal choice. 
+     as it is prone to hidden spatial variability. However, our paper takes into account the fact that socioeconomic factors are not 
+     constant on a time and space basis with cardiovascular disease by using a GWR model, as it's a much more complex relationship. That's not
+     to say the OLS model has no use in epidemiological research studies. One of the main goals of public health is to better the population as 
+     a whole. The OLS model is efficient in capturing the average differences between covariates. To get to the root cause of CVD mortality rates,
+     we need to start with the GRW model, to see overall improvement in the OLS model later on. 
+
+Paragraph 4. (GWR with CVD) >>>> 
+     The GWR model shows whether or not a linear relationship exists between cardiovascular disease deaths and the covariates, making it suitable 
+     to see where the areas of focus should be placed in terms of improvement as well as an increase presence of healthcare practitioners. 
+     The GWR model is better for analyzing disparities at the local-scale, see which socioeconomic factor affects different regions, and 
+     then implement a policy for that specific region. Past studies tend to soley focus on the trends of socioeconomic covariates and its 
+     spatial patterning. Our paper expands on past studies, by including the concentration of air pollutants as one of our covariates. By doing so,
+     we are able to fully explore the dynamic relationship between geographical units and CVD incidence/mortality rates. 
+     
+Paragraph 5. (Preventative risk measures + impact) >>>>
+     Risk assessment and risk estimates helps to understand the key factors associated with CVD. The concentration of specific races 
+     vary by counties so by studying the underlying socioeconomic covariates of CVD mortality on the county-level, researchers and health 
+     practitioners are thus able to curate the necessary risk preventative measures and allocate resources to the areas that need it the most. 
+     Furthermore, the dose-response relationship of air pollutant concentrations in a region and its effects can be analyzed. By putting the focus on 
+     smaller units, CVD-mortality rates will start to see a decline, nationally and globally.
+
+# Methods
+
+###Data Collection
+The 
+"Center_for_Medicare___Medicaid_Services__CMS____Medicare_Claims_data_20240208.csv" file from (CDC) website was loaded to analyze Medicare claims data, specifically Cardiovascular death rates across different counties and States in the US. Racial and geographic data were retrieved from the Vacdata in R. The script "Code to get ACS Socioeconomic file" from the 'functions' folder in the linked GitHub repository was used to extract median income data. Air quality data was sourced from the "pm25-2015.shp" file, and unemployment rates for the year 2015 were gathered using the "unemploymentRate2015.csv" file.
+
+###Data Preparation
+Several steps were taken to ensure the reliability and accuracy of the results when preparing the data for statistical analysis. The data from various sources was integrated into a final shapefile named "finalCVDshapes.shp." This integration was achieved through coding in R, specifically focusing on data from 2015, which allowed for a consistent time frame across all data sets. During the cleaning and processing phase, features with empty geometries were removed from the shapefile to ensure the removal of NA values in the dataset. Missing data entries were also omitted, which led to one county’s data being excluded. Centroids of the multipolygon geometries were calculated to have spatial analysis by providing a single reference point for each region. This step was essential for conducting precise location-based assessments. Lastly, the data frame was transformed into a SpatialPolygonsDataFrame, making it suitable for use in the Geographic Weighted Regression (GWR) model. This transformation was crucial as it enabled the analysis to incorporate spatial relationships within the data. 
+
+###Statistical Analysis
+In the statistical analysis, a Geographically Weighted Regression (GWR) model was used and ran using several R packages, including sf, GWmodel, ggplot2, and tidyverse. These packages were integral in setting up the model framework and for executing the analysis, providing tools for spatial data manipulation, regression modeling, and data visualization. The optimal bandwidth for the GWR model was determined using the bw.gwr function, which employed a Gaussian kernel. The reason Gaussian kernel was used was because it transforms the input data points into a higher-dimensional space, where the similarity between two data points is measured as the Euclidean distance between them. This function modeled the response variable, Cardiovascular death rate per 100000(Data_Vl), as a function of racial percentages, air pollutant concentrations, estimated median income, and unemployment rates for the year 2015. Optimizing the bandwidth is crucial as it affects the model's sensitivity to local variations, enhancing its accuracy in reflecting spatial heterogeneity. Parallel processing was employed (using the parallel.method = "omp" setting at default). The GWR itself was performed using the identified optimal bandwidth, incorporating the same predictors as those used for bandwidth selection. This ensures that the model's findings are reliable and applicable to the predictors. Finally, the GWR results were converted back into an sf object for visualization purposes. This conversion is critical for effectively allowing the covariates of the regression outcomes to be plotted and interpreted visually.
+
+###Mapping
+Generated maps using ggplot to visualize the spatial distribution of the dependent variable (deaths from CVD per 100,000 people) across different counties in the US, highlighting the significance of the variables, and plotted the significance of each variable within different regions to assess the overall effect on the CVD death rate.
+
+In conclusion the approach allows for examining how various socioeconomic, environmental, and demographic factors influence health outcomes across different regions in the States. The use of GWR helps understand local variations in these factors' impacts.
+
+This methodological outline ensures that each step of the data handling, analysis, and visualization process is documented, providing transparency and reproducibility of the research findings.
+
+
+```{r include=FALSE}
+source("./Functions/gwmodelJohan.R")
+source("./Functions/GWmodelRscript.R")
+```
+
+```{r}
+gwr_results_sf%>%ggplot() +
+  geom_sf(aes(fill = gwr_results_sf$y),
+          color = scales::alpha("black",
+                                alpha = 0.1
+                                )) +
+  scale_fill_gradientn(colours = terrain.colors(8),
+                       #limits = c(19,530),
+                       breaks = c(100,250,350)) +
+  theme(text = element_text(size = 20), 
+        legend.position = "bottom") + 
+  labs(title = "GWR for particulate concentrations, 2015",
+       fill = "Deaths from CVD per 100,000 people")
+```
+
+# Results
+
+```{r}
+gwr_results
+```
+###Table Summary 
+The analysis compares two statistical models to explore the relationships between socio-economic, demographic, and environmental variables and death rates. The first is a global regression model that does not consider spatial correlation despite revealing that all predictors are highly statistically significant. Hence, while the model does suggest that our variables are indeed important, the global model may overlook local variations that are crucial in understanding the true nature of the data. 
+
+On the other hand, the geographically weighted regression (GWR) model incorporates spatial variation, which is a critical factor given the context of the data. We can see how well the GWR model worked by looking at the R-squared value, which is .870, a significant improvement over the global model. This R-squared value, along with the use of spatial statistics, shows the non-uniform relationship between the predictors and the response variable across different geographical areas. In summary, by accommodating the spatial component present in the data, the GWR model provides a more realistic interpretation of how various factors influence death rates across different regions.
+
+###Plots
+In Figure #1 the plot represents the results of Geographically Weighted Regression (GWR) analysis of particulate concentrations and their correlation with cardiovascular disease (CVD) death rates in 2015. The particulate concentrations include all the covariates mentioned in the methods section. The regions along the higher latitudes (nearing 45°N) and towards the eastern section (approaching 80°W) display darker shades, suggesting higher CVD death rates in these areas, specifically the midwest and southwest regions.
+
+Figure #2 represents the local significance and magnitude of the '% White' demographic parameter on cardiovascular disease outcomes. From the plot, the prominent dark purple areas in the central part of the country, extending towards the southeastern regions, indicate a significant negative correlation between the percentage of the white population and CVD outcomes in these areas. Same with the Northwest region, however, there are few areas, particularly in the southwest near New Mexico and Arizona, where there are positively correlated to CVD death rate, with the white regions of counties suggesting no significance.
+
+Figure #3 represents the local significance and magnitude of the '% African' demographic parameter on cardiovascular disease outcomes. From the plot, areas located approximately in the northern central region indicate a significant positive correlation to CVD rate, and areas, notably in the central to southeastern areas of the map, suggest a significant negative correlation, with the white regions of counties suggesting no significance.
+
+Figure #4 represents the local significance and magnitude of the '% Hispanic' demographic parameter on cardiovascular disease outcomes. From the plot, areas across the central and southeastern regions are shaded in purple, suggesting a significant negative correlation between the percentage of the Hispanic population and CVD outcomes. There are isolated red patches in the north-central region, indicating areas where an increased percentage of the Hispanic population correlates with higher CVD outcomes. Lastly, as per the last figure, the white regions are specified as having no significance.
+
+Figure #5 represents the local significance and magnitude of the '% Asian' demographic parameter on cardiovascular disease outcomes. From the plot, a substantial portion of the map, particularly across the central to eastern regions, is colored in various shades of purple. This suggests that in these areas, an increased percentage of the Asian population correlates with lower CVD outcomes. However, there are some parts of the West where higher percentages of the Asian population are associated with an increase in CVD outcomes. 
+
+Figure #6 represents the local significance and magnitude of the “%p2.5 air quality” parameter on cardiovascular disease outcomes. From the plot, in the southern and northeastern regions, there increased levels of PM2.5 colored as red in the plot, meaning they are associated with higher rates of CVD. There are some regions in the West where it was negatively correlated with CVD. As usual, the white areas signify no significance. 
+
+Figure #7 represents the local significance and magnitude of the “median income” parameter on cardiovascular disease outcomes. From the plot, most of the region suggests that there is  significant negative correlation between the median income parameter and CVD outcomes. However, some parts of Texas indicate a positive correlation to CVD outcomes. As usual, the white areas signify no significance.
+
+Figure #8 represents the local significance and magnitude of the “Unemployment” parameter on cardiovascular disease outcomes. From the plot, in most of the central region, there is a positive correlation to CVD rates, and in the southwest region, you can see a negative correlation to CVD rates. As usual, the white areas signify no significance.
+
+```{r}
+#| layout-ncol: 2
+#| layout-nrow: 2
+#significance
+local_t_values <- gwr_results_sf$prc_wht_TV
+local_p_values <- 2 * pt(-abs(local_t_values), df = 2480.149) #df number cam from the Gw diagnostic
+
+
+gwr_results_sf$prc_wht_p_values <- local_p_values
+
+
+gwr_results_sf$prc_wht_signif_coef <- ifelse(gwr_results_sf$prc_wht_p_values < 0.05, 
+                                             gwr_results_sf$prc_wht, 
+                                             NA)  # Set to NA if not significant
+
+library(ggplot2)
+ggplot(gwr_results_sf) +
+  geom_sf(aes(fill = prc_wht_signif_coef), color = alpha("black",0.35), size = 0.1) +
+  scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
+                      name = "Magnitude", limits = NULL) +  
+  labs(title = "Local Significance and Magnitude of '% White' Parameter",
+       subtitle = "Geographically Weighted Regression (GWR)",
+       caption = "Blue indicates lower magnitude of effect and Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
+  theme_minimal() +
+  theme(text = element_text(size = 12), legend.position = "right")
+
+#significance
+local_t_values_2 <- gwr_results_sf$prc_frc_TV
+local_p_values_2 <- 2 * pt(-abs(local_t_values_2), df = 2480.149) #df number cam from the Gw diagnostic
+
+
+gwr_results_sf$prc_af_p_values <- local_p_values_2
+
+
+gwr_results_sf$prc_af_signif_coef <- ifelse(gwr_results_sf$prc_af_p_values < 0.05, 
+                                             gwr_results_sf$prc_frc, 
+                                             NA)  # Set to NA if not significant
+
+library(ggplot2)
+ggplot(gwr_results_sf) +
+  geom_sf(aes(fill = prc_af_signif_coef), color = alpha("black",0.35), size = 0.1) +
+  scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
+                      name = "Magnitude", limits = NULL) +  
+  labs(title = "Local Significance and Magnitude of '% African American' Parameter",
+       subtitle = "Geographically Weighted Regression (GWR)",
+       caption = "Blue indicates lower magnitude of effect and Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
+  theme_minimal() +
+  theme(text = element_text(size = 12), legend.position = "right")
+
+#significance
+local_t_values_3 <- gwr_results_sf$prc_hsp_TV
+local_p_values_3 <- 2 * pt(-abs(local_t_values_3), df = 2480.149) #df number cam from the Gw diagnostic
+
+
+
+gwr_results_sf$prc_hsp_p_values <- local_p_values_3
+
+
+gwr_results_sf$prc_hsp_signif_coef <- ifelse(gwr_results_sf$prc_hsp_p_values < 0.05, 
+                                             gwr_results_sf$prc_hsp, 
+                                             NA)  # Set to NA if not significant
+
+library(ggplot2)
+ggplot(gwr_results_sf) +
+  geom_sf(aes(fill = prc_hsp_signif_coef), color = alpha("black",0.35), size = 0.1) +
+  scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
+                      name = "Magnitude", limits = NULL) +  
+  labs(title = "Local Significance and Magnitude of '% Hispanic' Parameter",
+       subtitle = "Geographically Weighted Regression (GWR)",
+       caption = "Blue indicates lower magnitude of effect and Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
+  theme_minimal() +
+  theme(text = element_text(size = 12), legend.position = "right")
+
+#significance
+local_t_values_4 <- gwr_results_sf$perc_sn_TV
+local_p_values_4 <- 2 * pt(-abs(local_t_values_4), df = 2480.149) #df number cam from the Gw diagnostic
+
+
+gwr_results_sf$prc_sn_p_values <- local_p_values_4
+
+
+gwr_results_sf$prc_sn_signif_coef <- ifelse(gwr_results_sf$prc_sn_p_values < 0.05, 
+                                             gwr_results_sf$perc_sn, 
+                                             NA)  # Set to NA if not significant
+
+library(ggplot2)
+ggplot(gwr_results_sf) +
+  geom_sf(aes(fill = prc_sn_signif_coef), color = alpha("black",0.35), size = 0.1) +
+  scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
+                      name = "Magnitude", limits = NULL) +  
+  labs(title = "Local Significance and Magnitude of '% Asian' Parameter",
+       subtitle = "Geographically Weighted Regression (GWR)",
+       caption = "Blue indicates lower magnitude of effect and Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
+  theme_minimal() +
+  theme(text = element_text(size = 12), legend.position = "right")
+```
+
+-   Demographic Impact: The percentage of white and Hispanic populations shows significant regional variations in association with death rates. Higher proportions of white populations correlate with lower death rates in central areas, whereas higher percentages of Hispanic populations are linked to lower death rates in the West and Southwest. Conversely, higher percentages of African American populations are associated with higher death rates in certain Midwestern and Southeastern regions.
+
+```{r}
+#significance
+local_t_values_5 <- gwr_results_sf$p2_5_20_TV
+local_p_values_5 <- 2 * pt(-abs(local_t_values_5), df = 2480.149) #df number cam from the Gw diagnostic
+
+
+
+gwr_results_sf$prc_p2_p_values <- local_p_values_5
+
+
+gwr_results_sf$prc_p2_signif_coef <- ifelse(gwr_results_sf$prc_p2_p_values < 0.05, 
+                                             gwr_results_sf$p2_5_20, 
+                                             NA)  # Set to NA if not significant
+
+library(ggplot2)
+ggplot(gwr_results_sf) +
+  geom_sf(aes(fill = prc_p2_signif_coef), color = "black", size = 0.1) +
+  scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
+                      name = "Coefficient Magnitude", limits = NULL) +  
+  labs(title = "Local Significance and Magnitude of PM2.5 Parameter",
+       subtitle = "Geographically Weighted Regression (GWR)",
+       caption = "Blue indicates lower magnitude of effect and Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
+  theme_minimal() +
+  theme(text = element_text(size = 12), legend.position = "right")
+```
+
+-   Environmental Influence: Air quality, indicated by PM2.5 levels, demonstrates a significant positive relationship with death rates, particularly east of the Rockies, highlighting environmental health as a major concern.
+
+    ```{r}
+    #significance
+    local_t_values_6 <- gwr_results_sf$estimat_TV
+    local_p_values_6 <- 2 * pt(-abs(local_t_values_6), df = 2480.149) #df number cam from the Gw diagnostic
+
+
+    gwr_results_sf$prc_est_p_values <- local_p_values_6
+
+
+    gwr_results_sf$prc_est_signif_coef <- ifelse(gwr_results_sf$prc_est_p_values < 0.05, 
+                                                 gwr_results_sf$estimat, 
+                                                 NA)  # Set to NA if not significant
+
+    library(ggplot2)
+    ggplot(gwr_results_sf) +
+      geom_sf(aes(fill = prc_est_signif_coef), color = "black", size = 0.1) +
+      scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
+                          name = "Coefficient Magnitude", limits = NULL) +  
+      labs(title = "Local Significance of Median Income Parameter",
+           subtitle = "Geographically Weighted Regression (GWR)",
+           caption = "Blue indicates lower magnitude of effect and Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
+      theme_minimal() +
+      theme(text = element_text(size = 12), legend.position = "right")
+
+    #significance
+    local_t_values_7 <- gwr_results_sf$U__2015
+    local_p_values_7 <- 2 * pt(-abs(local_t_values_7), df = 2480.149) #df number cam from the Gw diagnostic
+
+
+    gwr_results_sf$prc_U_2015_p_values <- local_p_values_7
+
+
+    gwr_results_sf$prc_U_2015_signif_coef <- ifelse(gwr_results_sf$prc_U_2015_p_values < 0.05, 
+                                                 gwr_results_sf$U__2015, 
+                                                 NA)  # Set to NA if not significant
+
+    library(ggplot2)
+    ggplot(gwr_results_sf) +
+      geom_sf(aes(fill = prc_U_2015_signif_coef), color = "black", size = 0.1) +
+      scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
+                          name = "Coefficient Magnitude", limits = NULL) +  
+      labs(title = "Local Significance of Unemployment Parameter",
+           subtitle = "Geographically Weighted Regression (GWR)",
+           caption = "Blue indicates lower magnitude of effect and Red indicates larger magnitude of effect;\nwhite indicates no significant effect") +
+      theme_minimal() +
+      theme(text = element_text(size = 12), legend.position = "right")
+    ```
+
+<!-- -->
+
+-   Socio-economic Correlation: Median income levels across many regions show a consistent negative association with death rates, suggesting that higher income areas generally experience fewer deaths.
+
+# Discussion
+
+These maps reveal that the relationships between race, socio-economic factors, environmental quality, and death rates are complex and highly localized. The significance and strength of these relationships vary considerably across different parts of the United States. For example, 
+
+-   Socio-economic factors like income show widespread significance, implying a consistent relationship with health outcomes across various locations.
+
+<!-- -->
+
+-   Race impacts are significant in certain areas, which may reflect underlying health disparities, access to care, or other social determinants of health.
+
+<!-- -->
+
+-   Air quality has a broad impact, suggesting environmental health concerns that might require region-specific policies. 
+
+{{< pagebreak >}}
+
+# References {.unnumbered}
+
+::: {#refs}
+:::
+
+[@article-journal]

@@ -57,13 +57,36 @@ Paragraph 1. (Review of regression approaches in cardiovascular disease mortalit
      they found a correlation between household income, race, and healthcare access. Their results also showed that counties in the South had 
      the highest PM 2.5 concentrations. 
 
-2.  Review of geographically weighted regression models 
+Paragraph 2. (Review of geographically weighted regression models) >>>>
+     The geographically weighted regression model (GWR) stands out from the traditional regression models to explore spatial data by doing so
+     on the local scale as well as taking into account varied coefficients for a certain spatial unit (Gebread et. al). The GWR model uses the 
+     weighted least square method to estimate the regression coefficients. In general, we are interested in seeing values closer to the point of 
+     interest than values farther from it, as they carry more weight and have a greater influence. The GWR model includes the parameter, neighborhood 
+     (also known as the bandwidth). 
 
-3.  GWR with CVD 
+Paragraph 3. (Direct comparison with OLS approaches) >>>> 
+     As seen in other studies, the Ordinary Least Squares model is a popular method for public health studies. Compared to the GWR model, 
+     the OLS model generates the regression coefficients on a global scale. Because of this, the OLS method may not be the ideal choice. 
+     as it is prone to hidden spatial variability. However, our paper takes into account the fact that socioeconomic factors are not 
+     constant on a time and space basis with cardiovascular disease by using a GWR model, as it's a much more complex relationship. That's not
+     to say the OLS model has no use in epidemiological research studies. One of the main goals of public health is to better the population as 
+     a whole. The OLS model is efficient in capturing the average differences between covariates. To get to the root cause of CVD mortality rates,
+     we need to start with the GRW model, to see overall improvement in the OLS model later on. 
 
-4.  Risk prediction model 
-
-5.  Direct comparison with clustering approaches
+Paragraph 4. (GWR with CVD) >>>> 
+     The GWR model shows whether or not a linear relationship exists between cardiovascular disease deaths and the covariates, making it suitable 
+     to see where the areas of focus should be placed in terms of improvement as well as an increase presence of healthcare practitioners. 
+     The GWR model is better for analyzing disparities at the local-scale, see which socioeconomic factor affects different regions, and 
+     then implement a policy for that specific region. Past studies tend to soley focus on the trends of socioeconomic covariates and its 
+     spatial patterning. Our paper expands on past studies, by including the concentration of air pollutants as one of our covariates. By doing so,
+     we are able to fully explore the dynamic relationship between geographical units and CVD incidence/mortality rates. 
+     
+Paragraph 5. (Preventative risk measures + impact) >>>>
+     Risk assessment and risk estimates helps to understand the key factors associated with CVD. The concentration of specific races 
+     vary by counties so by studying the underlying socioeconomic covariates of CVD mortality on the county-level, researchers and health 
+     practitioners are thus able to curate the necessary risk preventative measures and allocate resources to the areas that need it the most. 
+     Furthermore, the dose-response relationship of air pollutant concentrations in a region and its effects can be analyzed. By putting the focus on 
+     smaller units, CVD-mortality rates will start to see a decline, nationally and globally.
 
 # Methods
 

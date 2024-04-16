@@ -175,6 +175,10 @@
   urlcolor={Blue},
   pdfcreator={LaTeX via pandoc}}
 
+\usepackage{lineno}
+\linenumbers
+\usepackage{setspace}
+\doublespacing
 \newcommand{\runninghead}{A Preprint }
 \renewcommand{\runninghead}{CVD Related to PM2.5 }
 \title{Spatial Modeling of Cardiovascular Disease Associated with
@@ -190,15 +194,12 @@ University\\\\\href{mailto:shombit123@tamu.edu}{shombit123@tamu.edu}}
 \begin{document}
 \maketitle
 \begin{abstract}
-Cardiovascular disease (CVD) stands as the leading cause of death in the
-United States. By using spatial modeling techniques, such as
-geographically weighted regression (GWR), we have determined that CVD
-will see an increasing incidence rate outside the Stroke Belt region as
-the concentration of air pollutants increases and socioeconomic factors
-worsen. Policymakers and health practice practitioners are thus able to
-use these results in justifying targeted interventions to curb the
-increasing rates of CVD, aiming to halt one of the world's deadliest
-diseases.
+Cardiovascular disease (CVD) is the leading cause of death in the United
+States. By using a spatial modeling technique (geographically weighted
+regression), we found the concentration of PM 2.5 is centered in the
+Strokebelt region. Policymakers and health practitioners can use these
+results to identify targeted interventions to curb the increasing rates
+of CVD, aiming to halt one of the world's deadliest diseases.
 \end{abstract}
 {\bfseries \emph Keywords}
 \def\sep{\textbullet\ }
@@ -219,11 +220,11 @@ Cardiovascular Mortality (CVM)
   analyzing this relationship to produce risk prediction estimates for
   our specified age group.~
 \item
-  Central thesis: Use a geographically weighted model approach to
-  produce visualizations and analyze the relationship between our
-  response variable (CVD deaths) and its covariates (air pollutant
-  concentration and socioeconomic factors), specifically focusing on
-  spatial variation.~
+  Central thesis: Despite past studies focusing on the Stroke Belt
+  region of the United States, we aim to put our focus on the nationwide
+  impact of PM 2.5 concentration, median household income, and
+  unemployment rates on cardiovascular disease deaths, necessitating
+  regional interventions.
 \item
   Step back: The overall outcome of our study involves aiding
   policymakers and health practitioners develop the necessary
@@ -369,7 +370,7 @@ Model}\label{geographically-weighted-regression-model}
    ***********************************************************************
    *                       Package   GWmodel                             *
    ***********************************************************************
-   Program starts at: 2024-04-15 16:07:06.984972 
+   Program starts at: 2024-04-16 11:57:24.063415 
    Call:
    gwr.basic(formula = Data_Vl ~ prc_wht + prc_frc + prc_hsp + perc_sn + 
     p2_5_20 + estimat + U__2015, data = mergedf_spatial, bw = opt_bandwidth, 
@@ -444,7 +445,7 @@ Model}\label{geographically-weighted-regression-model}
    Adjusted R-square value:  0.8399823 
 
    ***********************************************************************
-   Program stops at: 2024-04-15 16:07:08.331113 
+   Program stops at: 2024-04-16 11:57:25.225759 
 \end{verbatim}
 
 Table Summary interpretation: The analysis compares two distinct

@@ -164,7 +164,7 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
-  pdftitle={Spatial Modeling of Cardiovascular Disease Associated with Increasing Airborne Particulate Matter},
+  pdftitle={Spatial Modeling of Cardiovascular Disease Incidence Positively Associated with PM2.5},
   pdfauthor={Johan Booc; Christina Kim; Shombit Roy},
   pdfkeywords={Fine Particulate Matter (PM2\_5), Cardiovascular Disease
 (CVD), Cardiovascular Mortality (CVM)},
@@ -181,8 +181,8 @@
 \doublespacing
 \newcommand{\runninghead}{A Preprint }
 \renewcommand{\runninghead}{CVD Related to PM2.5 }
-\title{Spatial Modeling of Cardiovascular Disease Associated with
-Increasing Airborne Particulate Matter}
+\title{Spatial Modeling of Cardiovascular Disease Incidence Positively
+Associated with PM2.5}
 \def\asep{\\\\\\ } % default: all authors on same column
 \author{\textbf{Johan Booc}\\Department of Statistics\\Texas A\&M
 University\\\\\href{mailto:jbooc24@tamu.edu}{jbooc24@tamu.edu}\asep\textbf{Christina
@@ -263,12 +263,12 @@ between studies however the end goal remains the same, reduce the
 disease mortality rates for the population. Statistical regression
 models have been a popular choice, specifically for CVD-related studies.
 The factors that compromise the underlying causes for CVD can be seen as
-a dynamic and interconnected web. Zelko et. al examines the relationship
-between CVD and covariates similar to our study, such as air pollution,
-social determinants, and county-level data. By using a GWR model, they
-found a correlation between household income, race, and healthcare
-access. Their results also showed that counties in the South had the
-highest PM 2.5 concentrations.
+a dynamic and interconnected web. Zelko et al. (2023) examines the
+relationship between CVD and covariates similar to our study, such as
+air pollution, social determinants, and county-level data. By using a
+GWR model, they found a correlation between household income, race, and
+healthcare access. Their results also showed that counties in the South
+had the highest PM 2.5 concentrations.
 
 Paragraph 2. (Review of geographically weighted regression models)
 \textgreater\textgreater\textgreater\textgreater{} The geographically
@@ -414,7 +414,7 @@ transparency and reproducibility of the research findings.
    ***********************************************************************
    *                       Package   GWmodel                             *
    ***********************************************************************
-   Program starts at: 2024-04-16 12:41:54.363774 
+   Program starts at: 2024-04-17 16:12:35.250563 
    Call:
    gwr.basic(formula = Data_Vl ~ prc_wht + prc_frc + prc_hsp + perc_sn + 
     p2_5_20 + estimat + U__2015, data = mergedf_spatial, bw = opt_bandwidth, 
@@ -489,7 +489,7 @@ transparency and reproducibility of the research findings.
    Adjusted R-square value:  0.8399823 
 
    ***********************************************************************
-   Program stops at: 2024-04-16 12:41:55.694518 
+   Program stops at: 2024-04-17 16:12:36.461186 
 \end{verbatim}
 
 \subsection{Table Summary}\label{table-summary}
@@ -650,10 +650,11 @@ CVD rates in the United States?
 These maps reveal that the relationships between race, socio-economic
 factors, environmental quality, and death rates are complex and highly
 localized. The significance and strength of these relationships vary
-considerably across different parts of the United States. Socio-economic
-factors such as median income show widespread, consistent significance,
-implying a consistent relationship with CVD outcomes across various
-locations.
+considerably across different parts of the United States. Some of the
+socio-economic factors such as median income show widespread, consistent
+significance, implying a consistent relationship with CVD outcomes
+across various locations, which differs from the local significance that
+we observed in other variables.
 
 Another factor to consider from the plots is the percentage of each race
 that inhabits each county. We can observe that for African Americans,
@@ -678,7 +679,7 @@ relationship between CVM and socioeconomic covariates, we can find the
 factors that have the most significant impact on death rates in
 different areas of the country. This highlights the need to identify
 efficient methods of intervention in order to curb one of the deadliest
-groups of diseases on the planet.
+groups of diseases on the planet. (Zelko et al. 2023)
 
 \newpage{}
 
@@ -686,7 +687,17 @@ groups of diseases on the planet.
 \addcontentsline{toc}{section}{References}
 
 \phantomsection\label{refs}
-\begin{CSLReferences}{0}{1}
+\begin{CSLReferences}{1}{0}
+\bibitem[\citeproctext]{ref-zelkoGeographicallyWeightedModeling2023}
+Zelko, Andrea, Pedro R. V. O. Salerno, Sadeer Al-Kindi, Fredrick Ho,
+Fanny Petermann Rocha, Khurram Nasir, Sanjay Rajagopalan, Salil Deo, and
+Naveed Sattar. 2023. {``Geographically {Weighted} {Modeling} to
+{Explore} {Social} and {Environmental} {Factors} {Affecting}
+{County}-{Level} {Cardiovascular} {Mortality} in {People} {With}
+{Diabetes} in the {United} {States}: {A} {Cross}-{Sectional}
+{Analysis}.''} \emph{The American Journal of Cardiology} 209 (December):
+193--98. \url{https://doi.org/10.1016/j.amjcard.2023.09.084}.
+
 \end{CSLReferences}
 
 

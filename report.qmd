@@ -227,7 +227,7 @@ This methodological outline ensures that each step of the data handling,
 analysis, and visualization process is documented, providing
 transparency and reproducibility of the research findings.
 
-```{r include=FALSE, cache=TRUE}
+```{r include=FALSE, cache=FALSE}
 source("./Functions/gwmodelJohan.R")
 source("./Functions/GWmodelRscript.R")
 ```
@@ -241,7 +241,7 @@ gwr_results_sf%>%ggplot() +
   scale_fill_gradientn(colours = terrain.colors(8),
                        #limits = c(19,530),
                        breaks = c(50,150,300)) +
-  theme(text = element_text(size = 15), 
+  theme(text = element_text(size = 10), 
         legend.position = "bottom") + 
   labs(title = "CVD Deaths, 2015",
        caption = "Fig 1",
@@ -456,7 +456,7 @@ ggplot(gwr_results_sf) +
 ```{r}
 #significance
 local_t_values_5 <- gwr_results_sf$p2_5_20_TV
-local_p_values_5 <- 2 * pt(-abs(local_t_values_5), df = 2480.149) #df number cam from the Gw diagnostic
+local_p_values_5 <- 2 * pt(-abs(local_t_values_5), df = 2480.149) #df number came from the Gw diagnostic
 
 
 
@@ -499,7 +499,7 @@ ggplot(gwr_results_sf) +
 
     library(ggplot2)
     ggplot(gwr_results_sf) +
-      geom_sf(aes(fill = prc_est_signif_coef), color = "black", size = 0.1) +
+      geom_sf(aes(fill = prc_est_signif_coef * log(merge2015GW$estimat)), color = "black", size = 0.1) +
       scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
                           name = "Coefficient Magnitude", limits = NULL) +  
       labs(title = "Local Significance of Median Income Parameter",
@@ -551,11 +551,12 @@ CVD rates in the United States?
 These maps reveal that the relationships between race, socio-economic
 factors, environmental quality, and death rates are complex and highly
 localized. The significance and strength of these relationships vary
-considerably across different parts of the United States. Some of the
-socio-economic factors such as median income show widespread, consistent
-significance, implying a consistent relationship with CVD outcomes
-across various locations, which differs from the local significance that
-we observed in other variables.
+considerably across different parts of the United States. In contrast,
+some of the socio-economic factors such as median income show
+widespread, consistent significance, implying that the significance of
+the relationship with CVD outcomes is nearly constant across various
+locations. This differs from the heterogeneous local significance that
+we observed in the majority of our other variables.
 
 Another factor to consider from the plots is the percentage of each race
 that inhabits each county. We can observe that for African Americans,
@@ -566,7 +567,22 @@ access to medical care.
 -   One limitation of race percentages is the misreporting of medical
     records affecting minorities (Tabb et al.) However, this oversight
     lends further credence to the fact that intervention is needed in
-    order to combat racial health disparities.
+    order to combat racial health disparities. We can look at the
+    Variance Inflation Factor (VIF) to show that the multicollinearity
+    does not impact our results:
+
+```{r eval = FALSE}
+dp = cbind(finalCVD$lon, finalCVD$lat)
+DM = gw.dist(dp.locat = dp)
+#collin = gwr.collin.diagno(Data_Vl ~ 
+                           # prc_wht + prc_frc + prc_hsp + perc_sn + 
+                          #  p2_5_20 + estimat + U__2015, 
+                          #data = mergedf_spatial, 
+                          #bw = opt_bandwidth, 
+                          #kernel = "gaussian", 
+                          #adaptive = FALSE, 
+                          #dMat = DM)
+```
 
 P3: Air quality has a broad impact, suggesting environmental health
 concerns that might require region-specific policies. 

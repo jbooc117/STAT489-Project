@@ -414,7 +414,7 @@ transparency and reproducibility of the research findings.
    ***********************************************************************
    *                       Package   GWmodel                             *
    ***********************************************************************
-   Program starts at: 2024-04-17 16:12:35.250563 
+   Program starts at: 2024-04-21 13:55:25.838393 
    Call:
    gwr.basic(formula = Data_Vl ~ prc_wht + prc_frc + prc_hsp + perc_sn + 
     p2_5_20 + estimat + U__2015, data = mergedf_spatial, bw = opt_bandwidth, 
@@ -489,7 +489,7 @@ transparency and reproducibility of the research findings.
    Adjusted R-square value:  0.8399823 
 
    ***********************************************************************
-   Program stops at: 2024-04-17 16:12:36.461186 
+   Program stops at: 2024-04-21 13:55:26.457804 
 \end{verbatim}
 
 \subsection{Table Summary}\label{table-summary}
@@ -650,11 +650,12 @@ CVD rates in the United States?
 These maps reveal that the relationships between race, socio-economic
 factors, environmental quality, and death rates are complex and highly
 localized. The significance and strength of these relationships vary
-considerably across different parts of the United States. Some of the
-socio-economic factors such as median income show widespread, consistent
-significance, implying a consistent relationship with CVD outcomes
-across various locations, which differs from the local significance that
-we observed in other variables.
+considerably across different parts of the United States. In contrast,
+some of the socio-economic factors such as median income show
+widespread, consistent significance, implying that the significance of
+the relationship with CVD outcomes is nearly constant across various
+locations. This differs from the heterogeneous local significance that
+we observed in the majority of our other variables.
 
 Another factor to consider from the plots is the percentage of each race
 that inhabits each county. We can observe that for African Americans,
@@ -668,7 +669,9 @@ access to medical care.
   One limitation of race percentages is the misreporting of medical
   records affecting minorities (Tabb et al.) However, this oversight
   lends further credence to the fact that intervention is needed in
-  order to combat racial health disparities.
+  order to combat racial health disparities. We can look at the Variance
+  Inflation Factor (VIF) to show that the multicollinearity does not
+  impact our results:
 \end{itemize}
 
 P3: Air quality has a broad impact, suggesting environmental health

@@ -255,21 +255,21 @@ disease. The techniques often used differ between studies but all have
 the same goal: to reduce the disease incidence and mortality rates.
 Statistical regression models are popular methods for CVD studies. The
 underlying causes for CVD are dynamic and can be seen as an
-interconnected web. Zelko et. al (Zelko et al. 2023) examines the
-relationship between CVD and covariates similar to our study (air
-pollution, social determinants, and county-level data). From using a GWR
-model, their results found that counties in the South had the highest
-exposure to PM 2.5 concentrations whereas counties in the Northeast had
-the lowest. A strong correlation was also found between household
-income, race, and healthcare access.~
+interconnected web. (Zelko et al. 2023) examines the relationship
+between CVD and covariates similar to our study (air pollution, social
+determinants, and county-level data). From using a GWR model, their
+results found that counties in the South had the highest exposure to PM
+2.5 concentrations whereas counties in the Northeast had the lowest. A
+strong correlation was also found between household income, race, and
+healthcare access.~
 
 Compared to traditional regression models, the geographically weighted
 model (GWR) explores spatial data by considering varied coefficients for
-a certain spatial unit (Gebrean et. al)(Gebreab and Diez Roux 2012). The
-GWR model contains the parameter, neighborhood (also known as bandwidth)
-and builds on the weighted least squares method to estimate the
-regression coefficients. We want to see values closer to the point of
-interest since they carry more weight, thus having a greater influence.~
+a certain spatial unit (Gebreab and Diez Roux 2012). The GWR model
+contains the parameter, neighborhood (also known as bandwidth) and
+builds on the weighted least squares method to estimate the regression
+coefficients. We want to see values closer to the point of interest
+since they carry more weight, thus having a greater influence.~
 
 The Ordinary Least Squares model is a popular choice of method for
 public health studies because it generates the regression coefficients
@@ -290,13 +290,12 @@ also minimalized between the actual model and any estimates. This makes
 the GWR model suitable for seeing the socioeconomic factors that affect
 different regions and narrows down our focus to the areas in need of
 improvement, which helps health practitioners implement policies for
-that region. Past studies (Zelko et. al, Terry et.al, and Singh
-et.al){[}Zelko et al. (2023){]}(Terry et al. 2023)(Singh et al. 2019)
-tend to focus on the trends of socioeconomic covariates and their
-spatial patterning. However, our study extends past studies by including
-PM 2.5 concentrations as one of our covariates. From this, we can fully
-understand the dynamic relationship between different counties and CVD
-incidence/mortality rates.~
+that region. Past studies (Zelko et al. 2023),(Terry et al. 2023),
+and(Singh et al. 2019) tend to focus on the trends of socioeconomic
+covariates and their spatial patterning. However, our study extends past
+studies by including PM 2.5 concentrations as one of our covariates.
+From this, we can fully understand the dynamic relationship between
+different counties and CVD incidence/mortality rates.~
 
 Risk assessment and risk estimates uncover the key factors associated
 with CVD. Because the concentration of specific races varies by county,
@@ -326,7 +325,7 @@ gathered using the ``unemploymentRate2015.csv'' file.
 
 Several steps were taken to ensure the reliability and accuracy of the
 results when preparing the data for statistical analysis. The data from
-various sources was integrated into a final shapefile named
+various sources was integrated into a final shape file named
 ``finalCVDshapes.shp.'' This integration was achieved through coding in
 R, specifically focusing on data from 2015, which allowed for a
 consistent time frame across all data sets. During the cleaning and
@@ -394,7 +393,7 @@ transparency and reproducibility of the research findings.
    ***********************************************************************
    *                       Package   GWmodel                             *
    ***********************************************************************
-   Program starts at: 2024-04-21 22:28:46.784854 
+   Program starts at: 2024-04-22 12:02:53.980286 
    Call:
    gwr.basic(formula = Data_Vl ~ prc_wht + prc_frc + prc_hsp + perc_sn + 
     p2_5_20 + estimat + U__2015, data = mergedf_spatial, bw = opt_bandwidth, 
@@ -469,7 +468,7 @@ transparency and reproducibility of the research findings.
    Adjusted R-square value:  0.8399823 
 
    ***********************************************************************
-   Program stops at: 2024-04-21 22:28:47.365263 
+   Program stops at: 2024-04-22 12:02:54.546821 
 \end{verbatim}
 
 \subsection{Table Summary}\label{table-summary}
@@ -494,7 +493,7 @@ summary, by accommodating the spatial component present in the data, the
 GWR model provides a more realistic interpretation of how various
 factors influence death rates across different regions.
 
-\subsection{Plots}\label{plots}
+\subsection{Local Significance Plots}\label{local-significance-plots}
 
 In Figure \#1 the plot represents the results of Geographically Weighted
 Regression (GWR) analysis of particulate concentrations and their
@@ -654,15 +653,17 @@ access to medical care.
   impact our results:
 \end{itemize}
 
-P3: Air quality has a broad impact, suggesting environmental health
-concerns that might require region-specific policies.~
+Concentration of PM2.5 and the consequential reduction in air quality
+has a significant impact localized in the central and southeastern
+regions of the United States, suggesting environmental health concerns
+that might require region-specific intervention.~
 
-Conclusion: We have shown that by using a GWR model to analyze the
-relationship between CVM and socioeconomic covariates, we can find the
-factors that have the most significant impact on death rates in
-different areas of the country. This highlights the need to identify
-efficient methods of intervention in order to curb one of the deadliest
-groups of diseases on the planet. (Zelko et al. 2023)
+We have shown that by using a GWR model to analyze the relationship
+between CVM and socioeconomic covariates, the factors that have the most
+significant impact on death rates vary by area of the country. This
+highlights the need to identify efficient methods of intervention in
+order to curb one of the deadliest groups of diseases on the planet
+(Marlow 1994).
 
 \newpage{}
 
@@ -677,6 +678,11 @@ Disparities in {CHD} Mortality Between Blacks and Whites Across the
 {United} {States}: {A} Geographically Weighted Regression Approach.''}
 \emph{Health \& Place} 18 (5): 1006--14.
 \url{https://doi.org/10.1016/j.healthplace.2012.06.006}.
+
+\bibitem[\citeproctext]{ref-Marlow1994}
+Marlow, Hilary F. 1994. {``The Pharmaceutical Industry Viewpoint.''}
+\emph{Cardiology} 85 (1): 102--12.
+\url{https://doi.org/10.1159/000176769}.
 
 \bibitem[\citeproctext]{ref-singhSpatiotemporalDemographicTrends2019}
 Singh, Gitanjali M., Ninon Becquart, Melissa Cruz, Andrea Acevedo,

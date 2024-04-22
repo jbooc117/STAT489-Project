@@ -262,7 +262,7 @@ summary, by accommodating the spatial component present in the data, the
 GWR model provides a more realistic interpretation of how various
 factors influence death rates across different regions.
 
-## Plots
+## Local Significance Plots
 
 In Figure #1 the plot represents the results of Geographically Weighted
 Regression (GWR) analysis of particulate concentrations and their
@@ -338,7 +338,7 @@ significance.
 #| layout-nrow: 2
 #significance
 local_t_values <- gwr_results_sf$prc_wht_TV
-local_p_values <- 2 * pt(-abs(local_t_values), df = 2480.149) #df number cam from the Gw diagnostic
+local_p_values <- 2 * pt(-abs(local_t_values), df = 2480.149) #df number came from the Gw diagnostic
 
 
 gwr_results_sf$prc_wht_p_values <- local_p_values
@@ -353,11 +353,11 @@ ggplot(gwr_results_sf) +
   geom_sf(aes(fill = prc_wht_signif_coef * gwr_results_sf$prc_wht/10000), color = alpha("black",0.35), size = 0.1) +
   scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
                       name = "Magnitude", limits = NULL) +  
-  labs(title = "Local Significance and Magnitude of '% White' Parameter",
+  labs(title = "Local Significance and Magnitude of '% White'",
        subtitle = "Geographically Weighted Regression (GWR)",
        caption = "Fig 2: Blue indicates lower magnitude of effect;\n Red indicates larger magnitude of effect;\nWhite indicates no significant effect") +
   theme_minimal() +
-  theme(text = element_text(size = 12), legend.position = "right")
+  theme(text = element_text(size = 10), legend.position = "right")
 
 #significance
 local_t_values_2 <- gwr_results_sf$prc_frc_TV
@@ -376,11 +376,11 @@ ggplot(gwr_results_sf) +
   geom_sf(aes(fill = prc_af_signif_coef * gwr_results_sf$prc_frc/10000), color = alpha("black",0.35), size = 0.1) +
   scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
                       name = "Magnitude", limits = NULL) +  
-  labs(title = "Local Significance and Magnitude of '% African American' Parameter",
+  labs(title = "Local Significance and Magnitude of '% African American'",
        subtitle = "Geographically Weighted Regression (GWR)",
        caption = "Fig 3: Blue indicates lower magnitude of effect;\n Red indicates larger magnitude of effect;\nWhite indicates no significant effect") +
   theme_minimal() +
-  theme(text = element_text(size = 12), legend.position = "right")
+  theme(text = element_text(size = 10), legend.position = "right")
 
 #significance
 local_t_values_3 <- gwr_results_sf$prc_hsp_TV
@@ -400,11 +400,11 @@ ggplot(gwr_results_sf) +
   geom_sf(aes(fill = prc_hsp_signif_coef * gwr_results_sf$prc_hsp/10000), color = alpha("black",0.35), size = 0.1) +
   scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
                       name = "Magnitude", limits = NULL) +  
-  labs(title = "Local Significance and Magnitude of '% Hispanic' Parameter",
+  labs(title = "Local Significance and Magnitude of '% Hispanic'",
        subtitle = "Geographically Weighted Regression (GWR)",
        caption = "Fig 4: Blue indicates lower magnitude of effect;\n Red indicates larger magnitude of effect;\nWhite indicates no significant effect") +
   theme_minimal() +
-  theme(text = element_text(size = 12), legend.position = "right")
+  theme(text = element_text(size = 10), legend.position = "right")
 
 #significance
 local_t_values_4 <- gwr_results_sf$perc_sn_TV
@@ -423,11 +423,11 @@ ggplot(gwr_results_sf) +
   geom_sf(aes(fill = prc_sn_signif_coef * gwr_results_sf$perc_sn/10000), color = alpha("black",0.35), size = 0.1) +
   scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
                       name = "Magnitude", limits = NULL) +  
-  labs(title = "Local Significance and Magnitude of '% Asian' Parameter",
+  labs(title = "Local Significance and Magnitude of '% Asian'",
        subtitle = "Geographically Weighted Regression (GWR)",
        caption = "Fig 5: Blue indicates lower magnitude of effect;\n Red indicates larger magnitude of effect;\nWhite indicates no significant effect") +
   theme_minimal() +
-  theme(text = element_text(size = 12), legend.position = "right")
+  theme(text = element_text(size = 10), legend.position = "right")
 ```
 
 -   Demographic Impact: The percentage of white and Hispanic populations
@@ -570,15 +570,17 @@ DM = gw.dist(dp.locat = dp)
                           #dMat = DM)
 ```
 
-P3: Air quality has a broad impact, suggesting environmental health
-concerns that might require region-specific policies. 
+Concentration of PM2.5 and the consequential reduction in air quality
+has a significant impact localized in the central and southeastern
+regions of the United States, suggesting environmental health concerns
+that might require region-specific intervention. 
 
-Conclusion: We have shown that by using a GWR model to analyze the
-relationship between CVM and socioeconomic covariates, we can find the
-factors that have the most significant impact on death rates in
-different areas of the country. This highlights the need to identify
-efficient methods of intervention in order to curb one of the deadliest
-groups of diseases on the planet.
+We have shown that by using a GWR model to analyze the relationship
+between CVM and socioeconomic covariates, the factors that have the most
+significant impact on death rates vary by area of the country. This
+highlights the need to identify efficient methods of intervention in
+order to curb one of the deadliest groups of diseases on the planet
+[@Marlow1994].
 
 {{< pagebreak >}}
 

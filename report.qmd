@@ -562,7 +562,7 @@ ggplot(gwr_results_sf) +
                           name = "Coefficient Magnitude", limits = NULL) +  
       labs(title = "Local Significance of Median Income Parameter",
            subtitle = "Geographically Weighted Regression (GWR)",
-           caption = "Fig 7: Blue indicates lower magnitude of effect;\n Red indicates larger magnitude of effect;\nWhite indicates no significant effect") +
+           caption = "Blue indicates lower magnitude of effect;\n Red indicates larger magnitude of effect;\nWhite indicates no significant effect") +
       theme_minimal() +
       theme(text = element_text(size = 12), legend.position = "right")
 
@@ -585,7 +585,7 @@ ggplot(gwr_results_sf) +
                           name = "Coefficient Magnitude", limits = NULL) +  
       labs(title = "Local Significance of Unemployment Parameter",
            subtitle = "Geographically Weighted Regression (GWR)",
-           caption = "Fig 8: Blue indicates lower magnitude of effect;\n Red indicates larger magnitude of effect;\nWhite indicates no significant effect") +
+           caption = "Blue indicates lower magnitude of effect;\n Red indicates larger magnitude of effect;\nWhite indicates no significant effect") +
       theme_minimal() +
       theme(text = element_text(size = 12), legend.position = "right")
 ```
@@ -627,7 +627,8 @@ intervention is needed in order to combat racial health disparities. We
 can look at the Variance Inflation Factor (VIF) to determine if
 multi-collinearity has an impact on our results:
 
-```{r cache = TRUE}
+```{r cache = TRUE, results = 'asis'}
+#| label: tbl-10
 collin = gwr.collin.diagno(Data_Vl ~ 
                             prc_wht + prc_frc + prc_hsp + perc_sn + 
                             p2_5_20 + estimat + U__2015, 
@@ -635,18 +636,18 @@ collin = gwr.collin.diagno(Data_Vl ~
                           bw = opt_bandwidth, 
                           kernel = "gaussian", 
                           adaptive = FALSE)
-head(collin$VIF)
-
+VIF = head(collin$VIF)
+print(xtable(VIF), type = "latex", include.rownames = FALSE)
 ```
 
 Typically, when examining the VIF of a GWR model, we want the
 coefficients for each of the seven columns–which represent our seven
-independent variables–to be less than 15. We can see that this standard
-holds for most cases of the columns outside the % White column, which
-has extremely high values. This represents a limitation in our model, as
-it shows multicollinearity with respect to the white variable, however,
-this is to be expected given that the white population makes up a
-majority of the United States.
+independent variables–to be less than 15. We can see in @tbl-10 that
+this standard holds for most cases of the columns outside the % White
+column, which has extremely high values. This represents a limitation in
+our model, as it shows multicollinearity with respect to the white
+variable, however, this is to be expected given that the white
+population makes up a majority of the United States.
 
 The concentration of PM2.5 and the consequential reduction in air
 quality has a significant impact localized in the central and

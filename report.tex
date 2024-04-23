@@ -716,24 +716,45 @@ intervention is needed in order to combat racial health disparities. We
 can look at the Variance Inflation Factor (VIF) to determine if
 multi-collinearity has an impact on our results:
 
-\begin{verbatim}
-         [,1]      [,2]      [,3]     [,4]     [,5]     [,6]     [,7]
-[1,] 183.2164 196.11538  7.237109 2.559717 1.146563 2.438190 2.618307
-[2,]  81.3242  93.79554  4.142495 2.530078 1.774716 3.385766 2.649919
-[3,] 302.1586 313.78439 16.892299 4.063351 1.266136 2.418759 2.086234
-[4,] 140.8283 151.45950  5.254129 2.134224 1.101818 2.354699 2.726051
-[5,] 131.7704 128.38684  8.326177 2.673668 1.066131 2.340259 2.319100
-[6,] 282.6620 294.22580 14.144948 3.770423 1.236497 2.435351 2.215778
-\end{verbatim}
+\begin{table}
+
+\caption{\label{tbl-10}}
+
+\centering{
+
+\captionsetup{labelsep=none}
+
+\% latex table generated in R 4.3.2 by xtable 1.8-4 package \% Tue Apr
+23 00:11:25 2024
+
+[ht]
+\centering
+\begin{tabular}{rrrrrrr}
+  \hline
+1 & 2 & 3 & 4 & 5 & 6 & 7 \\ 
+  \hline
+183.22 & 196.12 & 7.24 & 2.56 & 1.15 & 2.44 & 2.62 \\ 
+  81.32 & 93.80 & 4.14 & 2.53 & 1.77 & 3.39 & 2.65 \\ 
+  302.16 & 313.78 & 16.89 & 4.06 & 1.27 & 2.42 & 2.09 \\ 
+  140.83 & 151.46 & 5.25 & 2.13 & 1.10 & 2.35 & 2.73 \\ 
+  131.77 & 128.39 & 8.33 & 2.67 & 1.07 & 2.34 & 2.32 \\ 
+  282.66 & 294.23 & 14.14 & 3.77 & 1.24 & 2.44 & 2.22 \\ 
+   \hline
+\end{tabular}
+
+}
+
+\end{table}%
 
 Typically, when examining the VIF of a GWR model, we want the
 coefficients for each of the seven columns--which represent our seven
-independent variables--to be less than 15. We can see that this standard
-holds for most cases of the columns outside the \% White column, which
-has extremely high values. This represents a limitation in our model, as
-it shows multicollinearity with respect to the white variable, however,
-this is to be expected given that the white population makes up a
-majority of the United States.
+independent variables--to be less than 15. We can see in
+Table~\ref{tbl-10} that this standard holds for most cases of the
+columns outside the \% White column, which has extremely high values.
+This represents a limitation in our model, as it shows multicollinearity
+with respect to the white variable, however, this is to be expected
+given that the white population makes up a majority of the United
+States.
 
 The concentration of PM2.5 and the consequential reduction in air
 quality has a significant impact localized in the central and

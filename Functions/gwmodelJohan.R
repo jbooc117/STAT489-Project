@@ -1,7 +1,7 @@
-library(sf)
-library(GWmodel)
-library(ggplot2)
-library(tidyverse)
+#library(sf)
+#library(GWmodel)
+#library(ggplot2)
+#library(tidyverse)
 set.seed(1234)
 
 finalCVD = read_sf("./Data/finalCVDshapes.shp")

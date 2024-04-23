@@ -111,6 +111,20 @@
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
 \usepackage{arxiv}
 \usepackage{orcidlink}
 \usepackage{amsmath}
@@ -224,9 +238,14 @@ factors involved in influencing the incidence rates of CVD from
 genetics, lifestyle, diet, and smoking/alcohol habits. We look into the
 covariates - PM 2.5 concentration, median household income, and
 unemployment rates - to analyze the spatial variation for our specified
-age population, thus decreasing future CVD incidence rates. From this,
-we can examine the effects of certain CVD risk factors for the year
-2015.~
+age population, thus decreasing future CVD incidence rates.
+Specifically, we focus on PM 2.5 concentration as the world continues to
+depend on fossil fuels/natural gas and climate change is an ongoing
+concern. Earlier studies such as (Warsito et al. 2018) and (Liu et al.
+2020)highlight the modern-day threats from air pollution using a Robust
+GWR model and Bayesian-temporal model, respectively. From studying our
+covariates, we can examine the effects of certain CVD risk factors for
+the year 2015.~
 
 The geographically weighted regression model uses local variables and
 weights to produce statistical visualizations of the US's regional
@@ -235,17 +254,18 @@ Other methods, such as the traditional linear regression model and
 clustering, have been used in past CVD studies. However, we found the
 GWR model allows us to see each covariate's local significance and
 magnitude. The spatial distribution aspect of the GWR model highlights
-regions that are concentrated, increased or decreased percentages, and
-any significant correlations. This makes the GWR model efficient in
-analyzing the dynamic relationship of CVD rates and the factors that
-contribute to it.~
+regions that are concentrated with CVD rates, whether incidence
+percentage rates are increasing or decreasing, and any significant
+correlations. This makes the GWR model efficient in analyzing the
+dynamic relationship of CVD rates and the factors that contribute to
+it.~
 
 Using a geographically weighted regression approach, the overall outcome
 of our study aids policymakers and health practitioners in implementing
-the necessary interventions for targeted regions most affected by our
-covariates. Tailoring aid to each specific region of the US first can
-help public health experts eventually reach a national decrease in CVD
-incidence rates.
+the necessary interventions for targeted regions that are being
+influenced the most by our covariates. For public health experts, it's
+ideal to tailor aid to each specific region of the US first to
+eventually reach a national decrease in CVD incidence rates.
 
 \section{Related Works}\label{related-works}
 
@@ -261,7 +281,9 @@ determinants, and county-level data). From using a GWR model, their
 results found that counties in the South had the highest exposure to PM
 2.5 concentrations whereas counties in the Northeast had the lowest. A
 strong correlation was also found between household income, race, and
-healthcare access.~
+healthcare access. Overall, there are several causes to consider with
+CVD, and where the covariates are concentrated is another important
+consideration.
 
 Compared to traditional regression models, the geographically weighted
 model (GWR) explores spatial data by considering varied coefficients for
@@ -271,7 +293,7 @@ builds on the weighted least squares method to estimate the regression
 coefficients. We want to see values closer to the point of interest
 since they carry more weight, thus having a greater influence.~
 
-The Ordinary Least Squares model is a popular choice of method for
+The Ordinary Least Squares (OLS) model is a popular choice of method for
 public health studies because it generates the regression coefficients
 on a global scale and captures the average differences between
 covariates. However, this means spatial variability between units can be
@@ -295,7 +317,7 @@ and(Singh et al. 2019) tend to focus on the trends of socioeconomic
 covariates and their spatial patterning. However, our study extends past
 studies by including PM 2.5 concentrations as one of our covariates.
 From this, we can fully understand the dynamic relationship between
-different counties and CVD incidence/mortality rates.~
+counties and CVD incidence/mortality rates.~
 
 Risk assessment and risk estimates uncover the key factors associated
 with CVD. Because the concentration of specific races varies by county,
@@ -304,8 +326,9 @@ the socioeconomic covariates of CVD mortality at the county level. This
 helps researchers and health practitioners to develop the necessary
 risk-preventative measures and allocate resources to the areas that need
 them the most. By putting the focus on the county level (rather than on
-individual states/nationally), CVD mortality rates will be reduced,
-nationally and globally.~
+individual states/nationally), resources can be allocated accordingly to
+the regions that need the most assistance. This can lead to a reduction
+in CVD mortality rates, both nationally and globally.
 
 \section{Methods}\label{methods}
 
@@ -328,24 +351,26 @@ is available in our GitHub repository.
 Several steps were taken to ensure the reliability and accuracy of the
 results when preparing the data for statistical analysis. The data from
 various sources was integrated into one file by year/county/latitude and
-longitude/geometries. This integration was achieved through coding in R,
-specifically focusing on data from 2015, which allowed for a consistent
-time frame across all data sets. During the cleaning and processing
-phase, features with empty geometries were removed from the shapefile to
-ensure the removal of NA values in the dataset. Missing data entries
-were also omitted, which led to Nantucket County being removed as it had
-incomplete data and was removed from our analysis. Also, in this
-dataset, we are not analyzing Alaska and Hawaii. Centroids of the
-multi-polygon geometries were calculated to provide a single point
-representing the location of these complex shapes. This step was
-essential for conducting precise location-based assessments. Lastly, the
-data frame was transformed into a SpatialPolygonsDataFrame, making it
-suitable for use in the Geographic Weighted Regression (GWR) model.
+longitude/geometries. This integration was achieved through coding in
+RStudio Version 4.3.2, specifically focusing on data from 2015, which
+allowed for a consistent time frame across all data sets. During the
+cleaning and processing phase, features with empty geometries were
+removed from the shapefile to ensure the removal of NA values in the
+dataset. Missing data entries were also omitted, which led to Nantucket
+County being removed as it had incomplete data and was removed from our
+analysis. Also, in this dataset, we are not analyzing Alaska and Hawaii
+due to their geographical isolation from the contiguous United States.
+Centroids of the multi-polygon geometries were calculated to provide a
+single point representing the location of these complex shapes. This
+step was essential for conducting precise location-based assessments.
+Lastly, the data frame was transformed into a SpatialPolygonsDataFrame,
+making it suitable for use in the Geographic Weighted Regression (GWR)
+model.
 
 \subsection{Statistical Analysis}\label{statistical-analysis}
 
 A Geographically Weighted Regression (GWR) model was used in the
-statistical analysis, which was run using the GWmodel library. These
+statistical analysis, which was created using the GWmodel library. These
 packages were integral in setting up the model framework and executing
 the analysis, providing tools for spatial data manipulation, regression
 modeling, and data visualization. The optimal bandwidth for the GWR
@@ -361,7 +386,7 @@ constraints. This function modeled the response variable, Cardiovascular
 death rate per 100,000 residents:
 
 \[
-y = \beta_0*\%White +\beta_1* \%Black\dots
+y = \beta_0*\%White +\beta_1* \%Black + \beta_2 *\%Hispanic + \beta_3 *\%Asian + \beta_4 *PM2.5 + \beta_5 * Median Income + \beta_6 * \%Unemployed
 \]
 
 The variable ``y'' represents the CVM per 100,000 residents in each
@@ -377,15 +402,27 @@ of freedom were found from the GWR diagnostic output.
 
 \subsection{Mapping}\label{sec-mapping}
 
-We generated mapping plots to visualize the spatial distribution of the
-dependent variable (deaths from CVD per 100,000 people) across different
-counties in the US, highlighting the significance of the variables, and
-plotted the significance of each variable within different regions to
-assess the overall effect on the CVD death rate.~
+We generated geographic plots to visualize the spatial distribution of
+the dependent variable (deaths from CVD per 100,000 people) across
+different counties in the US, highlighting the significance of the
+variables, and plotted the significance of each variable within
+different regions to assess the overall effect on the CVD death rate.
 
 This approach allows for examining how various socioeconomic,
 environmental, and demographic factors influence health outcomes across
-different regions in the United States. (Simulation study)
+different regions in the United States. We showed this in simulated data
+where we used a piecewise function to the coordinates, which divides the
+geographical space into four quadrants and assigns different
+coefficients to them to model for spatial heterogeneity. Also, a spatial
+autocorrelation test (Moran's I) is performed on the residuals of the
+GWR model. From the table in our appendix and the graph in our appendix,
+we have a high standard deviation and low p-value, strongly suggesting
+that the residuals of the GWR model are not randomly distributed but
+show significant spatial autocorrelation. The graph shows that the
+majority of the residuals are close to zero, which means the predicted
+values are pretty close to the observed values, indicating that the GWR
+model has accounted for spatial variation effectively and that it is a
+good fit.
 
 This methodological outline ensures that each step of the data handling,
 analysis, and visualization process is documented, providing
@@ -405,106 +442,24 @@ transparency and reproducibility of the research findings.
 
 \section{Results}\label{results}
 
-\begin{verbatim}
-   ***********************************************************************
-   *                       Package   GWmodel                             *
-   ***********************************************************************
-   Program starts at: 2024-04-22 16:08:56.257397 
-   Call:
-   gwr.basic(formula = Data_Vl ~ prc_wht + prc_frc + prc_hsp + perc_sn + 
-    p2_5_20 + estimat + U__2015, data = mergedf_spatial, bw = opt_bandwidth, 
-    kernel = "gaussian", adaptive = FALSE, parallel.method = "omp")
+\subsection{Regression Summary}\label{regression-summary}
 
-   Dependent (y) variable:  Data_Vl
-   Independent variables:  prc_wht prc_frc prc_hsp perc_sn p2_5_20 estimat U__2015
-   Number of data points: 3057
-   ***********************************************************************
-   *                    Results of Global Regression                     *
-   ***********************************************************************
-
-   Call:
-    lm(formula = formula, data = data)
-
-   Residuals:
-     Min       1Q   Median       3Q      Max 
--133.061  -22.813   -5.661   19.637  202.340 
-
-   Coefficients:
-                 Estimate Std. Error t value Pr(>|t|)    
-   (Intercept)  2.388e+02  1.024e+01  23.313  < 2e-16 ***
-   prc_wht     -8.158e+01  9.500e+00  -8.587  < 2e-16 ***
-   prc_frc      5.526e+01  9.988e+00   5.532 3.42e-08 ***
-   prc_hsp     -9.321e+01  1.023e+01  -9.107  < 2e-16 ***
-   perc_sn     -2.090e+02  3.425e+01  -6.101 1.18e-09 ***
-   p2_5_20      6.311e+00  4.453e-01  14.170  < 2e-16 ***
-   estimat     -2.120e-03  7.150e-05 -29.648  < 2e-16 ***
-   U__2015      3.736e+00  4.118e-01   9.072  < 2e-16 ***
-
-   ---Significance stars
-   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
-   Residual standard error: 35.64 on 3049 degrees of freedom
-   Multiple R-squared: 0.6105
-   Adjusted R-squared: 0.6096 
-   F-statistic: 682.6 on 7 and 3049 DF,  p-value: < 2.2e-16 
-   ***Extra Diagnostic information
-   Residual sum of squares: 3873809
-   Sigma(hat): 35.6093
-   AIC:  30534.31
-   AICc:  30534.37
-   BIC:  27603.76
-   ***********************************************************************
-   *          Results of Geographically Weighted Regression              *
-   ***********************************************************************
-
-   *********************Model calibration information*********************
-   Kernel function: gaussian 
-   Fixed bandwidth: 128251.7 
-   Regression points: the same locations as observations are used.
-   Distance metric: Euclidean distance metric is used.
-
-   ****************Summary of GWR coefficient estimates:******************
-                    Min.     1st Qu.      Median     3rd Qu.      Max.
-   Intercept -1.8237e+02  1.6625e+02  2.7812e+02  4.1353e+02 2293.3931
-   prc_wht   -1.7708e+03 -2.3314e+02 -1.1902e+02 -3.3864e+01  309.4663
-   prc_frc   -1.9197e+03 -2.0396e+02 -6.1895e+01  5.2242e+01 3229.3222
-   prc_hsp   -1.7720e+03 -2.8864e+02 -1.5801e+02 -6.4279e+01  504.0406
-   perc_sn   -1.9199e+03 -6.5045e+02 -3.4826e+02 -1.4864e+02 1635.4916
-   p2_5_20   -4.8476e+01 -9.9089e-01  3.7131e+00  9.5388e+00   41.5626
-   estimat   -8.0369e-03 -2.6333e-03 -1.8226e-03 -1.1243e-03    0.0017
-   U__2015   -7.0110e+00  2.6200e+00  5.3167e+00  7.4156e+00   18.3070
-   ************************Diagnostic information*************************
-   Number of data points: 3057 
-   Effective number of parameters (2trace(S) - trace(S'S)): 576.851 
-   Effective degrees of freedom (n-2trace(S) + trace(S'S)): 2480.149 
-   AICc (GWR book, Fotheringham, et al. 2002, p. 61, eq 2.33): 28146.12 
-   AIC (GWR book, Fotheringham, et al. 2002,GWR p. 96, eq. 4.22): 27581.59 
-   BIC (GWR book, Fotheringham, et al. 2002,GWR p. 61, eq. 2.34): 27506.99 
-   Residual sum of squares: 1290938 
-   R-square value:  0.8701873 
-   Adjusted R-square value:  0.8399823 
-
-   ***********************************************************************
-   Program stops at: 2024-04-22 16:08:57.492146 
-\end{verbatim}
-
-\subsection{Table Summary}\label{table-summary}
-
-Table \#1 shows the global regression, and Table \#2 shows the GWR
-regression output, and they both show the relationships between
-socioeconomic, demographic, and environmental variables and death rates.
-The first is a global regression model that does not consider spatial
-correlation despite revealing that all predictors are statistically
-significant. Hence, while the model does suggest that our variables are
-indeed important, the global model may overlook local variations that
-are crucial in understanding the true nature of the data. This can be
-seen in Figure \#2, which shows the residual of the global model, and
+The GWR regression showed two models: global regression and GWR
+regression output. They show the relationships between socioeconomic,
+demographic, and environmental variables and death rates. The first is a
+global regression model that does not consider spatial correlation
+despite revealing that all predictors are statistically significant.
+Hence, while the model does suggest that our variables are indeed
+important, the global model may overlook local variations that are
+crucial in understanding the true nature of the data. This can be seen
+in Figure~\ref{fig-2}, which shows the residual of the global model, and
 there appears to be a spatial pattern to the residuals, with specific
 areas showing clusters of higher residuals and the other regions showing
 clusters of lower residuals. This clustering of residuals suggests that
 the global regression model may not be capturing all the spatial
 variation in the data. This implies that the relationship between the
 independent and dependent variables might differ across different
-locations. Figure~\ref{fig-1}
+locations.
 
 On the other hand, the geographically weighted regression (GWR) model
 incorporates spatial variation, which is a critical factor given the
@@ -515,10 +470,22 @@ spatial component present in the data, the GWR model provides a more
 realistic interpretation of how various factors influence death rates
 across different regions.
 
+\begin{figure}
+
+\centering{
+
+\captionsetup{labelsep=none}\includegraphics{report_files/figure-pdf/fig-2-1.pdf}
+
+}
+
+\caption{\label{fig-2}}
+
+\end{figure}%
+
 \subsection{Local Significance Plots}\label{local-significance-plots}
 
-In Figure \#1, the plot shows an exploratory data analysis (EDA) plot,
-specifically a choropleth map displaying the number of deaths from
+In Figure~\ref{fig-1}, the plot shows an exploratory data analysis (EDA)
+plot, specifically a choropleth map displaying the number of deaths from
 cardiovascular disease (CVD) per 100,000 people across the contiguous
 United States for the year 2015. The particulate concentrations include
 all the covariates mentioned in the methods section. The regions along
@@ -526,77 +493,129 @@ the higher latitudes (nearing 45 N) and towards the eastern section
 (approaching 80 W) display darker shades, suggesting higher CVD death
 rates in these areas, specifically the midwest and southwest regions.~
 
-Figure \#2 represents the local significance and magnitude of the `\%
-White' demographic parameter on cardiovascular disease outcomes. The
-reason we plotted for the local significance and magnitude is that it
-can help identify areas where the predictor variable has a stronger or
-weaker influence on the outcome, leading to targeted insights that would
-not be possible with a global model. From the plot, the prominent dark
-purple areas in the central part of the country, extending towards the
+\textbf{?@fig-3} represents the local significance and magnitude of the
+`\% White' demographic parameter on cardiovascular disease outcomes. We
+plotted for the local significance and magnitude because it can help
+identify areas where the predictor variable has a stronger or weaker
+influence on the outcome, leading to targeted insights that would not be
+possible with a global model. From the plot, the prominent dark purple
+areas in the central part of the country, extending towards the
 southeastern regions, indicate a significant negative correlation
 between the percentage of the white population and CVD outcomes in these
 areas. Like the Northwest region, however, there are few areas,
 particularly in the southwest near New Mexico and Arizona, where there
 are positively correlated to CVD death rate, with the white regions of
-counties suggesting no significance.~~
+counties suggesting no significance and this is white region is similar
+for all the figures.
 
-Figure \#3 represents the local significance and magnitude of the `\%
-African' demographic parameter on cardiovascular disease outcomes. From
-the plot, areas located approximately in the northern central region
-indicate a significant positive correlation to CVD rate, and areas,
-notably in the central to southeastern areas of the map, suggest a
-significant negative correlation.
+\textbf{?@fig-4} represents the local significance and magnitude of the
+`\% African' demographic parameter on cardiovascular disease outcomes.
+From the plot, areas located approximately in the northern central
+region indicate a significant positive correlation to CVD rate, and
+areas, notably in the central to southeastern areas of the map, suggest
+a significant negative correlation.
 
-~Figure \#4 represents the local significance and magnitude of the `\%
-Hispanic' demographic parameter on cardiovascular disease outcomes. From
-the plot, areas across the central and southeastern regions are shaded
-in purple, suggesting a significant negative correlation between the
-percentage of the Hispanic population and CVD outcomes. There are
-isolated red patches in the north-central region, indicating areas where
-an increased Hispanic population correlates with higher CVD outcomes.~
+\textbf{?@fig-5} represents the local significance and magnitude of the
+`\% Hispanic' demographic parameter on cardiovascular disease outcomes.
+From the plot, areas across the central and southeastern regions are
+shaded in purple, suggesting a significant negative correlation between
+the percentage of the Hispanic population and CVD outcomes. The isolated
+red patches in the north-central region indicate areas where an
+increased Hispanic population correlates with higher CVD outcomes.~
 
-Figure \#5 represents the local significance and magnitude of the `\%
-Asian' demographic parameter on cardiovascular disease outcomes. From
-the plot, a substantial portion of the map, particularly across the
+\textbf{?@fig-6} represents the local significance and magnitude of the
+`\% Asian' demographic parameter on cardiovascular disease outcomes.
+From the plot, a substantial portion of the map, particularly across the
 central to eastern regions, is colored in various shades of purple. This
 suggests that in these areas, an increased percentage of the Asian
 population correlates with lower CVD outcomes. However, there are some
 parts of the West where higher percentages of the Asian population are
 associated with an increase in CVD outcomes.~
 
-Figure \#6 represents the local significance and magnitude of the
-``\%p2.5 air quality'' parameter on cardiovascular disease outcomes.
+Figure~\ref{fig-7} represents the local significance and magnitude of
+the ``\%p2.5 air quality'' parameter on cardiovascular disease outcomes.
 From the plot, in the southern and northeastern regions, there increased
 levels of PM2.5 colored as red in the plot, meaning they are associated
 with higher rates of CVD. There are some regions in the West where it
 was negatively correlated with CVD.
 
-Figure \#7 represents the local significance and magnitude of the
+\textbf{?@fig-8} represents the local significance and magnitude of the
 ``median income'' parameter on cardiovascular disease outcomes. From the
-plot, most of the region suggests that there is a significant negative
-correlation between the median income parameter and CVD outcomes.
-However, some parts of Texas indicate a positive correlation to CVD
-outcomes.~
+plot, most of the region suggests a significant negative correlation
+between the median income parameter and CVD outcomes. However, some
+parts of Texas indicate a positive correlation to CVD outcomes.~
 
-Figure \#8 represents the local significance and magnitude of the
+\textbf{?@fig-9} represents the local significance and magnitude of the
 ``Unemployment'' parameter on cardiovascular disease outcomes. From the
-plot, in most of the central region, there is a positive correlation to
-CVD rates, and in the southwest region, you can see a negative
-correlation to CVD rates.
+plot, there is a positive correlation to CVD rates in most of the
+central region, and in the southwest region, there is a negative
+correlation.
 
 \begin{figure}
 
 \begin{minipage}{0.50\linewidth}
-\includegraphics{report_files/figure-pdf/unnamed-chunk-3-1.pdf}\end{minipage}%
+
+\begin{figure}[H]
+
+\centering{
+
+\captionsetup{labelsep=none}\includegraphics{report_files/figure-pdf/fig-3-1.pdf}
+
+}
+
+\caption{\label{fig-3-1}}
+
+\end{figure}%
+
+\end{minipage}%
 %
 \begin{minipage}{0.50\linewidth}
-\includegraphics{report_files/figure-pdf/unnamed-chunk-3-2.pdf}\end{minipage}%
+
+\begin{figure}[H]
+
+\centering{
+
+\captionsetup{labelsep=none}\includegraphics{report_files/figure-pdf/fig-3-2.pdf}
+
+}
+
+\caption{\label{fig-3-2}}
+
+\end{figure}%
+
+\end{minipage}%
 \newline
 \begin{minipage}{0.50\linewidth}
-\includegraphics{report_files/figure-pdf/unnamed-chunk-3-3.pdf}\end{minipage}%
+
+\begin{figure}[H]
+
+\centering{
+
+\captionsetup{labelsep=none}\includegraphics{report_files/figure-pdf/fig-3-3.pdf}
+
+}
+
+\caption{\label{fig-3-3}}
+
+\end{figure}%
+
+\end{minipage}%
 %
 \begin{minipage}{0.50\linewidth}
-\includegraphics{report_files/figure-pdf/unnamed-chunk-3-4.pdf}\end{minipage}%
+
+\begin{figure}[H]
+
+\centering{
+
+\captionsetup{labelsep=none}\includegraphics{report_files/figure-pdf/fig-3-4.pdf}
+
+}
+
+\caption{\label{fig-3-4}}
+
+\end{figure}%
+
+\end{minipage}%
 
 \end{figure}%
 
@@ -613,7 +632,17 @@ correlation to CVD rates.
   Southeastern regions.
 \end{itemize}
 
-\includegraphics{report_files/figure-pdf/unnamed-chunk-4-1.pdf}
+\begin{figure}
+
+\centering{
+
+\captionsetup{labelsep=none}\includegraphics{report_files/figure-pdf/fig-7-1.pdf}
+
+}
+
+\caption{\label{fig-7}}
+
+\end{figure}%
 
 \begin{itemize}
 \tightlist
@@ -624,9 +653,29 @@ correlation to CVD rates.
   a major concern.
 \end{itemize}
 
-\includegraphics{report_files/figure-pdf/unnamed-chunk-5-1.pdf}
+\begin{figure}
 
-\includegraphics{report_files/figure-pdf/unnamed-chunk-5-2.pdf}
+\centering{
+
+\captionsetup{labelsep=none}\includegraphics{report_files/figure-pdf/fig-8-1.pdf}
+
+}
+
+\caption{\label{fig-8-1}}
+
+\end{figure}%
+
+\begin{figure}
+
+\centering{
+
+\captionsetup{labelsep=none}\includegraphics{report_files/figure-pdf/fig-8-2.pdf}
+
+}
+
+\caption{\label{fig-8-2}}
+
+\end{figure}%
 
 \begin{itemize}
 \tightlist
@@ -660,23 +709,36 @@ Another factor to consider from the plots is the percentage of each race
 that inhabits each county. We can observe that for African Americans,
 Hispanics, and Asians that the impacts are significant in localized
 areas of the country, which may reflect underlying health disparities in
-access to medical care.
+access to medical care. One limitation of race percentages is the
+misreporting of medical records affecting minorities (Tabb et al.)
+However, this oversight lends further credence to the fact that
+intervention is needed in order to combat racial health disparities. We
+can look at the Variance Inflation Factor (VIF) to determine if
+multi-collinearity has an impact on our results:
 
-\begin{itemize}
-\tightlist
-\item
-  One limitation of race percentages is the misreporting of medical
-  records affecting minorities (Tabb et al.) However, this oversight
-  lends further credence to the fact that intervention is needed in
-  order to combat racial health disparities. We can look at the Variance
-  Inflation Factor (VIF) to show that the multicollinearity does not
-  impact our results:
-\end{itemize}
+\begin{verbatim}
+         [,1]      [,2]      [,3]     [,4]     [,5]     [,6]     [,7]
+[1,] 183.2164 196.11538  7.237109 2.559717 1.146563 2.438190 2.618307
+[2,]  81.3242  93.79554  4.142495 2.530078 1.774716 3.385766 2.649919
+[3,] 302.1586 313.78439 16.892299 4.063351 1.266136 2.418759 2.086234
+[4,] 140.8283 151.45950  5.254129 2.134224 1.101818 2.354699 2.726051
+[5,] 131.7704 128.38684  8.326177 2.673668 1.066131 2.340259 2.319100
+[6,] 282.6620 294.22580 14.144948 3.770423 1.236497 2.435351 2.215778
+\end{verbatim}
 
-Concentration of PM2.5 and the consequential reduction in air quality
-has a significant impact localized in the central and southeastern
-regions of the United States, suggesting environmental health concerns
-that might require region-specific intervention.~
+Typically, when examining the VIF of a GWR model, we want the
+coefficients for each of the seven columns--which represent our seven
+independent variables--to be less than 15. We can see that this standard
+holds for most cases of the columns outside the \% White column, which
+has extremely high values. This represents a limitation in our model, as
+it shows multicollinearity with respect to the white variable, however,
+this is to be expected given that the white population makes up a
+majority of the United States.
+
+The concentration of PM2.5 and the consequential reduction in air
+quality has a significant impact localized in the central and
+southeastern regions of the United States, suggesting environmental
+health concerns that might require region-specific intervention.~
 
 We have shown that by using a GWR model to analyze the relationship
 between CVM and socioeconomic covariates, the factors that have the most
@@ -684,6 +746,11 @@ significant impact on death rates vary by area of the country. This
 highlights the need to identify efficient methods of intervention in
 order to curb one of the deadliest groups of diseases on the planet
 (Marlow 1994).
+
+\section{Appendix}\label{appendix}
+
+The R code used for this study can be found in our public GitHub
+repository: \url{https://github.com/jbooc117/STAT489-Project.git}.
 
 \newpage{}
 
@@ -698,6 +765,14 @@ Disparities in {CHD} Mortality Between Blacks and Whites Across the
 {United} {States}: {A} Geographically Weighted Regression Approach.''}
 \emph{Health \& Place} 18 (5): 1006--14.
 \url{https://doi.org/10.1016/j.healthplace.2012.06.006}.
+
+\bibitem[\citeproctext]{ref-liuAnalysisShortTermEffects2020}
+Liu, Yi, Jingjie Sun, Yannong Gou, Xiubin Sun, Dandan Zhang, and Fuzhong
+Xue. 2020. {``Analysis of {Short}-{Term} {Effects} of {Air} {Pollution}
+on {Cardiovascular} {Disease} {Using} {Bayesian} {Spatio}-{Temporal}
+{Models}.''} \emph{International Journal of Environmental Research and
+Public Health} 17 (3): 879.
+\url{https://doi.org/10.3390/ijerph17030879}.
 
 \bibitem[\citeproctext]{ref-Marlow1994}
 Marlow, Hilary F. 1994. {``The Pharmaceutical Industry Viewpoint.''}
@@ -721,6 +796,13 @@ Sadeer Al-Kindi, and Salil Deo. 2023. {``Trends in {Cardiovascular}
 {Index} in the {United} {States}.''} \emph{Journal of the American Heart
 Association} 12 (20): e030290.
 \url{https://doi.org/10.1161/JAHA.123.030290}.
+
+\bibitem[\citeproctext]{ref-warsitoRobustGeographicallyWeighted2018}
+Warsito, Budi, Hasbi Yasin, Dwi Ispriyanti, and Abdul Hoyyi. 2018.
+{``Robust Geographically Weighted Regression of Modeling the {Air}
+{Polluter} {Standard} {Index} ({APSI}).''} \emph{Journal of Physics:
+Conference Series} 1025 (May): 012096.
+\url{https://doi.org/10.1088/1742-6596/1025/1/012096}.
 
 \bibitem[\citeproctext]{ref-zelkoGeographicallyWeightedModeling2023}
 Zelko, Andrea, Pedro R. V. O. Salerno, Sadeer Al-Kindi, Fredrick Ho,

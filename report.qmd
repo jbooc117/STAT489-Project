@@ -261,6 +261,7 @@ source("./Functions/GWmodelRscript.R")
 
 ```{r fig-1}
 #| label: fig-1
+#| fig-pos: "!ht"
 gwr_results_sf%>%ggplot() +
   geom_sf(aes(fill = gwr_results_sf$y),
           color = scales::alpha("black",
@@ -402,10 +403,7 @@ plot, there is a positive correlation to CVD rates in most of the
 central region, and in the southwest region, there is a negative
 correlation.
 
-```{r fig-3}
-#| label: fig-3
-#| layout-ncol: 2
-#| layout-nrow: 2
+```{r output = FALSE}
 #significance
 local_t_values <- gwr_results_sf$prc_wht_TV
 local_p_values <- 2 * pt(-abs(local_t_values), df = 2480.149) #df number came from the Gw diagnostic
@@ -419,7 +417,7 @@ gwr_results_sf$prc_wht_signif_coef <- ifelse(gwr_results_sf$prc_wht_p_values < 0
                                              NA)  # Set to NA if not significant
 
 library(ggplot2)
-ggplot(gwr_results_sf) +
+white_plot = ggplot(gwr_results_sf) +
   geom_sf(aes(fill = prc_wht_signif_coef * gwr_results_sf$prc_wht/10000), color = alpha("black",0.35), size = 0.1) +
   scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
                       name = "Magnitude", limits = NULL) +  
@@ -442,7 +440,7 @@ gwr_results_sf$prc_af_signif_coef <- ifelse(gwr_results_sf$prc_af_p_values < 0.0
                                              NA)  # Set to NA if not significant
 
 library(ggplot2)
-ggplot(gwr_results_sf) +
+black_plot = ggplot(gwr_results_sf) +
   geom_sf(aes(fill = prc_af_signif_coef * gwr_results_sf$prc_frc/10000), color = alpha("black",0.35), size = 0.1) +
   scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
                       name = "Magnitude", limits = NULL) +  
@@ -466,7 +464,7 @@ gwr_results_sf$prc_hsp_signif_coef <- ifelse(gwr_results_sf$prc_hsp_p_values < 0
                                              NA)  # Set to NA if not significant
 
 library(ggplot2)
-ggplot(gwr_results_sf) +
+hispan_plot = ggplot(gwr_results_sf) +
   geom_sf(aes(fill = prc_hsp_signif_coef * gwr_results_sf$prc_hsp/10000), color = alpha("black",0.35), size = 0.1) +
   scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
                       name = "Magnitude", limits = NULL) +  
@@ -489,7 +487,7 @@ gwr_results_sf$prc_sn_signif_coef <- ifelse(gwr_results_sf$prc_sn_p_values < 0.0
                                              NA)  # Set to NA if not significant
 
 library(ggplot2)
-ggplot(gwr_results_sf) +
+asian_plot = ggplot(gwr_results_sf) +
   geom_sf(aes(fill = prc_sn_signif_coef * gwr_results_sf$perc_sn/10000), color = alpha("black",0.35), size = 0.1) +
   scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
                       name = "Magnitude", limits = NULL) +  
@@ -498,7 +496,25 @@ ggplot(gwr_results_sf) +
        caption = "Blue indicates lower magnitude of effect;\n Red indicates larger magnitude of effect;\nWhite indicates no significant effect") +
   theme_minimal() +
   theme(text = element_text(size = 10), legend.position = "right")
+
+#Saving plots as PNG files:
+ggsave("whiteplot.png", plot = white_plot)
+ggsave("blackplot.png", plot = black_plot)
+ggsave("hispanplot.png", plot = hispan_plot)
+ggsave("asianplot.png", plot = asian_plot)
 ```
+
+::: {#fig-race layout="[[50,50],[50,50]]"}
+
+![Figure 3](whiteplot.png){#fig-3}
+
+![Figure 4](blackplot.png){#fig-4}
+
+![Figure 5](hispanplot.png){#fig-5}
+
+![Figure 6](asianplot.png){#fig-6}
+
+:::
 
 -   Demographic Impact: The percentage of white and Hispanic populations
     shows significant regional variations in association with death

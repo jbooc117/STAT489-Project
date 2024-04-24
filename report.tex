@@ -428,7 +428,7 @@ This methodological outline ensures that each step of the data handling,
 analysis, and visualization process is documented, providing
 transparency and reproducibility of the research findings.
 
-\begin{figure}
+\begin{figure}[!ht]
 
 \centering{
 
@@ -493,9 +493,9 @@ the higher latitudes (nearing 45 N) and towards the eastern section
 (approaching 80 W) display darker shades, suggesting higher CVD death
 rates in these areas, specifically the midwest and southwest regions.~
 
-\textbf{?@fig-3} represents the local significance and magnitude of the
-`\% White' demographic parameter on cardiovascular disease outcomes. We
-plotted for the local significance and magnitude because it can help
+Figure~\ref{fig-3} represents the local significance and magnitude of
+the `\% White' demographic parameter on cardiovascular disease outcomes.
+We plotted for the local significance and magnitude because it can help
 identify areas where the predictor variable has a stronger or weaker
 influence on the outcome, leading to targeted insights that would not be
 possible with a global model. From the plot, the prominent dark purple
@@ -508,23 +508,24 @@ are positively correlated to CVD death rate, with the white regions of
 counties suggesting no significance and this is white region is similar
 for all the figures.
 
-\textbf{?@fig-4} represents the local significance and magnitude of the
-`\% African' demographic parameter on cardiovascular disease outcomes.
-From the plot, areas located approximately in the northern central
-region indicate a significant positive correlation to CVD rate, and
-areas, notably in the central to southeastern areas of the map, suggest
-a significant negative correlation.
+Figure~\ref{fig-4} represents the local significance and magnitude of
+the `\% African' demographic parameter on cardiovascular disease
+outcomes. From the plot, areas located approximately in the northern
+central region indicate a significant positive correlation to CVD rate,
+and areas, notably in the central to southeastern areas of the map,
+suggest a significant negative correlation.
 
-\textbf{?@fig-5} represents the local significance and magnitude of the
-`\% Hispanic' demographic parameter on cardiovascular disease outcomes.
-From the plot, areas across the central and southeastern regions are
-shaded in purple, suggesting a significant negative correlation between
-the percentage of the Hispanic population and CVD outcomes. The isolated
-red patches in the north-central region indicate areas where an
-increased Hispanic population correlates with higher CVD outcomes.~
+Figure~\ref{fig-5} represents the local significance and magnitude of
+the `\% Hispanic' demographic parameter on cardiovascular disease
+outcomes. From the plot, areas across the central and southeastern
+regions are shaded in purple, suggesting a significant negative
+correlation between the percentage of the Hispanic population and CVD
+outcomes. The isolated red patches in the north-central region indicate
+areas where an increased Hispanic population correlates with higher CVD
+outcomes.~
 
-\textbf{?@fig-6} represents the local significance and magnitude of the
-`\% Asian' demographic parameter on cardiovascular disease outcomes.
+Figure~\ref{fig-6} represents the local significance and magnitude of
+the `\% Asian' demographic parameter on cardiovascular disease outcomes.
 From the plot, a substantial portion of the map, particularly across the
 central to eastern regions, is colored in various shades of purple. This
 suggests that in these areas, an increased percentage of the Asian
@@ -555,65 +556,49 @@ correlation.
 
 \begin{minipage}{0.50\linewidth}
 
-\begin{figure}[H]
-
 \centering{
 
-\captionsetup{labelsep=none}\includegraphics{report_files/figure-pdf/fig-3-1.pdf}
+\includegraphics{whiteplot.png}
 
 }
 
-\caption{\label{fig-3-1}}
-
-\end{figure}%
+\subcaption{\label{fig-3}Figure 3}
 
 \end{minipage}%
 %
 \begin{minipage}{0.50\linewidth}
 
-\begin{figure}[H]
-
 \centering{
 
-\captionsetup{labelsep=none}\includegraphics{report_files/figure-pdf/fig-3-2.pdf}
+\includegraphics{blackplot.png}
 
 }
 
-\caption{\label{fig-3-2}}
-
-\end{figure}%
+\subcaption{\label{fig-4}Figure 4}
 
 \end{minipage}%
 \newline
 \begin{minipage}{0.50\linewidth}
 
-\begin{figure}[H]
-
 \centering{
 
-\captionsetup{labelsep=none}\includegraphics{report_files/figure-pdf/fig-3-3.pdf}
+\includegraphics{hispanplot.png}
 
 }
 
-\caption{\label{fig-3-3}}
-
-\end{figure}%
+\subcaption{\label{fig-5}Figure 5}
 
 \end{minipage}%
 %
 \begin{minipage}{0.50\linewidth}
 
-\begin{figure}[H]
-
 \centering{
 
-\captionsetup{labelsep=none}\includegraphics{report_files/figure-pdf/fig-3-4.pdf}
+\includegraphics{asianplot.png}
 
 }
 
-\caption{\label{fig-3-4}}
-
-\end{figure}%
+\subcaption{\label{fig-6}Figure 6}
 
 \end{minipage}%
 

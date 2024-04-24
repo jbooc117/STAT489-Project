@@ -28,6 +28,6 @@ set.seed(12345)
 
 ## Results
 
-## Literature Review 
+## Literature Review
 
 ## Conclusion

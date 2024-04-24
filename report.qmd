@@ -621,11 +621,12 @@ that inhabits each county. We can observe that for African Americans,
 Hispanics, and Asians that the impacts are significant in localized
 areas of the country, which may reflect underlying health disparities in
 access to medical care. One limitation of race percentages is the
-misreporting of medical records affecting minorities (Tabb et al.)
-However, this oversight lends further credence to the fact that
-intervention is needed in order to combat racial health disparities. We
-can look at the Variance Inflation Factor (VIF) to determine if
-multi-collinearity has an impact on our results:
+misreporting of medical records affecting minorities
+[@tabbExploringSpatialPatterning2020]. However, this oversight lends
+further credence to the fact that intervention is needed in order to
+combat racial health disparities. We can look at the Variance Inflation
+Factor (VIF) to determine if multi-collinearity has an impact on our
+results:
 
 ```{r cache = TRUE, results = 'asis'}
 #| label: tbl-10

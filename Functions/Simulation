@@ -2,11 +2,12 @@
 library(GWmodel)
 library(dplyr)
 library(ggplot2)
-library(MASS) # For mvrnorm
+library(MASS)
+library(sf)# For mvrnorm
 set.seed(123) # For reproducibility
 
 
-finalCVD <- read_sf("finalCVDshapes.shp")
+finalCVD <- read_sf("C:/Users/Shombit Roy/OneDrive/Desktop/finalCVDshapes.shp")
 finalCVD <- na.omit(finalCVD)
 
 covariates <- subset(finalCVD, select = c(prc_wht, prc_frc, prc_hsp, perc_sn, p2_5_20, estimat, U__2015, geometry))
@@ -97,6 +98,7 @@ gwr_results_sf%>%ggplot() +
 
 
 library(sf)
+library(spdep)
 gwr_results_spatial <- as(gwr_results_sf, "Spatial")
 
 nb <- poly2nb(gwr_results_spatial)

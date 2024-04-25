@@ -505,15 +505,13 @@ ggsave("asianplot.png", plot = asian_plot)
 ```
 
 ::: {#fig-race layout="[[50,50],[50,50]]"}
+![Figure 3a](whiteplot.png){#fig-3}
 
-![Figure 3](whiteplot.png){#fig-3}
+![Figure 3b](blackplot.png){#fig-4}
 
-![Figure 4](blackplot.png){#fig-4}
+![Figure 3c](hispanplot.png){#fig-5}
 
-![Figure 5](hispanplot.png){#fig-5}
-
-![Figure 6](asianplot.png){#fig-6}
-
+![Figure 3d](asianplot.png){#fig-6}
 :::
 
 -   Demographic Impact: The percentage of white and Hispanic populations
@@ -557,8 +555,7 @@ ggplot(gwr_results_sf) +
     particularly east of the Rockies, highlighting environmental health
     as a major concern.
 
-```{r fig-8}
-#| label: fig-8
+```{r output = FALSE}
 #significance
     local_t_values_6 <- gwr_results_sf$estimat_TV
     local_p_values_6 <- 2 * pt(-abs(local_t_values_6), df = 2480.149) #df number cam from the Gw diagnostic
@@ -572,7 +569,7 @@ ggplot(gwr_results_sf) +
                                                  NA)  # Set to NA if not significant
 
     library(ggplot2)
-    ggplot(gwr_results_sf) +
+medianIncome = ggplot(gwr_results_sf) +
       geom_sf(aes(fill = prc_est_signif_coef * log(merge2015GW$estimat)), color = "black", size = 0.1) +
       scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
                           name = "Coefficient Magnitude", limits = NULL) +  
@@ -595,7 +592,7 @@ ggplot(gwr_results_sf) +
                                                  NA)  # Set to NA if not significant
 
     library(ggplot2)
-    ggplot(gwr_results_sf) +
+unemployment = ggplot(gwr_results_sf) +
       geom_sf(aes(fill = prc_U_2015_signif_coef), color = "black", size = 0.1) +
       scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
                           name = "Coefficient Magnitude", limits = NULL) +  
@@ -604,7 +601,18 @@ ggplot(gwr_results_sf) +
            caption = "Blue indicates lower magnitude of effect;\n Red indicates larger magnitude of effect;\nWhite indicates no significant effect") +
       theme_minimal() +
       theme(text = element_text(size = 12), legend.position = "right")
+    
+#Save plots as PNG files
+ggsave("medIncomePlot.png", plot = medianIncome)
+ggsave("unemployPlot.png", plot = unemployment)
+
 ```
+
+::: {#fig-econ layout="[[50,50],[50,50]]"}
+![Figure 5a](medIncomePlot.png){#fig-8}
+
+![Figure 5b](unemployPlot.png){#fig-9}
+:::
 
 <!-- -->
 

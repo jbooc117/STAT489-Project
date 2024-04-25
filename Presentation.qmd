@@ -20,10 +20,6 @@ library(tidyverse)
 set.seed(12345)
 ```
 
-## Abstract
-
-Cardiovascular disease (CVD) is the leading cause of death in the United States. By using a spa-1tial modeling technique (geographically weighted regression) and even after adjusting for median2household income and unemployment rates (finding similar correlations studied in the past), we3observed that the concentration of PM 2.5 is centered in the Stroke Belt region. Policymakers and health practitioners can use these results to identify targeted interventions to curb the increasing rates of CVD, aiming to halt one of the world's deadliest diseases.
-
 ## Methods
 
 ## Results

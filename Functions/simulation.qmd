@@ -15,7 +15,7 @@ library(sf)# For mvrnorm
 set.seed(123) # For reproducibility
 
 
-finalCVD <- read_sf("C:/Users/Shombit Roy/OneDrive/Desktop/finalCVDshapes.shp")
+#finalCVD <- read_sf("./Data/finalCVDshapes.shp")
 finalCVD <- na.omit(finalCVD)
 
 covariates <- subset(finalCVD, select = c(prc_wht, prc_frc, prc_hsp, perc_sn, p2_5_20, estimat, U__2015, geometry))

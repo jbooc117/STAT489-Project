@@ -262,20 +262,19 @@ source("./Functions/GWmodelRscript.R")
 ```{r fig-1}
 #| label: fig-1
 #| fig-pos: "!ht"
-gwr_results_sf%>%ggplot() +
+(edaplot = gwr_results_sf%>%ggplot() +
   geom_sf(aes(fill = gwr_results_sf$y),
           color = scales::alpha("black",
                                 alpha = 0.1
                                 )) +
   scale_fill_gradientn(colours = terrain.colors(8),
                        #limits = c(19,530),
-                       breaks = c(50,150,300)) +
-  theme(text = element_text(size = 10), 
-        legend.position = "bottom") + 
+                       breaks = c(50,150,300))  + 
   labs(title = "Deaths Related to CVD, 2015",
-       #caption = "Fig 1",
-       fill = "Deaths from CVD per 100,000 people") +
-  theme_bw()
+       fill = "CVM per 100,000 people") +
+  theme_bw() +
+  theme(text = element_text(size = 10), 
+        legend.position = "bottom"))
 ```
 
 # Results
@@ -325,13 +324,13 @@ residuals_global <- residuals(global_model)
 merge2015GW$residuals_global <- residuals_global
 
 # Spatial Plot of the Residuals
-ggplot(data = merge2015GW) +
+(gdrplot = ggplot(data = merge2015GW) +
   geom_sf(aes(fill = residuals_global)) +  
   scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0) +
   labs(title = "Global Distribution of Residuals", 
        fill = "Residuals",
        caption = "Blue indicates lower magnitude of effect;\n Red indicates larger magnitude of effect;\nWhite indicates no significant effect") +
-  theme_minimal()
+  theme_minimal())
 
 ```
 
@@ -421,7 +420,7 @@ white_plot = ggplot(gwr_results_sf) +
   geom_sf(aes(fill = prc_wht_signif_coef * gwr_results_sf$prc_wht/10000), color = alpha("black",0.35), size = 0.1) +
   scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
                       name = "Magnitude", limits = NULL) +  
-  labs(title = "Local Significance and Magnitude of '% White'",
+  labs(title = "Local Significance and Beta_0 of '% White'",
        subtitle = "Geographically Weighted Regression (GWR)",
        caption = "Blue indicates lower magnitude of effect;\n Red indicates larger magnitude of effect;\nWhite indicates no significant effect") +
   theme_minimal() +
@@ -444,7 +443,7 @@ black_plot = ggplot(gwr_results_sf) +
   geom_sf(aes(fill = prc_af_signif_coef * gwr_results_sf$prc_frc/10000), color = alpha("black",0.35), size = 0.1) +
   scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
                       name = "Magnitude", limits = NULL) +  
-  labs(title = "Local Significance and Magnitude of '% African American'",
+  labs(title = "Local Significance and Beta_1 of '% African American'",
        subtitle = "Geographically Weighted Regression (GWR)",
        caption = "Blue indicates lower magnitude of effect;\n Red indicates larger magnitude of effect;\nWhite indicates no significant effect") +
   theme_minimal() +
@@ -468,7 +467,7 @@ hispan_plot = ggplot(gwr_results_sf) +
   geom_sf(aes(fill = prc_hsp_signif_coef * gwr_results_sf$prc_hsp/10000), color = alpha("black",0.35), size = 0.1) +
   scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
                       name = "Magnitude", limits = NULL) +  
-  labs(title = "Local Significance and Magnitude of '% Hispanic'",
+  labs(title = "Local Significance and Beta_2 of '% Hispanic'",
        subtitle = "Geographically Weighted Regression (GWR)",
        caption = "Blue indicates lower magnitude of effect;\n Red indicates larger magnitude of effect;\nWhite indicates no significant effect") +
   theme_minimal() +
@@ -491,27 +490,27 @@ asian_plot = ggplot(gwr_results_sf) +
   geom_sf(aes(fill = prc_sn_signif_coef * gwr_results_sf$perc_sn/10000), color = alpha("black",0.35), size = 0.1) +
   scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
                       name = "Magnitude", limits = NULL) +  
-  labs(title = "Local Significance and Magnitude of '% Asian'",
+  labs(title = "Local Significance and Beta_3 of '% Asian'",
        subtitle = "Geographically Weighted Regression (GWR)",
        caption = "Blue indicates lower magnitude of effect;\n Red indicates larger magnitude of effect;\nWhite indicates no significant effect") +
   theme_minimal() +
   theme(text = element_text(size = 10), legend.position = "right")
 
 #Saving plots as PNG files:
-ggsave("whiteplot.png", plot = white_plot)
-ggsave("blackplot.png", plot = black_plot)
-ggsave("hispanplot.png", plot = hispan_plot)
-ggsave("asianplot.png", plot = asian_plot)
+ggsave(path = "./PresentationPhotos","whiteplot.png", plot = white_plot)
+ggsave(path = "./PresentationPhotos","blackplot.png", plot = black_plot)
+ggsave(path = "./PresentationPhotos","hispanplot.png", plot = hispan_plot)
+ggsave(path = "./PresentationPhotos","asianplot.png", plot = asian_plot)
 ```
 
 ::: {#fig-race layout="[[50,50],[50,50]]"}
-![Figure 3a](whiteplot.png){#fig-3}
+![Figure 3a](PresentationPhotos/whiteplot.png){#fig-3}
 
-![Figure 3b](blackplot.png){#fig-4}
+![Figure 3b](PresentationPhotos/blackplot.png){#fig-4}
 
-![Figure 3c](hispanplot.png){#fig-5}
+![Figure 3c](PresentationPhotos/hispanplot.png){#fig-5}
 
-![Figure 3d](asianplot.png){#fig-6}
+![Figure 3d](PresentationPhotos/asianplot.png){#fig-6}
 :::
 
 -   Demographic Impact: The percentage of white and Hispanic populations
@@ -537,17 +536,16 @@ gwr_results_sf$prc_p2_p_values <- local_p_values_5
 gwr_results_sf$prc_p2_signif_coef <- ifelse(gwr_results_sf$prc_p2_p_values < 0.05, 
                                              gwr_results_sf$p2_5_20, 
                                              NA)  # Set to NA if not significant
-
 library(ggplot2)
-ggplot(gwr_results_sf) +
+(pm25plot = ggplot(gwr_results_sf) +
   geom_sf(aes(fill = prc_p2_signif_coef), color = "black", size = 0.1) +
   scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
                       name = "Coefficient Magnitude", limits = NULL) +  
-  labs(title = "Local Significance and Magnitude of PM2.5 Parameter",
+  labs(title = "Local Significance and Beta_4 of PM2.5 Parameter",
        subtitle = "Geographically Weighted Regression (GWR)",
        caption = "Blue indicates lower magnitude of effect;\n Red indicates larger magnitude of effect;\nWhite indicates no significant effect") +
   theme_minimal() +
-  theme(text = element_text(size = 12), legend.position = "right")
+  theme(text = element_text(size = 12), legend.position = "right"))
 ```
 
 -   Environmental Influence: Air quality, indicated by PM2.5 levels,
@@ -573,7 +571,7 @@ medianIncome = ggplot(gwr_results_sf) +
       geom_sf(aes(fill = prc_est_signif_coef * log(merge2015GW$estimat)), color = "black", size = 0.1) +
       scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
                           name = "Coefficient Magnitude", limits = NULL) +  
-      labs(title = "Local Significance of Median Income Parameter",
+      labs(title = "Local Significance and Beta_5 of Median Income",
            subtitle = "Geographically Weighted Regression (GWR)",
            caption = "Blue indicates lower magnitude of effect;\n Red indicates larger magnitude of effect;\nWhite indicates no significant effect") +
       theme_minimal() +
@@ -596,15 +594,18 @@ unemployment = ggplot(gwr_results_sf) +
       geom_sf(aes(fill = prc_U_2015_signif_coef), color = "black", size = 0.1) +
       scale_fill_gradient2(low = "blue", mid = "white", high = "red", na.value = "white", 
                           name = "Coefficient Magnitude", limits = NULL) +  
-      labs(title = "Local Significance of Unemployment Parameter",
+      labs(title = "Local Significance and Beta_6 of Unemployment",
            subtitle = "Geographically Weighted Regression (GWR)",
            caption = "Blue indicates lower magnitude of effect;\n Red indicates larger magnitude of effect;\nWhite indicates no significant effect") +
       theme_minimal() +
       theme(text = element_text(size = 12), legend.position = "right")
     
 #Save plots as PNG files
-ggsave("medIncomePlot.png", plot = medianIncome)
-ggsave("unemployPlot.png", plot = unemployment)
+ggsave(path = "./PresentationPhotos","edaplot.png", plot = edaplot)
+ggsave(path = "./PresentationPhotos","gdrplot.png", plot = gdrplot)
+ggsave(path = "./PresentationPhotos","pm25.png", plot = pm25plot)
+ggsave(path = "./PresentationPhotos","medIncomePlot.png", plot = medianIncome)
+ggsave(path = "./PresentationPhotos","unemployPlot.png", plot = unemployment)
 
 ```
 
@@ -661,8 +662,10 @@ collin = gwr.collin.diagno(Data_Vl ~
                           bw = opt_bandwidth, 
                           kernel = "gaussian", 
                           adaptive = FALSE)
-VIF = head(collin$VIF)
-print(xtable(VIF), type = "latex", include.rownames = FALSE)
+VIF = head(round(collin$VIF))
+colnames(VIF) = c("%White","%Black","%Hispanic","%Asian",
+               "PM2.5","MedIncome","Unemployment")
+print(xtable(VIF), type = "latex", include.rownames = FALSE, comment = FALSE, floating = FALSE)
 ```
 
 Typically, when examining the VIF of a GWR model, we want the
@@ -670,9 +673,11 @@ coefficients for each of the seven columns–which represent our seven
 independent variables–to be less than 15. We can see in @tbl-10 that
 this standard holds for most cases of the columns outside the % White
 column, which has extremely high values. This represents a limitation in
-our model, as it shows multicollinearity with respect to the white
-variable, however, this is to be expected given that the white
-population makes up a majority of the United States.
+our model, as it shows multicollinearity with respect to the white and
+black variables, however, this is to be expected given that the racial
+variables we are using sum up to one. An adjustment to the model could
+be made in a future study to eliminate the % White variable and
+aggregate the other three into a single % Non-White variable. .
 
 The concentration of PM2.5 and the consequential reduction in air
 quality has a significant impact localized in the central and
@@ -682,9 +687,8 @@ health concerns that might require region-specific intervention. 
 We have shown that by using a GWR model to analyze the relationship
 between CVM and socioeconomic covariates, the factors that have the most
 significant impact on death rates vary by area of the country. This
-highlights the need to identify efficient methods of intervention in
-order to curb one of the deadliest groups of diseases on the planet
-[@Marlow1994].
+highlights the need to identify methods of intervention in order to curb
+one of the deadliest groups of diseases on the planet [@Marlow1994].
 
 # Appendix
 

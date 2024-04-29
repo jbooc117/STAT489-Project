@@ -22,9 +22,45 @@ set.seed(12345)
 
 # Introduction
 
+## Introduction
+
+-   As the leading cause of death in the US, we focused on cardiovascular disease (CVD) and its impact on the 18-44-year-old age group and the covariates, PM 2.5 concentration, and socioeconomic factors 
+-   Our goals with this study were to:
+    -    Fill a gap in prior studies that focused on the Stroke Belt region of the United States
+    -   Answer the question: Where are the socioeconomic and environmental factors affecting CVD rates in the United States
+
+## Some Key Terms:
+
+-   [Fine Particulate Matter (PM2.5)]{.underline}: particles with a diameter of 2.5 microns or less
+
+-   [Cardiovascular Disease (CVD)]{.underline}: group of disorders affecting the heart and blood vessels
+
+-   [Cardiovascular Mortality (CVM)]{.underline}: for the purpose of our study, the metric of CVM is calculated via deaths from CVD per 100,000 people
+
+-   [Stroke Belt]{.underline}: region of the southeastern United States with high incidence of CVD compared to the rest of the country
+
+## Visualization of Stroke Belt
+
+[![States that are a part of the Stroke Belt, highlighted in orange](PresentationPhotos/strokeBelt.png){width="90%"}](https://en.wikipedia.org/wiki/File:Stroke_belt.svg)
+
+## Introduction
+
+-   We chose to use the geographically weighted regression (GWR) model rather than other methods such as clustering and traditional linear regression for the following reasons: 
+
+    -   The GWR model highlights the local spatial significance between the response variable and each covariate 
+
+    -   We can analyze the spatial distribution, changes in percentage rates, and any correlations
+
+## Introduction
+
+-   The concentrations of the covariates differ across the US so public health experts need to tailor to each region 
+-   Because many factors influence CVD incidence rates, it’s useful to use the GWR model to help health practitioners implement necessary intervention
+
 # Literature Review Section
 
 ## Literature Review
+
+-   For further context on our problem, we looked towards other research papers studying CVD using spatial analysis
 
 -   Statistical regression + spatial models have been growing in popularity to analyze the distribution and factors of cardiovascular disease 
 
@@ -50,9 +86,9 @@ set.seed(12345)
 
 ## Methods
 
--   Medicare claims, racial/geographic data from the Census and TIGER Bureau, median income from Census API, air quality from NASA PM2.5 data, and unemployment rates loaded from CDC.
+-   Medicare claims, racial/geographic data were gathered from the Census and TIGER Bureau, median income was sourced from the Census API, air quality from NASA PM2.5 data, and unemployment rates were loaded from the Center for Disease Control (CDC).
 
--   Grouped data by year, county, and coordinates for 2015; cleaned by removing entries with empty geometries and incomplete data,  excluding Alaska and Hawaii, which led to Nantucket County being removed from the dataset
+-   The data was grouped by year, United States county, and coordinates for 2015; cleaned by removing entries with empty geometries and incomplete data, excluding Alaska and Hawaii, which led to Nantucket County being removed from the dataset
 
 ## Methods
 
@@ -66,17 +102,31 @@ set.seed(12345)
 
 $y = \beta_0*\%White +\beta_1* \%Black + \beta_2 *\%Hispanic + \beta_3 *\%Asian + \beta_4 *PM2.5 + \beta_5 * Median Income + \beta_6 * \%Unemployed$
 
+-   A correction for the asymptotics of the t-values from the GWR model is required, as they do not follow a standard t-distribution
+
+    -   We adjusted the t-values of the GWR model, aligning the assessment of t-values with appropriate statistical significance testing.
+
 ## Methods
 
 -   Geographic plots visualize the spatial distribution of CVD death rates across different US counties
 
 -   Significance of various socioeconomic, environmental, and demographic factors on CVD death rates is analyzed regionally.
 
+## Methods
+
+![Exploratory data analysis with full model. Many deaths are shown to be concentrated in the Stroke Belt region.](PresentationPhotos/edaplot.png){width="80%"}
+
 ## Simulation
 
--   Simulated data is used with a piecewise function dividing the geographical space into quadrants, each assigned different coefficients to model spatial heterogeneity
+![Simulated data is used with a piecewise function dividing the geographical space into quadrants, each assigned different coefficients to model spatial heterogeneity](PresentationPhotos/simplot.png){width="80%"}
 
--   A spatial autocorrelation test (Moran’s I) is performed on the residuals of the GWR model
+## Simulation
+
+| Moran I Statistic | Expectation  | Variance     |
+|-------------------|--------------|--------------|
+| 0.3010445156      | 0.0003274394 | 0.0001178233 |
+
+: Moran's I, a spatial autocorrelation test, is performed on the residuals of the GWR model. Results confirm a significant spatial correlation.
 
 # Results Section
 
@@ -90,9 +140,8 @@ $y = \beta_0*\%White +\beta_1* \%Black + \beta_2 *\%Hispanic + \beta_3 *\%Asian 
 
     -   Residual analysis reveals spatial patterns, with clusters of higher and lower residuals indicating missed spatial variation.
 
-```{=html}
 <!-- -->
-```
+
 -   The GWR model:
 
     -   Incorporates spatial variation, addressing a critical aspect of the data.
@@ -101,59 +150,35 @@ $y = \beta_0*\%White +\beta_1* \%Black + \beta_2 *\%Hispanic + \beta_3 *\%Asian 
 
 ## Results
 
-Picture of the Global dist of residuals
-
-Eda plot
+![Local variations are critical for understanding the nature of our data](PresentationPhotos/gdrplot.png)
 
 ## Results
 
-\% White demographic (Figure 3):
-
--   Significant negative correlation in central and southeastern regions.
-
--   Positive correlation near New Mexico and Arizona.
-
-\% African demographic (Figure 4):
-
--   Significant positive correlation in northern central regions.
-
--   Significant negative correlation in central to southeastern areas.
+![Significant negative correlation in central and southeastern regions. Positive correlation near New Mexico and Arizona.](PresentationPhotos/whiteplot.png){width="90%"}
 
 ## Results
 
-\% Hispanic demographic (Figure 5):
-
--   Significant negative correlation across central and southeastern regions.
-
--   Isolated red patches in north-central suggest positive correlations.
-
-\% Asian demographic (Figure 6):
-
--   Generally, increased % Asian correlates with lower CVD outcomes in central to eastern regions.
-
--   Some western regions show positive correlations.
+![Significant positive correlation in northern central region. Significant negative correlation in central to southeastern areas.](PresentationPhotos/blackplot.png){width="90%"}
 
 ## Results
 
-PM2.5 air quality (Figure 7):
-
--   Higher levels in southern and northeastern regions correlate with higher CVD rates.
-
--   Negative correlations in some western regions.
+![Significant negative correlation across central and southeastern regions. Isolated red patches in north-central suggest positive correlations.](PresentationPhotos/hispanplot.png){width="90%"}
 
 ## Results
 
-Median income (Figure 8):
+![Generally, increased % Asian correlates with lower CVD outcomes in central to eastern regions. Some western regions show positive correlations.](PresentationPhotos/asianplot.png){width="90%"}
 
--   Generally, higher median income correlates with lower CVD outcomes.
+## Results
 
--   Notable exception in parts of Texas with a positive correlation.
+![Higher levels in southern and northeastern regions correlate with higher CVD rates. Negative correlations in some western regions.](PresentationPhotos/pm25.png){width="90%"}
 
-Unemployment (Figure 9):
+## Results
 
--   Mostly positive correlation with CVD rates in central regions.
+![Generally, higher median income correlates with lower CVD outcomes. Notable exception in parts of Texas with a positive correlation.](PresentationPhotos/medIncomePlot.png){width="90%"}
 
--   Negative correlation in southwestern regions.
+## Results
+
+![Mostly positive correlation with CVD rates in central regions. Negative correlation in southwestern regions.](PresentationPhotos/unemployPlot.png){width="90%"}
 
 # Discussion Section
 
@@ -161,7 +186,7 @@ Unemployment (Figure 9):
 
 -   The purpose of the study was to fill a gap in CVD research that primarily focused on the stroke belt and adults over 55, with the goal of answering: what are the socioeconomic and environmental factors affecting CVD rates in the U.S.?
 
-[![Urban smog in China](PresentationPhotos/urbanPollution.jpg)](https://aaqr.org/articles/aaqr-17-06-oa-0223)
+[![Urban smog in Chinese city](PresentationPhotos/urbanPollution.jpg){width="75%"}](https://aaqr.org/articles/aaqr-17-06-oa-0223)
 
 ## Discussion
 
@@ -175,15 +200,36 @@ Unemployment (Figure 9):
 
 -   Limitation in race percentages presented by misreporting of medical records affecting minorities (Tabb et al. 2020). Shows that intervention is needed to combat racial health disparities that were caused by disparities in the healthcare system.
 
-## Discussion
+## Variance Inflation Factor (VIF)
 
 -   Looking at the Variance Inflation Factor (VIF) of our GWR model:
 
     ```{=tex}
-    \begin{table}[ht] \centering \begin{tabular}{rrrrrrr}   \hline 1 & 2 & 3 & 4 & 5 & 6 & 7 \\    \hline 183.22 & 196.12 & 7.24 & 2.56 & 1.15 & 2.44 & 2.62 \\    81.32 & 93.80 & 4.14 & 2.53 & 1.77 & 3.39 & 2.65 \\    302.16 & 313.78 & 16.89 & 4.06 & 1.27 & 2.42 & 2.09 \\    140.83 & 151.46 & 5.25 & 2.13 & 1.10 & 2.35 & 2.73 \\    131.77 & 128.39 & 8.33 & 2.67 & 1.07 & 2.34 & 2.32 \\    282.66 & 294.23 & 14.14 & 3.77 & 1.24 & 2.44 & 2.22 \\     \hline \end{tabular} \end{table}
+    \begin{tabular}{rrrrrrr}
+      \hline
+    \%WT & \%BLK & \%HISP & \%AS & PM2.5 & Income & Unemp. \\ 
+      \hline
+    183.00 & 196.00 & 7.00 & 3.00 & 1.00 & 2.00 & 3.00 \\ 
+      81.00 & 94.00 & 4.00 & 3.00 & 2.00 & 3.00 & 3.00 \\ 
+      302.00 & 314.00 & 17.00 & 4.00 & 1.00 & 2.00 & 2.00 \\ 
+      141.00 & 151.00 & 5.00 & 2.00 & 1.00 & 2.00 & 3.00 \\ 
+      132.00 & 128.00 & 8.00 & 3.00 & 1.00 & 2.00 & 2.00 \\ 
+      283.00 & 294.00 & 14.00 & 4.00 & 1.00 & 2.00 & 2.00 \\ 
+       \hline
+    \end{tabular}
     ```
 
+We can see that the %WT and %BLK columns have disproportionately high values. This represents a limitation in the model as it suggests multicollinearity.
+
+## Variance Inflation Factor
+
+This is, however, to be expected given that the racial variables we are using sum up to one. An adjustment to the model could be made in a future study to eliminate the % White variable and aggregate the other three races into a single % Non-White variable.
+
 ## Discussion
+
+-   PM2.5 concentrations in the central and southeastern regions of the United States suggest that region-specific intervention may be needed.
+
+[![Particulate smog in Houston, Texas](PresentationPhotos/Houston-Smog.jpg){width="75%"}](https://www.momscleanairforce.org/houston-slammed-for-clean-air-violations/)
 
 # Conclusion
 
@@ -191,4 +237,4 @@ Unemployment (Figure 9):
 
 -   We have shown that a GWR model can be used to analyze the relationship between CVM and socioeconomic covariates.
 
--   The differing local significance that we detected highlights the need to identify region-speific interventions to curb the toll of CVD.
+-   The differing local significance that we detected highlights the need to identify region-specific interventions to curb the toll of CVD.

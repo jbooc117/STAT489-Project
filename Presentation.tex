@@ -79,6 +79,13 @@
 \makeatother
 \usepackage{xcolor}
 \newif\ifbibliography
+\ifLuaTeX
+  \usepackage{luacolor}
+  \usepackage[soul]{lua-ul}
+\else
+  \usepackage{soul}
+  
+\fi
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 
@@ -168,18 +175,109 @@
 \title{Spatial Modeling of Cardiovascular Disease Incidence Positively
 Associated with PM2.5}
 \author{Shombit Roy, Christina Kim, Johan Booc}
-\date{2024-04-27}
+\date{2024-04-28}
 
 \begin{document}
 \frame{\titlepage}
 
 \section{Introduction}\label{introduction}
 
+\begin{frame}{Introduction}
+\phantomsection\label{introduction-1}
+\begin{itemize}
+\tightlist
+\item
+  As the leading cause of death in the US, we focused on cardiovascular
+  disease (CVD) and its impact on the 18-44-year-old age group and the
+  covariates, PM 2.5 concentration, and socioeconomic factors~
+\item
+  Our goals with this study were to:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Fill a gap in prior studies that focused on the Stroke Belt region
+    of the United States
+  \item
+    Answer the question: Where are the socioeconomic and environmental
+    factors affecting CVD rates in the United States
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Some Key Terms:}
+\phantomsection\label{some-key-terms}
+\begin{itemize}
+\item
+  \ul{Fine Particulate Matter (PM2.5)}: particles with a diameter of 2.5
+  microns or less
+\item
+  \ul{Cardiovascular Disease (CVD)}: group of disorders affecting the
+  heart and blood vessels
+\item
+  \ul{Cardiovascular Mortality (CVM)}: for the purpose of our study, the
+  metric of CVM is calculated via deaths from CVD per 100,000 people
+\item
+  \ul{Stroke Belt}: region of the southeastern United States with high
+  incidence of CVD compared to the rest of the country
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Visualization of Stroke Belt}
+\phantomsection\label{visualization-of-stroke-belt}
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.9\textwidth,height=\textheight]{PresentationPhotos/strokeBelt.png}
+
+}
+
+\caption{States that are a part of the Stroke Belt, highlighted in
+orange}
+
+\end{figure}%
+\end{frame}
+
+\begin{frame}{Introduction}
+\phantomsection\label{introduction-2}
+\begin{itemize}
+\item
+  We chose to use the geographically weighted regression (GWR) model
+  rather than other methods such as clustering and traditional linear
+  regression for the following reasons:~
+
+  \begin{itemize}
+  \item
+    The GWR model highlights the local spatial significance between the
+    response variable and each covariate~
+  \item
+    We can analyze the spatial distribution, changes in percentage
+    rates, and any correlations
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Introduction}
+\phantomsection\label{introduction-3}
+\begin{itemize}
+\tightlist
+\item
+  The concentrations of the covariates differ across the US so public
+  health experts need to tailor to each region~
+\item
+  Because many factors influence CVD incidence rates, it's useful to use
+  the GWR model to help health practitioners implement necessary
+  intervention
+\end{itemize}
+\end{frame}
+
 \section{Literature Review Section}\label{literature-review-section}
 
 \begin{frame}{Literature Review}
 \phantomsection\label{literature-review}
 \begin{itemize}
+\item
+  For further context on our problem, we looked towards other research
+  papers studying CVD using spatial analysis
 \item
   Statistical regression + spatial models have been growing in
   popularity to analyze the distribution and factors of cardiovascular
@@ -229,14 +327,15 @@ Associated with PM2.5}
 \phantomsection\label{methods}
 \begin{itemize}
 \item
-  Medicare claims, racial/geographic data from the Census and TIGER
-  Bureau, median income from Census API, air quality from NASA PM2.5
-  data, and unemployment rates loaded from CDC.
+  Medicare claims, racial/geographic data were gathered from the Census
+  and TIGER Bureau, median income was sourced from the Census API, air
+  quality from NASA PM2.5 data, and unemployment rates were loaded from
+  the Center for Disease Control (CDC).
 \item
-  Grouped data by year, county, and coordinates for 2015; cleaned by
-  removing entries with empty geometries and incomplete data,~ excluding
-  Alaska and Hawaii, which led to Nantucket County being removed from
-  the dataset
+  The data was grouped by year, United States county, and coordinates
+  for 2015; cleaned by removing entries with empty geometries and
+  incomplete data, excluding Alaska and Hawaii, which led to Nantucket
+  County being removed from the dataset
 \end{itemize}
 \end{frame}
 
@@ -259,6 +358,19 @@ Associated with PM2.5}
 \begin{frame}{Model}
 \phantomsection\label{model}
 \(y = \beta_0*\%White +\beta_1* \%Black + \beta_2 *\%Hispanic + \beta_3 *\%Asian + \beta_4 *PM2.5 + \beta_5 * Median Income + \beta_6 * \%Unemployed\)
+
+\begin{itemize}
+\item
+  A correction for the asymptotics of the t-values from the GWR model is
+  required, as they do not follow a standard t-distribution
+
+  \begin{itemize}
+  \tightlist
+  \item
+    We adjusted the t-values of the GWR model, aligning the assessment
+    of t-values with appropriate statistical significance testing.
+  \end{itemize}
+\end{itemize}
 \end{frame}
 
 \begin{frame}{Methods}
@@ -273,17 +385,52 @@ Associated with PM2.5}
 \end{itemize}
 \end{frame}
 
+\begin{frame}{Methods}
+\phantomsection\label{methods-3}
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{PresentationPhotos/edaplot.png}
+
+}
+
+\caption{Exploratory data analysis with full model. Many deaths are
+shown to be concentrated in the Stroke Belt region.}
+
+\end{figure}%
+\end{frame}
+
 \begin{frame}{Simulation}
 \phantomsection\label{simulation}
-\begin{itemize}
-\item
-  Simulated data is used with a piecewise function dividing the
-  geographical space into quadrants, each assigned different
-  coefficients to model spatial heterogeneity
-\item
-  A spatial autocorrelation test (Moran's I) is performed on the
-  residuals of the GWR model
-\end{itemize}
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{PresentationPhotos/simplot.png}
+
+}
+
+\caption{Simulated data is used with a piecewise function dividing the
+geographical space into quadrants, each assigned different coefficients
+to model spatial heterogeneity}
+
+\end{figure}%
+\end{frame}
+
+\begin{frame}{Simulation}
+\phantomsection\label{simulation-1}
+\begin{longtable}[]{@{}lll@{}}
+\caption{Moran's I, a spatial autocorrelation test, is performed on the
+residuals of the GWR model. Results confirm a significant spatial
+correlation.}\tabularnewline
+\toprule\noalign{}
+Moran I Statistic & Expectation & Variance \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+Moran I Statistic & Expectation & Variance \\
+\midrule\noalign{}
+\endhead
+0.3010445156 & 0.0003274394 & 0.0001178233 \\
+\bottomrule\noalign{}
+\end{longtable}
 \end{frame}
 
 \section{Results Section}\label{results-section}
@@ -323,87 +470,117 @@ Associated with PM2.5}
 
 \begin{frame}{Results}
 \phantomsection\label{results-1}
-Picture of the Global dist of residuals
+\begin{figure}[H]
 
-Eda plot
+{\centering \includegraphics{PresentationPhotos/gdrplot.png}
+
+}
+
+\caption{Local variations are critical for understanding the nature of
+our data}
+
+\end{figure}%
 \end{frame}
 
 \begin{frame}{Results}
 \phantomsection\label{results-2}
-\% White demographic (Figure 3):
+\begin{figure}[H]
 
-\begin{itemize}
-\item
-  Significant negative correlation in central and southeastern regions.
-\item
-  Positive correlation near New Mexico and Arizona.
-\end{itemize}
+{\centering \includegraphics[width=0.9\textwidth,height=\textheight]{PresentationPhotos/whiteplot.png}
 
-\% African demographic (Figure 4):
+}
 
-\begin{itemize}
-\item
-  Significant positive correlation in northern central regions.
-\item
-  Significant negative correlation in central to southeastern areas.
-\end{itemize}
+\caption{Significant negative correlation in central and southeastern
+regions. Positive correlation near New Mexico and Arizona.}
+
+\end{figure}%
 \end{frame}
 
 \begin{frame}{Results}
 \phantomsection\label{results-3}
-\% Hispanic demographic (Figure 5):
+\begin{figure}[H]
 
-\begin{itemize}
-\item
-  Significant negative correlation across central and southeastern
-  regions.
-\item
-  Isolated red patches in north-central suggest positive correlations.
-\end{itemize}
+{\centering \includegraphics[width=0.9\textwidth,height=\textheight]{PresentationPhotos/blackplot.png}
 
-\% Asian demographic (Figure 6):
+}
 
-\begin{itemize}
-\item
-  Generally, increased \% Asian correlates with lower CVD outcomes in
-  central to eastern regions.
-\item
-  Some western regions show positive correlations.
-\end{itemize}
+\caption{Significant positive correlation in northern central region.
+Significant negative correlation in central to southeastern areas.}
+
+\end{figure}%
 \end{frame}
 
 \begin{frame}{Results}
 \phantomsection\label{results-4}
-PM2.5 air quality (Figure 7):
+\begin{figure}[H]
 
-\begin{itemize}
-\item
-  Higher levels in southern and northeastern regions correlate with
-  higher CVD rates.
-\item
-  Negative correlations in some western regions.
-\end{itemize}
+{\centering \includegraphics[width=0.9\textwidth,height=\textheight]{PresentationPhotos/hispanplot.png}
+
+}
+
+\caption{Significant negative correlation across central and
+southeastern regions. Isolated red patches in north-central suggest
+positive correlations.}
+
+\end{figure}%
 \end{frame}
 
 \begin{frame}{Results}
 \phantomsection\label{results-5}
-Median income (Figure 8):
+\begin{figure}[H]
 
-\begin{itemize}
-\item
-  Generally, higher median income correlates with lower CVD outcomes.
-\item
-  Notable exception in parts of Texas with a positive correlation.
-\end{itemize}
+{\centering \includegraphics[width=0.9\textwidth,height=\textheight]{PresentationPhotos/asianplot.png}
 
-Unemployment (Figure 9):
+}
 
-\begin{itemize}
-\item
-  Mostly positive correlation with CVD rates in central regions.
-\item
-  Negative correlation in southwestern regions.
-\end{itemize}
+\caption{Generally, increased \% Asian correlates with lower CVD
+outcomes in central to eastern regions. Some western regions show
+positive correlations.}
+
+\end{figure}%
+\end{frame}
+
+\begin{frame}{Results}
+\phantomsection\label{results-6}
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.9\textwidth,height=\textheight]{PresentationPhotos/pm25.png}
+
+}
+
+\caption{Higher levels in southern and northeastern regions correlate
+with higher CVD rates. Negative correlations in some western regions.}
+
+\end{figure}%
+\end{frame}
+
+\begin{frame}{Results}
+\phantomsection\label{results-7}
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.9\textwidth,height=\textheight]{PresentationPhotos/medIncomePlot.png}
+
+}
+
+\caption{Generally, higher median income correlates with lower CVD
+outcomes. Notable exception in parts of Texas with a positive
+correlation.}
+
+\end{figure}%
+\end{frame}
+
+\begin{frame}{Results}
+\phantomsection\label{results-8}
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.9\textwidth,height=\textheight]{PresentationPhotos/unemployPlot.png}
+
+}
+
+\caption{Mostly positive correlation with CVD rates in central regions.
+Negative correlation in southwestern regions.}
+
+\end{figure}%
 \end{frame}
 
 \section{Discussion Section}\label{discussion-section}
@@ -421,11 +598,11 @@ Unemployment (Figure 9):
 
 \begin{figure}[H]
 
-{\centering \includegraphics{PresentationPhotos/urbanPollution.jpg}
+{\centering \includegraphics[width=0.75\textwidth,height=\textheight]{PresentationPhotos/urbanPollution.jpg}
 
 }
 
-\caption{Urban smog in China}
+\caption{Urban smog in Chinese city}
 
 \end{figure}%
 \end{frame}
@@ -456,18 +633,57 @@ Unemployment (Figure 9):
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Discussion}
-\phantomsection\label{discussion-3}
+\begin{frame}{Variance Inflation Factor (VIF)}
+\phantomsection\label{variance-inflation-factor-vif}
 \begin{itemize}
 \item
   Looking at the Variance Inflation Factor (VIF) of our GWR model:
 
-  \begin{table}[ht] \centering \begin{tabular}{rrrrrrr}   \hline 1 & 2 & 3 & 4 & 5 & 6 & 7 \\    \hline 183.22 & 196.12 & 7.24 & 2.56 & 1.15 & 2.44 & 2.62 \\    81.32 & 93.80 & 4.14 & 2.53 & 1.77 & 3.39 & 2.65 \\    302.16 & 313.78 & 16.89 & 4.06 & 1.27 & 2.42 & 2.09 \\    140.83 & 151.46 & 5.25 & 2.13 & 1.10 & 2.35 & 2.73 \\    131.77 & 128.39 & 8.33 & 2.67 & 1.07 & 2.34 & 2.32 \\    282.66 & 294.23 & 14.14 & 3.77 & 1.24 & 2.44 & 2.22 \\     \hline \end{tabular} \end{table}
+  \begin{tabular}{rrrrrrr}
+    \hline
+  \%WT & \%BLK & \%HISP & \%AS & PM2.5 & Income & Unemp. \\ 
+    \hline
+  183.00 & 196.00 & 7.00 & 3.00 & 1.00 & 2.00 & 3.00 \\ 
+    81.00 & 94.00 & 4.00 & 3.00 & 2.00 & 3.00 & 3.00 \\ 
+    302.00 & 314.00 & 17.00 & 4.00 & 1.00 & 2.00 & 2.00 \\ 
+    141.00 & 151.00 & 5.00 & 2.00 & 1.00 & 2.00 & 3.00 \\ 
+    132.00 & 128.00 & 8.00 & 3.00 & 1.00 & 2.00 & 2.00 \\ 
+    283.00 & 294.00 & 14.00 & 4.00 & 1.00 & 2.00 & 2.00 \\ 
+     \hline
+  \end{tabular}
 \end{itemize}
+
+We can see that the \%WT and \%BLK columns have disproportionately high
+values. This represents a limitation in the model as it suggests
+multicollinearity.
+\end{frame}
+
+\begin{frame}{Variance Inflation Factor}
+\phantomsection\label{variance-inflation-factor}
+This is, however, to be expected given that the racial variables we are
+using sum up to one. An adjustment to the model could be made in a
+future study to eliminate the \% White variable and aggregate the other
+three races into a single \% Non-White variable.
 \end{frame}
 
 \begin{frame}{Discussion}
-\phantomsection\label{discussion-4}
+\phantomsection\label{discussion-3}
+\begin{itemize}
+\tightlist
+\item
+  PM2.5 concentrations in the central and southeastern regions of the
+  United States suggest that region-specific intervention may be needed.
+\end{itemize}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.75\textwidth,height=\textheight]{PresentationPhotos/Houston-Smog.jpg}
+
+}
+
+\caption{Particulate smog in Houston, Texas}
+
+\end{figure}%
 \end{frame}
 
 \section{Conclusion}\label{conclusion}
@@ -480,7 +696,7 @@ Unemployment (Figure 9):
   between CVM and socioeconomic covariates.
 \item
   The differing local significance that we detected highlights the need
-  to identify region-speific interventions to curb the toll of CVD.
+  to identify region-specific interventions to curb the toll of CVD.
 \end{itemize}
 \end{frame}
 

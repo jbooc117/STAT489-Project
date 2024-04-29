@@ -558,7 +558,7 @@ correlation.
 
 \centering{
 
-\includegraphics{whiteplot.png}
+\includegraphics{PresentationPhotos/whiteplot.png}
 
 }
 
@@ -570,7 +570,7 @@ correlation.
 
 \centering{
 
-\includegraphics{blackplot.png}
+\includegraphics{PresentationPhotos/blackplot.png}
 
 }
 
@@ -582,7 +582,7 @@ correlation.
 
 \centering{
 
-\includegraphics{hispanplot.png}
+\includegraphics{PresentationPhotos/hispanplot.png}
 
 }
 
@@ -594,7 +594,7 @@ correlation.
 
 \centering{
 
-\includegraphics{asianplot.png}
+\includegraphics{PresentationPhotos/asianplot.png}
 
 }
 
@@ -713,21 +713,16 @@ multi-collinearity has an impact on our results:
 
 \captionsetup{labelsep=none}
 
-\% latex table generated in R 4.3.2 by xtable 1.8-4 package \% Sat Apr
-27 15:09:08 2024
-
-[ht]
-\centering
 \begin{tabular}{rrrrrrr}
   \hline
-1 & 2 & 3 & 4 & 5 & 6 & 7 \\ 
+\%White & \%Black & \%Hispanic & \%Asian & PM2.5 & MedIncome & Unemployment \\ 
   \hline
-183.22 & 196.12 & 7.24 & 2.56 & 1.15 & 2.44 & 2.62 \\ 
-  81.32 & 93.80 & 4.14 & 2.53 & 1.77 & 3.39 & 2.65 \\ 
-  302.16 & 313.78 & 16.89 & 4.06 & 1.27 & 2.42 & 2.09 \\ 
-  140.83 & 151.46 & 5.25 & 2.13 & 1.10 & 2.35 & 2.73 \\ 
-  131.77 & 128.39 & 8.33 & 2.67 & 1.07 & 2.34 & 2.32 \\ 
-  282.66 & 294.23 & 14.14 & 3.77 & 1.24 & 2.44 & 2.22 \\ 
+183.00 & 196.00 & 7.00 & 3.00 & 1.00 & 2.00 & 3.00 \\ 
+  81.00 & 94.00 & 4.00 & 3.00 & 2.00 & 3.00 & 3.00 \\ 
+  302.00 & 314.00 & 17.00 & 4.00 & 1.00 & 2.00 & 2.00 \\ 
+  141.00 & 151.00 & 5.00 & 2.00 & 1.00 & 2.00 & 3.00 \\ 
+  132.00 & 128.00 & 8.00 & 3.00 & 1.00 & 2.00 & 2.00 \\ 
+  283.00 & 294.00 & 14.00 & 4.00 & 1.00 & 2.00 & 2.00 \\ 
    \hline
 \end{tabular}
 
@@ -741,9 +736,11 @@ independent variables--to be less than 15. We can see in
 Table~\ref{tbl-10} that this standard holds for most cases of the
 columns outside the \% White column, which has extremely high values.
 This represents a limitation in our model, as it shows multicollinearity
-with respect to the white variable, however, this is to be expected
-given that the white population makes up a majority of the United
-States.
+with respect to the white and black variables, however, this is to be
+expected given that the racial variables we are using sum up to one. An
+adjustment to the model could be made in a future study to eliminate the
+\% White variable and aggregate the other three into a single \%
+Non-White variable. .
 
 The concentration of PM2.5 and the consequential reduction in air
 quality has a significant impact localized in the central and
@@ -753,9 +750,8 @@ health concerns that might require region-specific intervention.~
 We have shown that by using a GWR model to analyze the relationship
 between CVM and socioeconomic covariates, the factors that have the most
 significant impact on death rates vary by area of the country. This
-highlights the need to identify efficient methods of intervention in
-order to curb one of the deadliest groups of diseases on the planet
-(Marlow 1994).
+highlights the need to identify methods of intervention in order to curb
+one of the deadliest groups of diseases on the planet (Marlow 1994).
 
 \section{Appendix}\label{appendix}
 

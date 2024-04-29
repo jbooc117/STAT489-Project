@@ -106,10 +106,15 @@ moran_test <- moran.test(gwr_results_spatial$residual, listw, alternative = "two
 
 moran_test
 
-gwr_results_sf %>%
+(simPlot = gwr_results_sf %>%
   ggplot() +
   geom_sf(aes(fill = residual),
           color = scales::alpha("black", alpha = 0.1)) +
-  scale_fill_viridis_c()
+  scale_fill_viridis_c() +
+  labs(title = "CVD Simulation, 2015") +
+  theme_minimal())
+
+ggsave(path = "./PresentationPhotos","simPlot.png", plot = simPlot)
+
 
 ```

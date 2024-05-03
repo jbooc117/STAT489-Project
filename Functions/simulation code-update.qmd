@@ -1,0 +1,118 @@
+---
+title: "Test"
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+```{r}
+library(GWmodel)
+library(dplyr)
+library(ggplot2)
+library(MASS)
+library(sf)# For mvrnorm
+set.seed(123) # For reproducibility
+
+#finalCVD <- read_sf("./Data/finalCVDshapes.shp")
+finalCVD <- na.omit(finalCVD)
+
+covariates_sim <- subset(finalCVD, select = c(prc_wht, prc_frc, prc_hsp, perc_sn, p2_5_20, estimat, U__2015, geometry))
+
+
+covariates_cleaned_sim <- st_drop_geometry(covariates_sim)
+covariates_cleaned_sim <- na.omit(covariates_cleaned_sim)
+
+
+cov_matrix <- cov(covariates_cleaned_sim)
+simulated_covariates_sim <- as.data.frame(mvrnorm(n = nrow(covariates_cleaned_sim), mu = colMeans(covariates_cleaned_sim), Sigma = cov_matrix))
+names(simulated_covariates_sim) <- names(covariates_cleaned_sim)
+
+
+covariates_centroids_sim <- st_centroid(finalCVD)
+covariates_sim$lon <- st_coordinates(covariates_centroids_sim)[,1]
+covariates_sim$lat <- st_coordinates(covariates_centroids_sim)[,2]
+
+
+#piecewise
+median_lat_sim <- mean(finalCVD$lat)
+median_lon_sim <- mean(finalCVD$lon)
+
+get_coefficients_sim <- function(lat, lon, median_lat_sim, median_lon_sim) {
+  if (lat >= median_lat_sim && lon < median_lon_sim) {
+    c(63.96, 213.1, 63.37, -52.57, 4.244, -0.001999, 3.194)
+  } else if (lat >= median_lat_sim && lon >= median_lon_sim) {
+    c(-85.72, 37.2, -113.7, -117.3, 7.714, -0.002183, 4.078)
+  } else if (lat < median_lat_sim && lon < median_lon_sim) {
+    c(-152.9, -16.67, -151.6, -411.2, 6.369, -0.001991, 4.248)
+  } else if (lat < median_lat_sim && lon >= median_lon_sim) {
+    c(-95.24, 35.8, -121.7, -212.8, 6.821, -0.002247, 4.13)
+  } else {
+    c(-81.158, 55.26, -93.21, -209.0, 6.311, -.00212, 3.73)  # Default coefficients if no conditions are met
+  }
+}
+
+# Applying the piecewise coefficients for the simulated variable to not make it fixed 
+simulated_covariates_sim$Data_Vl <- mapply(function(idx) {
+  coefs <- get_coefficients_sim(covariates_sim$lat[idx], covariates_sim$lon[idx], median_lat_sim, median_lon_sim)
+  sum(coefs * simulated_covariates_sim[idx, 1:7]) + rnorm(1, mean = 0, sd = 1)
+}, idx = 1:nrow(simulated_covariates_sim))
+
+
+finalCVD_simulated_sim <- bind_cols(st_sf(covariates_sim), simulated_covariates_sim)
+
+# Convert to Spatial Dataframe if needed and perform GWR
+finalCVD_spatial_sim = as_Spatial(finalCVD_simulated_sim)
+
+opt_bandwidth_2_sim <- bw.gwr(Data_Vl ~ prc_wht...11 + prc_frc...12 + prc_hsp...13 + perc_sn...14 + p2_5_20...15 + estimat...16 + U__2015...17, 
+                          data = finalCVD_spatial_sim, 
+                          kernel = "gaussian", 
+                          adaptive = FALSE)
+
+gwr_results_sim <- gwr.basic(Data_Vl ~ prc_wht...11 + prc_frc...12 + prc_hsp...13 + perc_sn...14 + p2_5_20...15 + estimat...16 + U__2015...17, 
+                         data = finalCVD_spatial_sim, 
+                         bw = opt_bandwidth_2_sim, 
+                         kernel = "gaussian", 
+                         adaptive = FALSE)
+
+# Convert to sf and plot
+gwr_results_sf_sim = as(gwr_results_sim$SDF, "sf")
+
+
+
+
+gwr_results_sf_sim%>%ggplot() +
+  geom_sf(aes(fill = residual),
+          color = scales::alpha("black",
+                                alpha = 0.1
+                                ))
+
+
+
+
+
+library(sf)
+library(spdep)
+gwr_results_spatial_sim <- as(gwr_results_sf_sim, "Spatial")
+
+nb <- poly2nb(gwr_results_spatial_sim)
+
+listw <- nb2listw(nb, style="W", zero.policy=TRUE)
+
+class(gwr_results_spatial_sim$residual)
+
+moran_test <- moran.test(gwr_results_spatial_sim$residual, listw, alternative = "two.sided")
+
+moran_test
+
+(simPlot = gwr_results_sf_sim %>%
+  ggplot() +
+  geom_sf(aes(fill = residual),
+          color = scales::alpha("black", alpha = 0.1)) +
+  scale_fill_viridis_c() +
+  labs(title = "CVD Simulation, 2015") +
+  theme_minimal())
+
+ggsave(path = "./PresentationPhotos","simPlot.png", plot = simPlot)
+
+
+```

@@ -26,7 +26,7 @@ set.seed(12345)
 
 -   As the leading cause of death in the US, we focused on cardiovascular disease (CVD) and its impact on the 18-44-year-old age group and the covariates, PM 2.5 concentration, and socioeconomic factors 
 -   Our goals with this study were to:
-    -    Fill a gap in prior studies that focused on the Stroke Belt region of the United States
+    -   Fill a gap in prior studies that focused on the Stroke Belt region of the United States
     -   Answer the question: Where are the socioeconomic and environmental factors affecting CVD rates in the United States
 
 ## Some Key Terms:

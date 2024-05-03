@@ -410,19 +410,19 @@ different regions to assess the overall effect on the CVD death rate.
 
 This approach allows for examining how various socioeconomic,
 environmental, and demographic factors influence health outcomes across
-different regions in the United States. We showed this in simulated data
-where we used a piecewise function to the coordinates, which divides the
-geographical space into four quadrants and assigns different
-coefficients to them to model for spatial heterogeneity. Also, a spatial
-autocorrelation test (Moran's I) is performed on the residuals of the
-GWR model. From the table in our appendix and the graph in our appendix,
-we have a high standard deviation and low p-value, strongly suggesting
-that the residuals of the GWR model are not randomly distributed but
-show significant spatial autocorrelation. The graph shows that the
-majority of the residuals are close to zero, which means the predicted
-values are pretty close to the observed values, indicating that the GWR
-model has accounted for spatial variation effectively and that it is a
-good fit.
+different regions in the United States. We showed this in our simulated
+data where we used a piecewise function on the coordinates, which
+divides the geographical space into four quadrants and assigns different
+coefficients to them to model for spatial heterogeneity, which can be
+viewed in Figure~\ref{fig-A1}. Also, a spatial autocorrelation test
+(Moran's I) was performed on the residuals of the GWR model. Based on
+the table and graph in our appendix, we have a high standard deviation
+and low p-value, strongly suggesting that the residuals of the GWR model
+are not randomly distributed but instead show significant spatial
+autocorrelation. The graph shows that the majority of the residuals are
+close to zero, which means the predicted values are close to the
+observed values. This indicates that the GWR model has accounted for
+spatial variation effectively and that it is a good fit.
 
 This methodological outline ensures that each step of the data handling,
 analysis, and visualization process is documented, providing
@@ -432,11 +432,12 @@ transparency and reproducibility of the research findings.
 
 \centering{
 
-\captionsetup{labelsep=none}\includegraphics{report_files/figure-pdf/fig-1-1.pdf}
+\includegraphics{report_files/figure-pdf/fig-1-1.pdf}
 
 }
 
-\caption{\label{fig-1}}
+\caption{\label{fig-1}Higher death rates can be seen in Stroke Belt
+region for 2015}
 
 \end{figure}%
 
@@ -562,7 +563,8 @@ correlation.
 
 }
 
-\subcaption{\label{fig-3}Figure 3a}
+\subcaption{\label{fig-3}Figure 3a: Strong effect in southern New
+England area}
 
 \end{minipage}%
 %
@@ -574,7 +576,8 @@ correlation.
 
 }
 
-\subcaption{\label{fig-4}Figure 3b}
+\subcaption{\label{fig-4}Figure 3b: Significant positive effect in Idaho
+region}
 
 \end{minipage}%
 \newline
@@ -586,7 +589,8 @@ correlation.
 
 }
 
-\subcaption{\label{fig-5}Figure 3c}
+\subcaption{\label{fig-5}Figure 3c: Positive effect focused in New
+England}
 
 \end{minipage}%
 %
@@ -598,45 +602,25 @@ correlation.
 
 }
 
-\subcaption{\label{fig-6}Figure 3d}
+\subcaption{\label{fig-6}Figure 3d: Strong positive effects focused in
+western Stroke Belt, minor positive effects through region}
 
 \end{minipage}%
 
 \end{figure}%
 
-\begin{itemize}
-\tightlist
-\item
-  Demographic Impact: The percentage of white and Hispanic populations
-  shows significant regional variations in association with death rates.
-  Higher proportions of white populations correlate with lower death
-  rates in central areas, whereas higher percentages of Hispanic
-  populations are linked to lower death rates in the West and Southwest.
-  Conversely, higher percentages of African American populations are
-  associated with higher death rates in certain Midwestern and
-  Southeastern regions.
-\end{itemize}
-
 \begin{figure}
 
 \centering{
 
-\captionsetup{labelsep=none}\includegraphics{report_files/figure-pdf/fig-7-1.pdf}
+\includegraphics{report_files/figure-pdf/fig-7-1.pdf}
 
 }
 
-\caption{\label{fig-7}}
+\caption{\label{fig-7}Higher effect in south and northeast. Negative
+effect in the west.}
 
 \end{figure}%
-
-\begin{itemize}
-\tightlist
-\item
-  Environmental Influence: Air quality, indicated by PM2.5 levels,
-  demonstrates a significant positive relationship with death rates,
-  particularly east of the Rockies, highlighting environmental health as
-  a major concern.
-\end{itemize}
 
 \begin{figure}
 
@@ -644,11 +628,12 @@ correlation.
 
 \centering{
 
-\includegraphics{medIncomePlot.png}
+\includegraphics{PresentationPhotos/medIncomePlot.png}
 
 }
 
-\subcaption{\label{fig-8}Figure 5a}
+\subcaption{\label{fig-8}Figure 5a: As expected, median income has a
+consistent negative relationship with CVM}
 
 \end{minipage}%
 %
@@ -656,23 +641,17 @@ correlation.
 
 \centering{
 
-\includegraphics{unemployPlot.png}
+\includegraphics{PresentationPhotos/unemployPlot.png}
 
 }
 
-\subcaption{\label{fig-9}Figure 5b}
+\subcaption{\label{fig-9}Figure 5b: Consistently positive relationship
+in central regions, however negative patches exist in Florida and
+northern states}
 
 \end{minipage}%
 
 \end{figure}%
-
-\begin{itemize}
-\tightlist
-\item
-  Socio-economic Correlation: Median income levels across many regions
-  show a consistent negative association with death rates, suggesting
-  that higher income areas generally experience fewer deaths.
-\end{itemize}
 
 \section{Discussion}\label{discussion}
 
@@ -757,6 +736,31 @@ one of the deadliest groups of diseases on the planet (Marlow 1994).
 
 The R code used for this study can be found in our public GitHub
 repository: \url{https://github.com/jbooc117/STAT489-Project.git}.
+
+\subsection{Simulation Study Figures}\label{simulation-study-figures}
+
+\begin{longtable}[]{@{}lll@{}}
+\toprule\noalign{}
+Moran I Statistic & Expectation & Variance \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+0.3010445156 & 0.0003274394 & 0.0001178233 \\
+\end{longtable}
+
+\begin{figure}
+
+\centering{
+
+\includegraphics{PresentationPhotos/simplot.png}
+
+}
+
+\caption{\label{fig-A1}Division of country into four quadrants shows the
+effectiveness of the GWR model}
+
+\end{figure}%
 
 \newpage{}
 

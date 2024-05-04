@@ -153,68 +153,61 @@ in CVD mortality rates, both nationally and globally.
 A data set of Medicare services and claims from the Centers for Disease
 Control and Prevention (CDC) website was loaded to analyze Medicare
 claims data, specifically Cardiovascular death rates across different
-counties and States in the US. Racial and geographic data were retrieved
-from the Census and TIGER Bureau. The median income was extracted from
-the CENSUS API. The air quality index was extracted from the NASA PM 2.5
-Concentration data. Finally, the unemployment rate was extracted from
+counties in the US. Racial and geographic data were retrieved from the
+Census and TIGER Bureau. The median income was extracted from the CENSUS
+API. The air quality index was extracted from the NASA PM 2.5
+Concentration dataset. Finally, the unemployment rate was extracted from
 the CDC website. These data sources were collected and prepared for
 analysis to understand the relationship between these factors and
 Cardiovascular death rates. The code used to extract and filter the data
-is available in our GitHub repository.
+is available in our GitHub repository:
+<https://github.com/jbooc117/STAT489-Project.git>.
 
 ## Data Preprocessing
 
-Several steps were taken to ensure the reliability and accuracy of the
-results when preparing the data for statistical analysis. The data from
-various sources was integrated into one file by year/county/latitude and
-longitude/geometries. This integration was achieved through coding in
+We took several steps to ensure the reliability and accuracy of the
+results when preparing the data for statistical analysis. We integrated
+the data from various sources into one file and grouped it by year,
+county, and geometries. This integration was achieved through coding in
 RStudio Version 4.3.2, specifically focusing on data from 2015, which
 allowed for a consistent time frame across all data sets. During the
-cleaning and processing phase, features with empty geometries were
-removed from the shapefile to ensure the removal of NA values in the
-dataset. Missing data entries were also omitted, which led to Nantucket
-County being removed as it had incomplete data and was removed from our
-analysis. Also, in this dataset, we are not analyzing Alaska and Hawaii
-due to their geographical isolation from the contiguous United States.
-Centroids of the multi-polygon geometries were calculated to provide a
-single point representing the location of these complex shapes. This
-step was essential for conducting precise location-based assessments.
-Lastly, the data frame was transformed into a SpatialPolygonsDataFrame,
-making it suitable for use in the Geographic Weighted Regression (GWR)
-model.
+cleaning and processing phase, we removed features with empty geometries
+from the shapefile to ensure the removal of missing values in the
+dataset, which led to Nantucket County being removed as it had
+incomplete data and was removed from our analysis. Also, we removed
+Alaska and Hawaii in this dataset as they are geographically separate
+from the US. Centroids of the multi-polygon geometries were calculated
+to provide a single point representing the location of these complex
+shapes. 
 
 ## Statistical Analysis
 
-A Geographically Weighted Regression (GWR) model was used in the
-statistical analysis, which was created using the GWmodel library. These
-packages were integral in setting up the model framework and executing
-the analysis, providing tools for spatial data manipulation, regression
-modeling, and data visualization. The optimal bandwidth for the GWR
-model was estimated using cross-validation with hyperparameters such as
-Gaussian kernel and fixed bandwidth. The Gaussian kernel was used
-because it assigns weights to the data points based on their distance
-from where the model is being calculated, with closer points receiving
-higher weights. This weighting falls off smoothly and symmetrically. The
-adaptiveness is FALSE because the goal is systematically comparing
-coefficients across different geographic regions. So, a fixed bandwidth
-can help ensure that each region is analyzed under the same spatial
-constraints. This function modeled the response variable, Cardiovascular
-death rate per 100,000 residents:
+A geographically weighted regression (GWR) model was used in the
+statistical analysis, and it was run using the GWmodel library
+[@GWmodel]. The functions within the GWmodel library were integral in
+setting up the model framework and executing the analysis, providing
+tools for spatial data manipulation, regression modeling, and data
+visualization. The optimal bandwidth for the GWR model was estimated
+using cross-validation with hyperparameters we chose to use, such as
+Gaussian kernel and fixed bandwidth. The reason we chose the Gaussian
+Kernel was its smoothness. We set adaptiveness to false because the goal
+is to systematically compare coefficients across different geographic
+regions. A fixed bandwidth can help ensure that each region is analyzed
+under the same spatial constraints, and its cheaper. This function
+modeled the response variable, Cardiovascular death rate, per 100,000
+county residents:
 
 $$
 y = \beta_0*\%White +\beta_1* \%Black + \beta_2 *\%Hispanic + \beta_3 *\%Asian + \beta_4 *PM2.5 + \beta_5 * Median Income + \beta_6 * \%Unemployed
 $$
 
-The variable "y" represents the CVM per 100,000 residents in each
-county. The GWR was performed using the identified optimal bandwidth,
-incorporating the same predictors as those used for bandwidth selection.
-This ensures the model’s findings are reliable and applicable to the
-predictors. Lastly, the p-values were found to determine significance by
-using the t-values obtained from the local regression coefficients from
-the GWR model. Then, the cumulative distribution function of the
-T-distribution is used to calculate the p-values. It was done as a
-two-tail test as we tried to find significant differences, and degrees
-of freedom were found from the GWR diagnostic output.
+To calculate t-values from the GWR model, we introduced a correction for
+the t-values. This ensures accurate significance testing as the t-values
+from the GWR model do not follow a regular t-distribution. Then, the
+cumulative distribution function of the adjusted T-distribution is used
+to calculate the p-values. We conducted a two-tailed test to find
+significant differences, and effective degrees of freedom were found
+from the GWR diagnostic output.
 
 ## Mapping {#sec-mapping}
 
@@ -232,9 +225,9 @@ divides the geographical space into four quadrants and assigns different
 coefficients to them to model for spatial heterogeneity, which can be
 viewed in @fig-A1. Also, a spatial autocorrelation test (Moran's I) was
 performed on the residuals of the GWR model. Based on the table and
-graph in our appendix, we have a high standard deviation and low
-p-value, strongly suggesting that the residuals of the GWR model are not
-randomly distributed but instead show significant spatial
+graph in our appendix, we have a high standard deviation, low p-value,
+and a moderate Moran's I, suggesting that the residuals of the GWR model
+are not randomly distributed but instead show significant spatial
 autocorrelation. The graph shows that the majority of the residuals are
 close to zero, which means the predicted values are close to the
 observed values. This indicates that the GWR model has accounted for
@@ -288,31 +281,27 @@ source("./Functions/GWmodelRscript.R")
 
 ## Regression Summary
 
-The GWR regression showed two models: global regression and GWR
-regression output. They show the relationships between socioeconomic,
-demographic, and environmental variables and death rates. The first is a
-global regression model that does not consider spatial correlation
-despite revealing that all predictors are statistically significant.
-Hence, while the model does suggest that our variables are indeed
-important, the global model may overlook local variations that are
-crucial in understanding the true nature of the data. This can be seen
-in @fig-2, which shows the residual of the global model, and there
-appears to be a spatial pattern to the residuals, with specific areas
-showing clusters of higher residuals and the other regions showing
-clusters of lower residuals. This clustering of residuals suggests that
-the global regression model may not be capturing all the spatial
-variation in the data. This implies that the relationship between the
-independent and dependent variables might differ across different
-locations.
+We used two models: global regression and GWR regression output. They
+show the relationships between socioeconomic, demographic, and
+environmental variables and death rates. The first is a global
+regression model that does not consider spatial correlation despite
+revealing that all predictors are statistically significant. Hence,
+while the model does suggest that our variables are indeed important,
+the global model may overlook local variations that are crucial in
+understanding the true nature of the data. This can be seen in @fig-2,
+which shows the residual of the global model, and there appears to be a
+spatial pattern to the residuals, with specific areas showing clusters
+of higher residuals and the other regions showing clusters of lower
+residuals. This clustering of residuals suggests that the global
+regression model may not be capturing all the spatial variation in the
+data. This implies that the relationship between the independent and
+dependent variables might differ across different locations.
 
 On the other hand, the geographically weighted regression (GWR) model
 incorporates spatial variation, which is a critical factor given the
-data context. We can see that the AIC and BIC values are lower for the
-GWR regression than the Global regression, which makes it the most
-preferred model given the data.  In summary, by accommodating the
-spatial component present in the data, the GWR model provides a more
-realistic interpretation of how various factors influence death rates
-across different regions.
+data context. In summary, by accommodating the spatial component present
+in the data, the GWR model provides a more realistic interpretation of
+how various factors influence death rates across different regions.
 
 ```{r fig-2}
 #code for residual plot
@@ -343,19 +332,18 @@ merge2015GW$residuals_global <- residuals_global
 In @fig-1, the plot shows an exploratory data analysis (EDA) plot,
 specifically a choropleth map displaying the number of deaths from
 cardiovascular disease (CVD) per 100,000 people across the contiguous
-United States for the year 2015. The particulate concentrations include
-all the covariates mentioned in the methods section. The regions along
-the higher latitudes (nearing 45 N) and towards the eastern section
-(approaching 80 W) display darker shades, suggesting higher CVD death
-rates in these areas, specifically the midwest and southwest regions. 
+United States for the year 2015. The regions along the higher latitudes
+(nearing 45 N) and towards the eastern section (approaching 80 W)
+display darker shades, suggesting higher CVD death rates in these areas,
+specifically the midwest and southwest regions. 
 
 @fig-3 represents the local significance and magnitude of the ‘% White’
 demographic parameter on cardiovascular disease outcomes. We plotted for
 the local significance and magnitude because it can help identify areas
 where the predictor variable has a stronger or weaker influence on the
 outcome, leading to targeted insights that would not be possible with a
-global model. From the plot, the prominent dark purple areas in the
-central part of the country, extending towards the southeastern regions,
+global model. From the plot, the prominent dark red areas in the central
+part of the country, extending towards the southeastern regions,
 indicate a significant negative correlation between the percentage of
 the white population and CVD outcomes in these areas. Like the Northwest
 region, however, there are few areas, particularly in the southwest near
@@ -373,7 +361,7 @@ significant negative correlation.
 @fig-5 represents the local significance and magnitude of the ‘%
 Hispanic’ demographic parameter on cardiovascular disease outcomes. From
 the plot, areas across the central and southeastern regions are shaded
-in purple, suggesting a significant negative correlation between the
+in red, suggesting a significant negative correlation between the
 percentage of the Hispanic population and CVD outcomes. The isolated red
 patches in the north-central region indicate areas where an increased
 Hispanic population correlates with higher CVD outcomes. 
@@ -381,8 +369,8 @@ Hispanic population correlates with higher CVD outcomes. 
 @fig-6 represents the local significance and magnitude of the ‘% Asian’
 demographic parameter on cardiovascular disease outcomes. From the plot,
 a substantial portion of the map, particularly across the central to
-eastern regions, is colored in various shades of purple. This suggests
-that in these areas, an increased percentage of the Asian population
+eastern regions, is colored in various shades of red. This suggests that
+in these areas, an increased percentage of the Asian population
 correlates with lower CVD outcomes. However, there are some parts of the
 West where higher percentages of the Asian population are associated
 with an increase in CVD outcomes. 
@@ -392,7 +380,7 @@ quality” parameter on cardiovascular disease outcomes. From the plot, in
 the southern and northeastern regions, there increased levels of PM2.5
 colored as red in the plot, meaning they are associated with higher
 rates of CVD. There are some regions in the West where it was negatively
-correlated with CVD.
+correlated with CVD, highlighted in blue.
 
 @fig-8 represents the local significance and magnitude of the “median
 income” parameter on cardiovascular disease outcomes. From the plot,
@@ -623,8 +611,8 @@ impacts of CVD were primarily studied within the Stroke Belt, rather
 than the country at large.
 
 Our goal was to put our findings towards answering the following
-question: what are the socioeconomic and environmental factors affecting
-CVD rates in the United States?
+question: where are the socioeconomic and environmental factors
+affecting CVD rates in the United States?
 
 These maps reveal that the relationships between race, socio-economic
 factors, environmental quality, and death rates are complex and highly
@@ -677,7 +665,12 @@ aggregate the other three into a single % Non-White variable. .
 The concentration of PM2.5 and the consequential reduction in air
 quality has a significant impact localized in the central and
 southeastern regions of the United States, suggesting environmental
-health concerns that might require region-specific intervention. 
+health concerns that might require region-specific intervention. This
+aligns with previous research done on the stroke belt, where factors
+such as smoking, limited access to healthcare, and food insecurity
+[@zelkoGeographicallyWeightedModeling2023] combined with the high
+concentrations of PM2.5 have created a hotspot of CVM far surpassing the
+rates of the rest of the country.
 
 We have shown that by using a GWR model to analyze the relationship
 between CVM and socioeconomic covariates, the factors that have the most
@@ -695,6 +688,8 @@ repository: <https://github.com/jbooc117/STAT489-Project.git>.
 | Moran I Statistic | Expectation  | Variance     |
 |-------------------|--------------|--------------|
 | 0.3010445156      | 0.0003274394 | 0.0001178233 |
+
+: Moran's I test demonstrates spatial correlation in our model
 
 ![Division of country into four quadrants shows the effectiveness of the
 GWR model](PresentationPhotos/simplot.png){#fig-A1}

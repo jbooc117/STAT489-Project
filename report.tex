@@ -209,13 +209,14 @@ University\\\\\href{mailto:shombit123@tamu.edu}{shombit123@tamu.edu}}
 \maketitle
 \begin{abstract}
 Cardiovascular disease (CVD) is the leading cause of death in the United
-States. By using a spatial modeling technique (geographically weighted
-regression) we observed that the concentration of PM 2.5 is centered in
-the Stroke Belt region after adjusting for median household income and
-unemployment rates (finding similar correlations studied in the past).
-Policymakers and health practitioners can use these results to identify
-targeted interventions to curb the increasing rates of CVD, and help to
-halt one of the world's deadliest diseases.
+States. After adjusting for median household income and unemployment
+rates (finding similar correlations studied in the past), we used the
+spatial modeling technique, geographically weighted regression (GWR),
+and observed that the coefficient for the concentration of PM 2.5 is
+centered in the Stroke Belt region. Policymakers and health
+practitioners can use these results to identify targeted interventions
+to curb the increasing rates of CVD and help halt one of the world's
+deadliest diseases.
 \end{abstract}
 {\bfseries \emph Keywords}
 \def\sep{\textbullet\ }
@@ -226,109 +227,109 @@ Cardiovascular Mortality (CVM)
 \section{Introduction}\label{sec-intro}
 
 As cardiovascular disease is the leading cause of death in the US,
-numerous past studies have been done on this disease, specifically on
-the older population the 65+ year age group. Our study aims to further
-investigate the impact, focusing on the 18-44-year-old age population,
-since generally, there has been less interest in the effects of CVD on
-them.~
+numerous past studies have been done, specifically on the 65+ year age
+group. Our study aims to investigate the impact of CVD mortality rates
+further, focusing on the 18-44-year-old age population. There has been
+less interest in the effects of CVD outcomes on them because they are
+not seen as susceptible to the disease compared to the older
+population.~
 
-Our approach involves analyzing this relationship to produce risk
-prediction estimates for our specified age group. There are several
-factors involved in influencing the incidence rates of CVD from
-genetics, lifestyle, diet, and smoking/alcohol habits. We look into the
-covariates - PM 2.5 concentration, median household income, and
-unemployment rates - to analyze the spatial variation for our specified
-age population, thus decreasing future CVD incidence rates.
-Specifically, we focus on PM 2.5 concentration as the world continues to
-depend on fossil fuels/natural gas and climate change is an ongoing
-concern. Earlier studies such as (Warsito et al. 2018) and (Liu et al.
-2020)highlight the modern-day threats from air pollution using a Robust
-GWR model and Bayesian-temporal model, respectively. From studying our
-covariates, we can examine the effects of certain CVD risk factors for
-the year 2015.~
+Our approach analyzes the relationship between CVD rates and our
+covariates (socioeconomic factors and PM 2.5 concentration) to produce
+risk prediction estimates for our specified age group. There are several
+factors involved in influencing the mortality rates of CVD however, we
+look at PM 2.5 concentration, median household income, and unemployment
+rates to analyze the spatial variation of CVD rates for our specified
+age group. Earlier studies such as (Warsito et al. 2018; Liu et al.
+2020) highlight the modern-day air pollution threats by using a Robust
+GWR model and a Bayesian spatiotemporal model, respectively. By studying
+our covariates, we can examine their effects on CVD rates to produce
+risk estimates for the year 2015.
 
-The geographically weighted regression model uses local variables and
-weights to produce statistical visualizations of the US's regional
-variation between our response variable (CVD deaths) and its covariates.
-Other methods, such as the traditional linear regression model and
-clustering, have been used in past CVD studies. However, we found the
-GWR model allows us to see each covariate's local significance and
-magnitude. The spatial distribution aspect of the GWR model highlights
-regions that are concentrated with CVD rates, whether incidence
-percentage rates are increasing or decreasing, and any significant
-correlations. This makes the GWR model efficient in analyzing the
+To produce statistical visualizations of the US's regional variation
+between our response variable (CVD deaths) and its covariates, we used
+the geographically weighted regression model through local variables and
+weights. Other methods, such as the traditional linear regression model
+and clustering have been used in past CVD studies. However, we found the
+GWR model allows us to see the local significance (compared to the
+Ordinary Least Squares model) and nonstationary effects (compared to
+most clustering methods) from each of our covariates. The spatial
+distribution aspect of the GWR model highlights CVD mortality rate
+percentage changes and correlations between CVD outcomes and our
+covariates. Overall, we found the GWR model useful for analyzing the
 dynamic relationship of CVD rates and the factors that contribute to
 it.~
 
-Using a geographically weighted regression approach, the overall outcome
-of our study aids policymakers and health practitioners in implementing
-the necessary interventions for targeted regions that are being
-influenced the most by our covariates. For public health experts, it's
-ideal to tailor aid to each specific region of the US first to
-eventually reach a national decrease in CVD incidence rates.
+Using a geographically weighted regression approach, we found distinct
+geographic patterns for demographics and CVD outcomes. PM 2.5 levels and
+CVD rates showed a positive correlation in the south and northeast
+regions while western regions exhibited a negative correlation. For our
+socioeconomic covariates, a higher median income was associated with
+lower CVD levels and the correlation between unemployment rates and CVD
+outcomes varied. From this, the overall outcome of our study aims to
+assist policymakers and health practitioners implement necessary
+intervention for targeted regions.~
 
 \section{Related Works}\label{related-works}
 
-There's a growing popularity of using spatial models in the
+There's been a growing popularity of using spatial models in the
 epidemiological domain to analyze the distribution and factors of a
-disease. The techniques often used differ between studies but all have
+disease. The techniques used often differ between studies but all have
 the same goal: to reduce the disease incidence and mortality rates.
-Statistical regression models are popular methods for CVD studies. The
-underlying causes for CVD are dynamic and can be seen as an
-interconnected web. (Zelko et al. 2023) examines the relationship
-between CVD and covariates similar to our study (air pollution, social
-determinants, and county-level data). From using a GWR model, their
-results found that counties in the South had the highest exposure to PM
-2.5 concentrations whereas counties in the Northeast had the lowest. A
-strong correlation was also found between household income, race, and
-healthcare access. Overall, there are several causes to consider with
-CVD, and where the covariates are concentrated is another important
-consideration.
+Statistical regression models are popular methods for CVD studies and
+the underlying causes are dynamic. (Zelko et al. 2023) examined the
+relationship between CVD and covariates similar to our study (air
+pollution, social determinants, and county-level data). From using a GWR
+model, their coefficients showed counties in the South had the highest
+exposure to PM 2.5 concentration whereas counties in the Northeast had
+the lowest. In addition, they found a strong correlation between
+household income, race, and healthcare access. However, their study
+focused on Type 2 diabetes mortality rates in addition to CVD outcomes.
+Our study emphasizes CVD rates for our specified age group with a focus
+on PM 2.5 levels. The study found that their coefficients had
+statistically significant spatial variation so it is important to see
+where the covariates are concentrated. Overall, there are several causes
+to consider with CVD.
 
 Compared to traditional regression models, the geographically weighted
-model (GWR) explores spatial data by considering varied coefficients for
-a certain spatial unit (Gebreab and Diez Roux 2012). The GWR model
-contains the parameter, neighborhood (also known as bandwidth) and
-builds on the weighted least squares method to estimate the regression
-coefficients. We want to see values closer to the point of interest
-since they carry more weight, thus having a greater influence.~
-
-The Ordinary Least Squares (OLS) model is a popular choice of method for
-public health studies because it generates the regression coefficients
-on a global scale and captures the average differences between
-covariates. However, this means spatial variability between units can be
-easily hidden for the OLS model. Our paper acknowledges that PM 2.5
+model (GWR) is a local model with spatially varying coefficients, as
+opposed to the global model from Ordinary Least Squares (OLS) (Gebreab
+and Diez Roux 2012). The GWR model includes the kernel density function,
+weights, and the parameters distance and the number of neighborhoods
+(also known as bandwidth). It builds on the weighted least squares
+method to estimate the regression coefficient, with the diagonals of the
+weighted matrix representing the location of each observation. We want
+to see values closer to the point of interest since they carry more
+weight, thus having a greater influence. We acknowledge that PM 2.5
 concentration and socioeconomic factors are not spatially constant with
-cardiovascular disease. The GWR model is more suitable for our study
-because the goal of public health is to improve the population as a
-whole. To get to the root cause of CVD mortality rates and see future
-improvement, the OLS model should be treated as the `null' model, with
-the GWR model used to test and verify that it is a statistically
-significant better fit.
+cardiovascular disease. While a global model helps improve the
+population as a whole, we found the GWR model allows us to see the local
+significance of our covariates. This is an important feature to see
+future improvement in CVD mortality rates. We consider the OLS model as
+the `null' model, with the GWR model used to test and verify that it is
+a statistically significant better fit.
 
 The GWR model spatially displays a relationship between CVD deaths and
-their covariates and analyzes disparities at the local scale. Errors are
-also minimalized between the actual model and any estimates. This makes
-the GWR model suitable for seeing the socioeconomic factors that affect
-different regions and narrows down our focus to the areas in need of
-improvement, which helps health practitioners implement policies for
-that region. Past studies (Zelko et al. 2023),(Terry et al. 2023),
-and(Singh et al. 2019) tend to focus on the trends of socioeconomic
-covariates and their spatial patterning. However, our study extends past
-studies by including PM 2.5 concentrations as one of our covariates.
-From this, we can fully understand the dynamic relationship between
-counties and CVD incidence/mortality rates.~
+their covariates to analyze disparities at the local scale and minimize
+errors. This makes the GWR model suitable for seeing the socioeconomic
+factors that affect different regions and narrows down our focus to the
+areas in need of improvement, which helps health practitioners implement
+policies for that region. Past studies (Zelko et al. 2023; Terry et al.
+2023; Singh et al. 2019) have focused on the trends of socioeconomic
+covariates and their spatial patterning. However, our study extends the
+efforts of past studies by including PM 2.5 concentrations as one of our
+covariates. From this, we can fully understand the dynamic relationship
+between air quality and CVD mortality rates.
 
 Risk assessment and risk estimates uncover the key factors associated
-with CVD. Because the concentration of specific races varies by county,
-we studied the dose-response relationship of PM 2.5 concentrations and
-the socioeconomic covariates of CVD mortality at the county level. This
-helps researchers and health practitioners to develop the necessary
-risk-preventative measures and allocate resources to the areas that need
-them the most. By putting the focus on the county level (rather than on
-individual states/nationally), resources can be allocated accordingly to
-the regions that need the most assistance. This can lead to a reduction
-in CVD mortality rates, both nationally and globally.
+with CVD. We studied the concentration of specific races, the
+relationship of PM 2.5 concentrations, and the socioeconomic covariates
+of CVD rates at the county level. This helps researchers and health
+practitioners to develop the necessary risk-preventative measures and
+allocate resources to the areas that need them the most. By putting the
+focus on the county level (rather than individual states/nationally),
+resources can be allocated accordingly to the regions that need the most
+assistance, leading to a reduction in CVD mortality outcomes.~
 
 \section{Methods}\label{methods}
 
@@ -729,6 +730,14 @@ one of the deadliest groups of diseases on the planet (Marlow 1994).
 
 The R code used for this study can be found in our public GitHub
 repository: \url{https://github.com/jbooc117/STAT489-Project.git}.
+
+\subsection{Data Sets}\label{data-sets}
+
+The CDC dataset containing Medicare claims:
+\url{https://www.cdc.gov/dhdsp/maps/hd-stroke-mortality-dashboard.htm}
+
+PM2.5 concentrations from 2015 dataset:
+\url{https://sedac.ciesin.columbia.edu/data/set/sdei-global-annual-gwr-pm2-5-modis-misr-seawifs-aod-v4-gl-03/data-download}
 
 \subsection{Simulation Study Figures}\label{simulation-study-figures}
 
